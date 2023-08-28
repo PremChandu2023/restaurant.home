@@ -484,6 +484,15 @@ paths:
                   value:
                     succes: true
                     jwtToken: sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq
+        '400':
+          description: Errors in given request body
+          content:
+            application/json:
+              examples:
+                MenuItemIdFound:
+                  description: Occurs when given Id is invalid
+                  value:
+                    message: Given email is already registered give new email
       tags: &ref_4
         - EmployeeAuth
   /employee/register:
@@ -497,8 +506,59 @@ paths:
             schema:
               $ref: '#/components/schemas/registerEmployeeDto'
       responses:
-        '201':
-          description: ''
+        '200':
+          description: Logins the user and returns a jwt token after verifying the user
+          content:
+            application/json:
+              examples:
+                succes:
+                  description: Verify the employee and returns a Jwt token
+                  value:
+                    succes: true
+                    jwtToken: sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq
+        '400':
+          description: Errors in given request body
+          content:
+            application/json:
+              examples:
+                MenuItemIdFound:
+                  description: Occurs when given Id is invalid
+                  value:
+                    message: Given email is already registered give new email
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                AcceswithoutAuthorization:
+                  description: ' If the client attempts to access certain book-related endpoints without providing any authentication credentials'
+                  value:
+                    message: Authentication_is_required_to_access_the_resource.
+                ExpiredAuthenticationToken:
+                  description: >-
+                    When the client sends an authentication token that is
+                    invalid, expired, or not recognized by the server
+                  value:
+                    message: client's_token_is_not_valid_for_the_requested_operation
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                InsufficientPrivileges:
+                  description: ' If the client provides authentication credentials, but the credentials do not grant sufficient privileges to access a specific book-related operation'
+                  value:
+                    message: >-
+                      client_does_not_have_the_required_authorization_to_perform_the_requested_action.
+                RoleBasedAccessControl:
+                  description: >-
+                    If the API uses role-based access control, the server may
+                    respond with a 403 status code when a user with a certain
+                    role tries to access an operation that requires a higher
+                    role or specific permissions.
+                  value:
+                    message: >-
+                      User_with_this_role_is_not_permitted_to_access_the_resource
       tags: *ref_4
   /employee/{id}/details:
     get:
@@ -511,7 +571,31 @@ paths:
             type: number
       responses:
         '200':
-          description: ''
+          description: Gives the order details by given id
+          content:
+            application/json:
+              examples:
+                success:
+                  description: Gives the menu details
+                  value:
+                    succes: true
+                    data:
+                      menuitem_id: 2
+                      menu_itemname: manchuria
+                      price: 10
+                      tax: 5
+                      date:
+                        createdDate: '2023-08-17T08:31:36.802Z'
+                        updatedDate: '2023-08-24T04:40:27.390Z'
+        '400':
+          description: Occurs when given Id is invalid
+          content:
+            application/json:
+              examples:
+                InvalidId:
+                  description: Occurs when given Id is invalid
+                  value:
+                    message: Given_id_is_not_found
       tags: *ref_4
   /employee/roles:
     post:
@@ -524,10 +608,65 @@ paths:
             schema:
               $ref: '#/components/schemas/createRoleDto'
       responses:
-        '201':
-          description: ''
+        '200':
+          description: creates a role
+          content:
+            application/json:
+              examples:
+                success:
+                  description: Gives the role deatils that have been posted
+                  value:
+                    succes: true
+                    data:
+                      name: Customer
+                      description: customer has permission to order
+                      id: 5
+        '400':
+          description: Occurs when you are trying to post the same role again
+          content:
+            application/json:
+              examples:
+                conflict:
+                  description: Same Role posted again
+                  value:
+                    error: Conflict Error
+                    message: 'Given_role_is_already_present '
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                AcceswithoutAuthorization:
+                  description: ' If the client attempts to access certain book-related endpoints without providing any authentication credentials'
+                  value:
+                    message: Authentication_is_required_to_access_the_resource.
+                ExpiredAuthenticationToken:
+                  description: >-
+                    When the client sends an authentication token that is
+                    invalid, expired, or not recognized by the server
+                  value:
+                    message: client's_token_is_not_valid_for_the_requested_operation
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                InsufficientPrivileges:
+                  description: ' If the client provides authentication credentials, but the credentials do not grant sufficient privileges to access a specific book-related operation'
+                  value:
+                    message: >-
+                      client_does_not_have_the_required_authorization_to_perform_the_requested_action.
+                RoleBasedAccessControl:
+                  description: >-
+                    If the API uses role-based access control, the server may
+                    respond with a 403 status code when a user with a certain
+                    role tries to access an operation that requires a higher
+                    role or specific permissions.
+                  value:
+                    message: >-
+                      User_with_this_role_is_not_permitted_to_access_the_resource
       tags: *ref_4
-  /employee/updaterole/{id}:
+  /employee/role/{id}:
     put:
       operationId: AuthController_updateRoles
       parameters:
@@ -544,7 +683,36 @@ paths:
               $ref: '#/components/schemas/updateRoleDto'
       responses:
         '200':
-          description: ''
+          description: Role is updated succefully
+          content:
+            application/json:
+              examples:
+                success:
+                  description: Role is updated with given name in database
+                  value:
+                    succes: true
+                    data:
+                      id: 1
+                      employee_Id: A1
+                      employee_Name: prem
+                      status: Active
+                      email: prem3a3
+                      phoneNumber: 8367
+                      date:
+                        createdDate: '2023-08-22T05:30:40.783Z'
+                        updatedDate: '2023-08-22T09:38:24.000Z'
+                      roles:
+                        id: 1
+                        name: Manager
+        '400':
+          description: Occurs when given path varaible is invalid
+          content:
+            application/json:
+              examples:
+                IdNotFound:
+                  description: Role is updated with given name in database
+                  value:
+                    message: Id not found to update the role
       tags: *ref_4
 info:
   title: chandu
@@ -646,10 +814,49 @@ components:
         - password
     registerEmployeeDto:
       type: object
-      properties: {}
+      properties:
+        employee_Id:
+          type: string
+          example: A23
+        employee_Name:
+          type: string
+          example: A23
+        status:
+          type: string
+          example: Active
+        email:
+          type: string
+          example: prem3a3@gmail.com
+        password:
+          type: string
+          example: Prem@12345678
+        role:
+          type: string
+          example: Manager
+      required:
+        - employee_Id
+        - employee_Name
+        - status
+        - email
+        - password
+        - role
     createRoleDto:
       type: object
-      properties: {}
+      properties:
+        description:
+          type: string
+          example: Have permissions to change an employee
+      required:
+        - description
     updateRoleDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+          example: Manager
+        description:
+          type: string
+          example: Have permissions to change an employee
+      required:
+        - name
+        - description

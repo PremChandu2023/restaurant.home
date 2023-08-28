@@ -17,7 +17,7 @@ import { AuthCustomdecarators } from "./swagger-Auth/auth-swaggerdecaratot";
 export class AuthController  {
     constructor(private authservice:AuthService){}
 
-    @AuthCustomdecarators('Get','login')
+    @AuthCustomdecarators('Post','login')
    @Post('login')
    async employeeLogin(@Body() loginBody: loginEmployeeDto, @Res() response:Response)
     {
@@ -33,7 +33,7 @@ export class AuthController  {
             jwtToken : token
         })
     }
-
+    @AuthCustomdecarators('Post','register')
     @Post('register')
     async employeeRegister(@Body() employee:registerEmployeeDto)
     {
@@ -41,6 +41,7 @@ export class AuthController  {
     }
 
     @UseGuards(EmployeeAuthGuard)
+    @AuthCustomdecarators('Get',':id/details')
     @Get(':id/details')
     getEmployeeDetails(@Param('id') id:number)
     {
@@ -48,13 +49,14 @@ export class AuthController  {
     }
 
     //roles
+    @AuthCustomdecarators("Post",'roles')
     @Post('roles')
     createRoles(@Body() roleName : createRoleDto)
     {
        return this.authservice.createRoles(roleName);
     }
-
-    @Put('updaterole/:id')
+    @AuthCustomdecarators("Put",'role/:id')
+    @Put('role/:id')
     updateRoles(@Body() updateRoles:updateRoleDto, @Param('id') employeeid:number)
     {
        return this.authservice.updateRoles(updateRoles,employeeid);

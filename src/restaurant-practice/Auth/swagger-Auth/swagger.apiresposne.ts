@@ -11,6 +11,85 @@ export const AuthApiResposnes = {
                 }
               }
             }
+          },
+          UserbadRequest : {
+            status: 400, description : 'Errors in given request body',
+            content : {
+              'application/json': {
+                examples: {
+                 MenuItemIdFound : AuthExamples.duplicateEmail,
+                }
+              }
+            }
+            }
+    },
+    getById : {
+      ok : {
+          status: 200, description: 'Gives the order details by given id',
+          
+             content: {
+            'application/json': {
+              examples: {
+               success : AuthExamples.MenuById
+              }
+            }
           }
+        },
+      Badrequest:  {
+          status: 400, description: 'Occurs when given Id is invalid',
+          
+             content: {
+            'application/json': {
+              examples: {
+               InvalidId : AuthExamples.MenuBadRequest
+              }
+            }
+          }
+        }
+  },
+  
+  PostRole : {
+    ok : {
+      status: 210, description: 'creates a role',
+         content: {
+        'application/json': {
+          examples: {
+           success : AuthExamples.RoleGetSuccess
+          }
+        }
+      }
+    },
+    Conflict : {
+      status :410, description : "Occurs when you are trying to post the same role again",
+      content: {
+        'application/json': {
+          examples: {
+           conflict : AuthExamples.RoleConflict
+          }
+        }
+      }
     }
+  },
+  PutRole: {
+    ok: {
+      status: 200, description: 'Role is updated succefully',
+         content: {
+        'application/json': {
+          examples: {
+           success : AuthExamples.RolePutSuccess
+          }
+        }
+      }
+    },
+    BadRequest : {
+      status :410, description : "Occurs when given path varaible is invalid",
+      content: {
+        'application/json': {
+          examples: {
+           IdNotFound : AuthExamples.RolePutBadREquest
+          }
+        }
+      }
+    }
+  }
 }
