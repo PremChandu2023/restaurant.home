@@ -1,18 +1,21 @@
-import { IsArray, IsEnum, IsNotEmpty, IsNumber } from "class-validator";
+import { IsAlpha, IsArray, IsEnum, IsNotEmpty, IsNumber, IsNumberString } from "class-validator";
 import { OrderItem } from "./orders.entities/orderitem.entity";
 import { Injectable } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 import { OrderStatus } from "../Menu/enums/order.enum";
 import { PaymentStatus } from "../Menu/enums/payment.enum";
 
+@Injectable()
 export class MenuDto  {
     @IsNotEmpty()
+    @ApiProperty({example: 'Starters'})
     menu_name:string
 }
 @Injectable()
 export class MenuItemDto  {
     @ApiProperty({example : 'Pancakes'})
     @IsNotEmpty()
+    @IsAlpha()
     menu_itemname:string
     @ApiProperty({example : 20})
     @IsNotEmpty()
@@ -54,6 +57,7 @@ export class orderDetails {
 }
 @Injectable()
 export class updatePaymentDTo {
-    @ApiProperty({type : IsEnum})
+    @ApiProperty({type : IsEnum, example: 'pending'})
+    @IsEnum({PaymentStatus})
     orderStatus: PaymentStatus;
 }

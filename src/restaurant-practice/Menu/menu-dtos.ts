@@ -7,5 +7,6 @@ export class getMenuItemDto {
   menu_itemname:string
   @ApiProperty({example : 20})
   price:number
+  @ApiProperty({example : 'Starters'})
   menu_type : string
 }

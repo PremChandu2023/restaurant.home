@@ -23,7 +23,7 @@ export class OrderServices {
     createMenu(menu: MenuDto) {
         // console.log(menu);
 
-        const newMenu = this.menuRespository.create({ menu_name: menu.menu_name });
+        const newMenu = this.menuRespository.create({ menu_Type: menu.menu_name });
 
         return this.menuRespository.save(newMenu);
     }
@@ -161,14 +161,20 @@ export class OrderServices {
     }    
     async updatePaymentandOrderStatus(updateBody:updatePaymentDTo, orderId : number,)
     {
-     return this.datasource.transaction(async (manager) => {if(!Object.values(PaymentStatus).includes(updateBody.orderStatus))
+     return this.datasource.transaction(async (manager) => {
+        // if(!Object.values(PaymentStatus).includes(updateBody.orderStatus))
+        // {
+        //     throw new BadRequestException('Given_orderstatus_is_Invalid');
+        // }
+        // const order = await this.orderRespository.findOne({ where : {order_id : orderId}})   
+        // if( !order)
+        // {
+        //     throw new HttpException('given_id_not_found', HttpStatus.NOT_FOUND);
+        // }
+        const newOrder = await this.orderRespository.findOne({where : { order_id: orderId}});
+        if(!newOrder)
         {
-            throw new BadRequestException('Given_orderstatus_is_Invalid');
-        }
-        const order = await this.orderRespository.findOne({ where : {order_id : orderId}})   
-        if( !order)
-        {
-            throw new HttpException('given_id_not_found', HttpStatus.NOT_FOUND);
+            throw new BadRequestException({message : 'Given_order_id_not_found'});
         }
         const result = await manager
         .createQueryBuilder()

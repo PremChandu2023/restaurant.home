@@ -1,5 +1,5 @@
 import { applyDecorators } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiUnauthorizedResponse } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { OrderApiResponse } from "./orders.swaggers.api";
 
 export function OrderCustomdecator (method: string, route:string)
@@ -33,18 +33,44 @@ export function OrderCustomdecator (method: string, route:string)
             }
             case 'Put':
                 switch(route) {
-                    case '/itemquantity:name':
+                    case '/itemquantity:id':
                     return applyDecorators(ApiOkResponse(OrderApiResponse.put.ok),
-                    ApiNotFoundResponse(OrderApiResponse.put.NotFound)),
+                    ApiBadRequestResponse(OrderApiResponse.put.NotFound),
                     ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
-                    ApiForbiddenResponse(OrderApiResponse.put.frbidden)
+                    ApiForbiddenResponse(OrderApiResponse.put.frbidden))
                     case '/:id/addItem':
                     return applyDecorators(ApiOkResponse(OrderApiResponse.put.addMenUitem.ok),
-                    ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
+                       ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                        ApiForbiddenResponse(OrderApiResponse.put.frbidden))
                     // ApiBadRequestResponse(OrderApiResponse.put.addMenUitem.BadRequest))
                     // ApiUnauthorizedResponse(ApiResponses.get.unauthorized),
                     // ApiForbiddenResponse(ApiResponses.get.forbidden))
+                }
+            case 'Patch':
+                switch(route)
+                {
+                    case 'approved/:id':
+                        return applyDecorators(ApiOperation({description: 'Update the payment status as approved using the given OrderId'}),
+                            ApiOkResponse(OrderApiResponse.Patch.ok),
+                            ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
+                        )
+                    case 'declined/:id':
+                        return applyDecorators(ApiOperation({description : 'Update the payment status as declined using the given OrderId' })),
+                        ApiOkResponse(OrderApiResponse.Patch.ok),
+                        ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
+                }
+                case 'Delete':
+                    switch(route)
+                {
+                    case ':Orderid':
+                        return applyDecorators(ApiOperation({description: 'Deletes the odrer with given orderid'}),
+                            ApiOkResponse(OrderApiResponse.Delete.ok),
+                            ApiBadRequestResponse(OrderApiResponse.Delete.IdNotFound)
+                        )
+                    case ':orderItemId':
+                        return applyDecorators(ApiOperation({description : 'Update the payment status as declined using the given OrderId' })),
+                        ApiOkResponse(OrderApiResponse.Patch.ok),
+                        ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
                 }
     }
 }

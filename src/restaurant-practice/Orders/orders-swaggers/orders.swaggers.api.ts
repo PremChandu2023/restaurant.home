@@ -63,7 +63,7 @@ export const OrderApiResponse  = {
         }
       },
       NotFound : {
-        status : 400,description: 'Id is not found with given customername',
+        status : 400,description: 'Id is not found with given OrderItemId',
         content : {
         'application/json': {
           examples : {
@@ -119,5 +119,49 @@ export const OrderApiResponse  = {
             }
           }
         }
+    },
+    Patch :{
+      ok : {
+        status: 200, description: 'Updates the order and payment status',
+        content : {
+          'application/json': {
+            examples : {
+              success : OrderExamples.UpdatePaymentStatus,   
+            }
+          }
+        }
+      },
+      IdNotFound : {
+        status: 400, description: 'Occurs when order is deleted',
+        content : {
+          'application/json': {
+            examples : {
+              IdNotFound : OrderExamples.OrderIdNotFound
+            }
+          }
+        }
+      }
+    },
+    Delete : {
+      ok : {
+        status: 200, description: 'Delets the order with given OrderId',
+        content : {
+          'application/json': {
+            examples : {
+              success : OrderExamples.deleteSuccess,   
+            }
+          }
+        }
+      },
+      IdNotFound : {
+        status: 400, description: 'Occurs when order is deleted',
+        content : {
+          'application/json': {
+            examples : {
+              IdNotFound : OrderExamples.OrderIdNotFound
+            }
+          }
+        }
+      }
     }
 }

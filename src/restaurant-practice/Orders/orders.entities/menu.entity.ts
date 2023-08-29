@@ -10,7 +10,7 @@ export class Menu {
     menu_id:number;
 
     @Column()
-    menu_name:string;
+    menu_Type:string;
     
     @OneToMany(()=> MenuItems, (menuitems)=>menuitems.menus)
     menuItems:MenuItems[]

@@ -24,7 +24,7 @@ export class Order {
     @Column({type :'enum', enum : OrderStatus})
     orderStatus: OrderStatus
 
-    @Column({type : 'enum', enum : PaymentStatus})
+    @Column({type : 'enum', enum : PaymentStatus , default: 'pending'})
     paymentStatus:PaymentStatus
 
     @Exclude()

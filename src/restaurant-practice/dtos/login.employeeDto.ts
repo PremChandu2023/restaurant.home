@@ -11,6 +11,6 @@ export class loginEmployeeDto {
     /*checks the password validation according to the Passwordvalidations given the Isstrongpassword decarator*/
     @ApiProperty({type : IS_STRONG_PASSWORD, example: 'prem@123'})
     @IsNotEmpty()
-    @IsStrongPassword({minLength : 10, minLowercase:1, minSymbols:1,minNumbers:1,minUppercase:2})
+    @IsStrongPassword({minLength : 5, minLowercase:1, minSymbols:1,minNumbers:1,minUppercase:1})
     password:string
 }

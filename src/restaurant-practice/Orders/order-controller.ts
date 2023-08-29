@@ -12,12 +12,13 @@ import { Role } from "../Menu/enums/roles.enums";
 import { OrderCustomdecator } from "./orders-swaggers/order-customdecarators";
 import { updateOrderDto } from "./order-dtos/oders-updateDto";
 import { createOrderDTo } from "./order-dtos/createOrderDto";
+import { PaymentStatus } from "../Menu/enums/payment.enum";
 
 @ApiTags("Orders")
 @ApiBearerAuth()
 @Controller('/order')
 @UseInterceptors(RecentsearchInterceptor)
-// @UseGuards(EmployeeAuthGuard,RolesGuard)
+@UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
     constructor(private orderService: OrderServices) { }
 
@@ -40,27 +41,32 @@ export class OrderController {
         return this.orderService.getOrderById(OrderId)
     }
 
+    // @Roles(Role.Manager,Role.Waiter)
+    // @OrderCustomdecator('Get','/byname/:name')
+    // @Get('/byname/:name')
+    // async getOrderDetailsByName(@Param('name') customerName: string) {
+    //     return await this.orderService.getOrderByName(customerName)
+    // }
+
     @Roles(Role.Manager,Role.Waiter)
-    @OrderCustomdecator('Get','/byname/:name')
-    @Get('/byname/:name')
-    async getOrderDetailsByName(@Param('name') customerName: string) {
-        return await this.orderService.getOrderByName(customerName)
-    }
-    @Roles(Role.Manager,Role.Waiter)
-    @OrderCustomdecator('Put','/itemquantity:name')
+    @OrderCustomdecator('Put','/itemquantity:id')
     @Put('/itemquantity:id')
     async updateOrderQuantity(@Param('id') customerName:string, @Body() updateOrder: updateOrderDto) {
 
         return await this.orderService.updateOrderQuantity(updateOrder, customerName);
 
     }
+    /* Delets the menuItem of the Given customer order
+    * @OrderItem => it is the combined id  of orderid and particular menitem id  */
     @Roles(Role.Manager,Role.Waiter)
-    @Delete(':menuItemid')
+    @Delete(':orderItemId')
+    @OrderCustomdecator('Delete',':orderItemId')
     deleteMenuItem(@Param('menuItemid', ParseIntPipe) orderItemId:number) {
        return  this.orderService.deleteMenuItem(orderItemId);
     }
 
     @Delete(':Orderid')
+    @OrderCustomdecator('Delete',':Orderid')
     async deleteOrder(@Param('id',ParseIntPipe) orderId:number)
     {
         return await this.orderService.deleteOrderById(orderId);
@@ -73,10 +79,25 @@ export class OrderController {
         return this.orderService.addMenuItem(updateMenuItem,id);
     }
 
-
-    @Patch(':id/updateStatus')
-    updatePaymentStatus(@Body() updateStatus:updatePaymentDTo, @Param('id') id :number)
+    //approve the payment request
+    @Patch('approved/:id')
+    @OrderCustomdecator('Patch','approved/:id')
+    updatePaymentStatus( @Param('id') id :number)
     {
+       const  updateStatus:updatePaymentDTo = {
+        orderStatus:PaymentStatus.APPROVED
+       }
+        return this.orderService.updatePaymentandOrderStatus(updateStatus,id );
+    }
+
+    //cancle the payment request
+    @Patch('declined/:id')
+    @OrderCustomdecator('Patch','declined/:id')
+    updatePaymentdeStatus( @Param('id') id :number)
+    {
+       const  updateStatus:updatePaymentDTo = {
+        orderStatus:PaymentStatus.DECLINED
+       }
         return this.orderService.updatePaymentandOrderStatus(updateStatus,id );
     }
 }

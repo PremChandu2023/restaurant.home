@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import {Request} from 'express';
@@ -21,7 +21,11 @@ export class RolesGuard  implements CanActivate{
         
         const employee = await this.jwtService.verifyAsync(token , {secret : 'employeesecret'});
       
-       const value = requiredRoles.some((roles) =>  employee?.employee?.roles?.name === roles)     
+       const value = requiredRoles.some((roles) =>  employee?.employee?.roles?.name === roles)
+       if(!value)
+       {
+          throw new HttpException({message : 'User_with_this_role_is_not_permitted_to_access_the_resource'}, HttpStatus.FORBIDDEN);
+       }     
        return value;
     }
 

@@ -16,5 +16,6 @@ export const restaurentdatabase : TypeOrmModuleOptions  =
         database:'restaurent',
         entities: [Menu, MenuItems, Order,OrderItem, Employee, Roles],
         synchronize: true,
+        // logging : true
 
 }

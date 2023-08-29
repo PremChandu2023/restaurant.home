@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from 'express'
 
@@ -14,14 +14,25 @@ export class EmployeeAuthGuard implements CanActivate {
         }
         try {
             const payload = await this.jwtService.verifyAsync(token, {
-                secret: 'employeesecret'
+                secret: 'employeesecret',
             })
             // console.log(payload);
             
         }
-        catch
+        catch(error)
         {
-            throw new UnauthorizedException();
+            // console.log(error.name);
+            if(error.name === 'TokenExpiredError')
+            {    
+                throw new HttpException({message : "Given_Token_has_been_expired"}, HttpStatus.FORBIDDEN);
+            }
+            else if(error.name === 'JsonWebTokenError')
+            {
+                throw new UnauthorizedException({message :'Invalid_token'});
+            }
+            else {
+                throw new UnauthorizedException({message :'Authentication_failed'});
+            }
         }
         return true;
     }

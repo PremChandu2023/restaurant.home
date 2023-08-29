@@ -169,39 +169,7 @@ paths:
                 NotFound:
                   description: Gives the order details
                   value:
-                    message: Invalid id Order with given id is not available
-                    error: Not Found
-      tags: *ref_1
-      security: *ref_2
-  /order/byname/{name}:
-    get:
-      operationId: OrderController_getOrderDetailsByName
-      parameters:
-        - name: name
-          required: true
-          in: path
-          schema:
-            type: string
-      responses:
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              examples:
-                InsufficientPrivileges:
-                  description: ' If the client provides authentication credentials, but the credentials do not grant sufficient privileges to access a specific book-related operation'
-                  value:
-                    message: >-
-                      client_does_not_have_the_required_authorization_to_perform_the_requested_action.
-                RoleBasedAccessControl:
-                  description: >-
-                    If the API uses role-based access control, the server may
-                    respond with a 403 status code when a user with a certain
-                    role tries to access an operation that requires a higher
-                    role or specific permissions.
-                  value:
-                    message: >-
-                      User_with_this_role_is_not_permitted_to_access_the_resource
+                    message: Invalid_Id_Order_with_given_id_is_not_available
       tags: *ref_1
       security: *ref_2
   /order/itemquantity{id}:
@@ -220,6 +188,59 @@ paths:
             schema:
               $ref: '#/components/schemas/updateOrderDto'
       responses:
+        '200':
+          description: >-
+            Updates the quantity with given menuitem name and quantity to be
+            placed
+          content:
+            application/json:
+              examples:
+                success:
+                  description: updates the menuItem and returns menuitem
+                  value:
+                    success: true
+                    data:
+                      succes: true
+                      data:
+                        orderItem_id: 17
+                        quantity: 31
+                        menuitems:
+                          menuitem_id: 4
+                          menu_itemname: Pancakes
+                          price: 10
+                          tax: 5
+        '400':
+          description: Id is not found with given OrderItemId
+          content:
+            application/json:
+              examples:
+                InvalidId:
+                  description: >-
+                    This error occurs when name with given Orderitemid is not
+                    found
+                  value:
+                    message: Id_with_given_OrderItemId_is_not_avalaible
+                    error: Bad Request
+                InvalidMenuItem:
+                  description: This error occurs when menuItemName  is not found
+                  value:
+                    message: Invalid_Menuitem_name
+                    error: Bad Request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              examples:
+                AcceswithoutAuthorization:
+                  description: ' If the client attempts to access certain book-related endpoints without providing any authentication credentials'
+                  value:
+                    message: Authentication_is_required_to_access_the_resource.
+                ExpiredAuthenticationToken:
+                  description: >-
+                    When the client sends an authentication token that is
+                    invalid, expired, or not recognized by the server
+                  value:
+                    message: client's_token_is_not_valid_for_the_requested_operation
         '403':
           description: Forbidden
           content:
@@ -241,7 +262,7 @@ paths:
                       User_with_this_role_is_not_permitted_to_access_the_resource
       tags: *ref_1
       security: *ref_2
-  /order/{menuItemid}:
+  /order/{orderItemId}:
     delete:
       operationId: OrderController_deleteMenuItem
       parameters:
@@ -251,13 +272,22 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        '400':
+          description: Occurs when order is deleted
+          content:
+            application/json:
+              examples:
+                IdNotFound:
+                  description: Gives the order details
+                  value:
+                    message: Invalid_Id_Order_with_given_id_is_not_available
       tags: *ref_1
       security: *ref_2
   /order/{Orderid}:
     delete:
       operationId: OrderController_deleteOrder
+      summary: ''
+      description: Deletes the odrer with given orderid
       parameters:
         - name: id
           required: true
@@ -266,7 +296,23 @@ paths:
             type: number
       responses:
         '200':
-          description: ''
+          description: Delets the order with given OrderId
+          content:
+            application/json:
+              examples:
+                success:
+                  description: Deletes the Order
+                  value:
+                    message: Order_with_Id__has_been_deleted_successfuly
+        '400':
+          description: Occurs when order is deleted
+          content:
+            application/json:
+              examples:
+                IdNotFound:
+                  description: Gives the order details
+                  value:
+                    message: Invalid_Id_Order_with_given_id_is_not_available
       tags: *ref_1
       security: *ref_2
   /order/{id}/addItem:
@@ -342,29 +388,64 @@ paths:
                       User_with_this_role_is_not_permitted_to_access_the_resource
       tags: *ref_1
       security: *ref_2
-  /order/{id}/updateStatus:
+  /order/approved/{id}:
     patch:
       operationId: OrderController_updatePaymentStatus
+      summary: ''
+      description: Update the payment status as approved using the given OrderId
       parameters:
         - name: id
           required: true
           in: path
           schema:
             type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/updatePaymentDTo'
       responses:
         '200':
-          description: ''
+          description: Updates the order and payment status
+          content:
+            application/json:
+              examples:
+                success:
+                  description: Updates the payment status
+                  value:
+                    message: Order_with_Id_payment_has_been_updated_successfuly
+        '400':
+          description: Occurs when order is deleted
+          content:
+            application/json:
+              examples:
+                IdNotFound:
+                  description: Gives the order details
+                  value:
+                    message: Invalid_Id_Order_with_given_id_is_not_available
       tags: *ref_1
       security: *ref_2
-  /menu/{id}:
+  /order/declined/{id}:
+    patch:
+      operationId: OrderController_updatePaymentdeStatus
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '400':
+          description: Occurs when order is deleted
+          content:
+            application/json:
+              examples:
+                IdNotFound:
+                  description: Gives the order details
+                  value:
+                    message: Invalid_Id_Order_with_given_id_is_not_available
+      tags: *ref_1
+      security: *ref_2
+  /menu/byId/{id}:
     get:
       operationId: Menucontroller_getMenuItemsById
+      summary: ''
+      description: Get the menu items by id
       parameters:
         - name: id
           required: true
@@ -400,9 +481,29 @@ paths:
                     message: Given_id_is_not_found
       tags: &ref_3
         - Menu
+  /menu/filter:
+    get:
+      operationId: Menucontroller_getMenuByName
+      parameters:
+        - name: itemName
+          required: false
+          in: query
+          schema:
+            type: string
+        - name: category
+          required: false
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
   /menu:
     post:
       operationId: Menucontroller_createMenu
+      summary: ''
+      description: Creates a new menuitem category
       parameters: []
       requestBody:
         required: true
@@ -415,7 +516,7 @@ paths:
           description: ''
       tags: *ref_3
   /menu/{id}/menuitem:
-    put:
+    post:
       operationId: Menucontroller_addMenuItem
       parameters:
         - name: id
@@ -771,19 +872,14 @@ components:
       required:
         - menuItem
         - quantity
-    IsEnum:
-      type: object
-      properties: {}
-    updatePaymentDTo:
-      type: object
-      properties:
-        orderStatus:
-          $ref: '#/components/schemas/IsEnum'
-      required:
-        - orderStatus
     MenuDto:
       type: object
-      properties: {}
+      properties:
+        menu_name:
+          type: string
+          example: Starters
+      required:
+        - menu_name
     MenuItemDto:
       type: object
       properties:

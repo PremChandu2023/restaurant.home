@@ -1,6 +1,8 @@
 import { applyDecorators } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiOkResponse } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation } from "@nestjs/swagger";
 import { MenuResponses } from "./swagger-resposnes-menu";
+import { getOrderDto } from "src/restaurant-practice/Orders/order-dtos/getOrderdto";
+import { MenuDto } from "src/restaurant-practice/Orders/orders.dtos";
 
 
 export function MenuCustomdecarators(method:string,route:string)
@@ -9,12 +11,9 @@ export function MenuCustomdecarators(method:string,route:string)
         case 'Get':
             switch(route)
             {
-                case '/':
-                    return applyDecorators(
-                        ApiOkResponse(MenuResponses.get.ok)
-                    )
                 case '/:id':
                     return applyDecorators(
+                        ApiOperation({description: 'Get the menu items by id'}),
                         ApiOkResponse(MenuResponses.getById.ok),
                         ApiBadRequestResponse(MenuResponses.getById.Badrequest)
                     )
@@ -23,7 +22,7 @@ export function MenuCustomdecarators(method:string,route:string)
             switch(route)
             {
                 case '/':
-                    return applyDecorators()
+                    return applyDecorators(ApiOperation({description: 'Creates a new menuitem category'}))
                 case ':id/menuitem':
                     return applyDecorators(
                         ApiOkResponse(MenuResponses.addMenuItem.ok),

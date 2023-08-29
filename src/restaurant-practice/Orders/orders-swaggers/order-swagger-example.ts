@@ -49,8 +49,7 @@ OrderById : {
 OrderIdNotFound : {
     description : "Gives the order details",
     value :{
-        "message": "Invalid id Order with given id is not available",
-        "error": "Not Found",
+        "message": "Invalid_Id_Order_with_given_id_is_not_available"
     }
 },
 updatedQuantity : {
@@ -73,9 +72,9 @@ updatedQuantity : {
     }
 },
 updateIdNotFound : {
-    description : "This error occurs when name with given customername is not found",
+    description : "This error occurs when name with given Orderitemid is not found",
     value : {
-        "message": "Id_with_given_customerName_is_not_avalaible",
+        "message": "Id_with_given_OrderItemId_is_not_avalaible",
         "error": "Bad Request",
     }
 },
@@ -129,6 +128,20 @@ AcceswithoutAuthorization:  {
 
       message: "User_with_this_role_is_not_permitted_to_access_the_resource"
     }
-  } 
+  },
+  UpdatePaymentStatus: {
+    description: 'Updates the payment status',
+    value: {
+
+        message: "Order_with_Id_payment_has_been_updated_successfuly"
+      }
+  },
+  deleteSuccess : {
+    description: 'Deletes the Order',
+    value: {
+
+        message: "Order_with_Id__has_been_deleted_successfuly"
+      }
+  }
 
 }
