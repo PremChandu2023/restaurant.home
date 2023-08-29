@@ -27,7 +27,7 @@ export function setupSwagger(app: INestApplication): void {
 
   const swaggerYaml = yaml.dump(document, { indent: 2 });
 
-  writeFileSync('D:/Nest.js _practice/restaurant-task/restaurant.home/src/swagger/swagger.yml', swaggerYaml, 'utf8');
+  // writeFileSync('D:/Nest.js _practice/restaurant-task/restaurant.home/src/swagger/swagger.yml', swaggerYaml, 'utf8');
 
 
   SwaggerModule.setup('api1', app, document);

@@ -51,6 +51,19 @@ export const OrderApiResponse  = {
         }
       }
     },
+    getAllOrders : {
+      ok : {
+        status: 200, description: 'Gives all Orders',
+        
+           content: {
+          'application/json': {
+            examples: {
+             Success :OrderExamples.OrderById
+            }
+          }
+        }
+      }
+    },
     put: {
       ok: {
         status: 200, description: 'Updates the quantity with given menuitem name and quantity to be placed',

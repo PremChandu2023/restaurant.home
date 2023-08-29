@@ -1,6 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { map, tap } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { classToPlain } from "class-transformer";
 
 
 
@@ -14,10 +15,10 @@ export class RecentsearchInterceptor implements NestInterceptor {
             // result.submittedTime = `response submitted....... after  ${Date.now()}`;
             // console.log(result);
             // console.log(`response submitted....... after  ${Date.now()}`);
-
+            const modifiedResult = classToPlain(result, {excludePrefixes : ['date']})
            const modifiedResponse = {
             succes: true,
-            data : result
+            data : modifiedResult
            }
             return modifiedResponse;
 

@@ -68,7 +68,7 @@ export class MenuService {
 
         if(newMenuItem.length === 0)
        {
-            throw new BadRequestException({message : 'Invalid_request_given_Name_is_not_found'});
+            throw new BadRequestException({message : 'Given_Name_is_not_found'});
        }
 
         return newMenuItem;
@@ -80,7 +80,7 @@ export class MenuService {
     //    const newMenuItems  =await this.menuItemsRepository.findBy({menu_itemname : ILike(`%${ItemName}%`)})
        if(newMenuItems.length === 0)
        {
-            throw new BadRequestException({message : 'Invalid_name_given_name_is_not_found'});
+            throw new BadRequestException({message : 'Given_Category_is_not_found'});
        }
        return newMenuItems;
     }

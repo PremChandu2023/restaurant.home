@@ -37,9 +37,9 @@ async getMenuItemsById(@Param('id') id:number)
    return await this.menuService.getMenuItemById(id);
 }
 
+/*sorting the menuitems using item name or category */
 @Get('/filter')
-@ApiQuery({name: 'itemName' ,required :false})
-@ApiQuery({name: 'category', required: false})
+@MenuCustomdecarators('Get','/filter')
 async getMenuByName(@Query('itemName') ItemName :string, @Query('category') category:string)
 {   if(ItemName)
    {

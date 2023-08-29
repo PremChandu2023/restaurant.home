@@ -63,6 +63,11 @@ export class OrderServices {
             throw new InternalServerErrorException('failed_to_create_order')
         }
     }
+    async getAllOrders():Promise<Order[]>
+    {
+        const allOrders = await this.orderRespository.find();
+        return allOrders;
+    }
 
     async getOrderById(OrderId: number) {
           const newOrder = await this.orderRespository.findOne({where: {

@@ -40,6 +40,20 @@ export const MenuResponses = {
             }
           }
     },
+    filterGetByName :{
+      ok : {
+        status: 200, description: 'Gives the order details by given id',
+        
+           content: {
+          'application/json': {
+            examples: {
+             getByName : menuExamples.getbyName,
+             getByCategory: menuExamples.getByCategory
+            }
+          }
+        }
+      }
+    },
     addMenuItem :{
         ok : {
         status: 201, description: 'Creates a new Menuitem',

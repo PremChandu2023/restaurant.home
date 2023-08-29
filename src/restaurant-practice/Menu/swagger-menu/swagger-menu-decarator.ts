@@ -17,6 +17,8 @@ export function MenuCustomdecarators(method:string,route:string)
                         ApiOkResponse(MenuResponses.getById.ok),
                         ApiBadRequestResponse(MenuResponses.getById.Badrequest)
                     )
+                case '/filter':
+                    return applyDecorators(ApiOkResponse(MenuResponses.filterGetByName.ok))
             }
         case 'Post':
             switch(route)

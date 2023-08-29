@@ -24,6 +24,8 @@ export function OrderCustomdecator (method: string, route:string)
                        ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                        ApiForbiddenResponse(OrderApiResponse.put.frbidden)
                     )
+                case '':
+                    return applyDecorators(ApiOperation({description : 'Gives the list of all objects of orders '}),ApiOkResponse(OrderApiResponse.get.ok))
                 case '/byname/:name':
                 return applyDecorators(ApiOkResponse(OrderApiResponse.get.ok),
                 ApiNotFoundResponse(OrderApiResponse.get.notFound)),

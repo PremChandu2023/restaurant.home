@@ -50,5 +50,23 @@ export const menuExamples = {
         value : {
             "message": "Given_id_is_not_found"
         }
+    },
+    getbyName : {
+        description : "Sorts the values by given ItemName",
+        value : {
+            success : true,
+            data : {
+                
+            }
+        }
+    },
+    getByCategory:{
+        description : "Sorts the values by given Category",
+        value : {
+            success : true,
+            data : {
+                
+            }
+        }
     }
 }

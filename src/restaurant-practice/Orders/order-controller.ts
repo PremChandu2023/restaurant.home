@@ -1,5 +1,5 @@
 import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Patch, Post, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { OrderServices } from "./order-service";
 import { MenuDto, MenuItemDto,  updatePaymentDTo } from "./orders.dtos";
 import { MenuItems } from "./orders.entities/menuitem.entity";
@@ -18,7 +18,7 @@ import { PaymentStatus } from "../Menu/enums/payment.enum";
 @ApiBearerAuth()
 @Controller('/order')
 @UseInterceptors(RecentsearchInterceptor)
-@UseGuards(EmployeeAuthGuard,RolesGuard)
+// @UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
     constructor(private orderService: OrderServices) { }
 
@@ -32,6 +32,13 @@ export class OrderController {
             throw new BadRequestException({message : 'Table number should be number'})
         }
         return this.orderService.createOrder(createOrder);
+    }
+
+    @Get()
+    @OrderCustomdecator('Get','')
+   async  getAllOrders()
+    {
+       return await this.orderService.getAllOrders();
     }
 
     @Roles(Role.Manager,Role.Waiter)
