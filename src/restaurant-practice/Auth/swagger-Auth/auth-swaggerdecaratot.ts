@@ -1,5 +1,5 @@
 import { applyDecorators } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiForbiddenResponse, ApiOkResponse, ApiUnauthorizedResponse } from "@nestjs/swagger";
+import { ApiBadRequestResponse, ApiForbiddenResponse, ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { AuthApiResposnes } from "./swagger.apiresposne";
 import { OrderApiResponse } from "src/restaurant-practice/Orders/orders-swaggers/orders.swaggers.api";
 
@@ -19,7 +19,8 @@ export function AuthCustomdecarators(method:string,route:string)
             switch(route)
             {
                 case 'register':
-                    return applyDecorators(ApiOkResponse(AuthApiResposnes.post.success),
+                    return applyDecorators(
+                        ApiOperation({description:' registers the new user'}),ApiOkResponse(AuthApiResposnes.post.Usersuccess),
                     ApiBadRequestResponse(AuthApiResposnes.post.UserbadRequest),
                     ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                        ApiForbiddenResponse(OrderApiResponse.put.frbidden))

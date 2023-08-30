@@ -12,12 +12,26 @@ export const AuthApiResposnes = {
               }
             }
           },
+          Usersuccess : {
+            status: 201, description: 'register the user',
+            content: {
+              'application/json': {
+                examples: {
+                  succes : AuthExamples.registerSuccess     
+                }
+              }
+            }
+          },
           UserbadRequest : {
             status: 400, description : 'Errors in given request body',
             content : {
               'application/json': {
                 examples: {
-                 MenuItemIdFound : AuthExamples.duplicateEmail,
+                  duplicateEmail : AuthExamples.duplicateEmail,
+                  duplicateIdError : AuthExamples.duplicateIdError,
+                  phonenumberError : AuthExamples.phoneNumberError,
+                  RoleNameError : AuthExamples.RoleNameError
+
                 }
               }
             }

@@ -2,10 +2,10 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, InternalSer
 import { Tablemenu } from "../Menu/table-menu";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, QueryBuilder, Repository, Transaction } from "typeorm";
-import { Menu } from "./orders.entities/menu.entity";
-import { MenuItems } from "./orders.entities/menuitem.entity";
-import { Order } from "./orders.entities/orders.entity";
-import { OrderItem } from "./orders.entities/orderitem.entity";
+import { Menu } from "../Entities/orders.entities/menu.entity";
+import { MenuItems } from "../Entities/orders.entities/menuitem.entity";
+import { Order } from "../Entities/orders.entities/orders.entity";
+import { OrderItem } from "../Entities/orders.entities/orderitem.entity";
 
 import { MenuDto, MenuItemDto, orderDetails,  updatePaymentDTo } from "./orders.dtos";
 import { OrderStatus } from "../Menu/enums/order.enum";
@@ -60,18 +60,18 @@ export class OrderServices {
         }
         catch(error)
         {
-            throw new InternalServerErrorException('failed_to_create_order')
+            throw new InternalServerErrorException(error)
         }
     }
     async getAllOrders():Promise<Order[]>
     {
-        const allOrders = await this.orderRespository.find();
+        const allOrders = await this.orderRespository.find({relations : {orderItems : {menuitems : true}},where: {orderItems : {quantity : 2,menuitems : {menu_itemname:"friedrice"}}}});
         return allOrders;
     }
 
     async getOrderById(OrderId: number) {
           const newOrder = await this.orderRespository.findOne({where: {
-                order_id: OrderId
+                order_id: OrderId,
             },relations : ['orderItems',  'orderItems.menuitems']})
             if(!newOrder)
             {

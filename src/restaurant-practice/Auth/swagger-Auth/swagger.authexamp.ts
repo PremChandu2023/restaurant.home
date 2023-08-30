@@ -7,27 +7,81 @@ export const AuthExamples = {
             jwtToken : 'sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq'
         }
     },
+    registerSuccess : {
+        description : 'register the user and returns it',
+        value : {
+            "succes": true,
+            "data": {
+              "employee_Id": "A25",
+              "employee_Name": "Prem",
+              "status": "Active",
+              "email": "chandu3a3@gmail.com",
+              "phoneNumber": "855456145",
+              "role": "waiter",
+              "roles": {
+                "id": 3,
+                "name": "waiter",
+                "description": "Have permissions to place order for an employee"
+              },
+              "id": 2
+            }
+        },    
+    },
     duplicateEmail : {
-        description : "Occurs when given Id is invalid",
+        description : "Occurs when given email is invalid",
          value :{
             "message": "Given email is already registered give new email"
         }
     },
+    duplicateIdError : {
+        description : "Occurs when given Id is invalid",
+         value :{
+            "message": [
+              "employee_Id should not be empty",
+              "employee_Id must be a string",
+            ],
+            "error": "Bad Request",
+            "statusCode": 400
+          }
+        },
+        phoneNumberError :  {
+            description : "Occurs when given phone number is invalid",
+             value :{
+                "message": [
+                  "phoneNumber must be a number string"
+                ],
+                "error": "Bad Request",
+                "statusCode": 400
+              }
+            },
+            RoleNameError: {
+                description : "Occurs when given phone number is invalid",
+                 value :{
+                    "message": [
+                      "role must be one of the following values: manager, admin, waiter, chef, customer"
+                    ],
+                    "error": "Bad Request",
+                    "statusCode": 400
+                  }
+                },
     MenuById :{
         description : "Gives the menu details",
          value :{
             "succes": true,
             "data": {
-                "menuitem_id": 2,
-                "menu_itemname": "manchuria",
-                "price": 10,
-                "tax": 5,
-                "date": {
-                    "createdDate": "2023-08-17T08:31:36.802Z",
-                    "updatedDate": "2023-08-24T04:40:27.390Z"
-                }
+              "id": 2,
+              "employee_Id": "A25",
+              "employee_Name": "Prem",
+              "status": "Active",
+              "email": "chandu3a3@gmail.com",
+              "phoneNumber": "855456145",
+              "roles": {
+                "id": 3,
+                "name": "waiter",
+                "description": "Have permissions to place order for an employee"
+              }
             }
-        }
+          }
     }, MenuBadRequest : {
         description : "Occurs when given Id is invalid",
          value :{

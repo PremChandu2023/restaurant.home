@@ -10,7 +10,7 @@ export class EmployeeAuthGuard implements CanActivate {
         const request = context.switchToHttp().getRequest<Request>();
         const token = await this.getTokenFromHeader(request);
         if (!token) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException({mesage :"Token is not present"});
         }
         try {
             const payload = await this.jwtService.verifyAsync(token, {

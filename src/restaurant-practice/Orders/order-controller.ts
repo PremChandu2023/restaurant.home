@@ -2,7 +2,7 @@ import { BadRequestException, Body, Controller, Delete, Get, HttpException, Http
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { OrderServices } from "./order-service";
 import { MenuDto, MenuItemDto,  updatePaymentDTo } from "./orders.dtos";
-import { MenuItems } from "./orders.entities/menuitem.entity";
+import { MenuItems } from "../Entities/orders.entities/menuitem.entity";
 import { OrderCustomInterceptor } from "./Interceptors/Order.Interceptor";
 import { RecentsearchInterceptor } from "../interceptors/interceptor-menu";
 import { Roles } from "../custom-decarators/custom-roles-decarator";
@@ -66,13 +66,13 @@ export class OrderController {
     /* Delets the menuItem of the Given customer order
     * @OrderItem => it is the combined id  of orderid and particular menitem id  */
     @Roles(Role.Manager,Role.Waiter)
-    @Delete(':orderItemId')
+    @Delete(':orderitemid')
     @OrderCustomdecator('Delete',':orderItemId')
     deleteMenuItem(@Param('menuItemid', ParseIntPipe) orderItemId:number) {
        return  this.orderService.deleteMenuItem(orderItemId);
     }
 
-    @Delete(':Orderid')
+    @Delete(':orderid')
     @OrderCustomdecator('Delete',':Orderid')
     async deleteOrder(@Param('id',ParseIntPipe) orderId:number)
     {
@@ -80,7 +80,7 @@ export class OrderController {
     }
     
     @OrderCustomdecator('Put','/:id/addItem')
-    @Put('/:id/addItem')
+    @Put('/:id/additem')
     addMenuItem(@Param('id', ParseIntPipe) id:number,@Body() updateMenuItem:updateOrderDto)
     {
         return this.orderService.addMenuItem(updateMenuItem,id);

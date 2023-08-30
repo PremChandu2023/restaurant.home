@@ -1,5 +1,5 @@
 import { IsAlpha, IsArray, IsEnum, IsNotEmpty, IsNumber, IsNumberString } from "class-validator";
-import { OrderItem } from "./orders.entities/orderitem.entity";
+import { OrderItem } from "../Entities/orders.entities/orderitem.entity";
 import { Injectable } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 import { OrderStatus } from "../Menu/enums/order.enum";

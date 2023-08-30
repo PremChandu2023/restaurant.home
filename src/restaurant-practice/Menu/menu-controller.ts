@@ -28,16 +28,15 @@ export class Menucontroller {
 // {
 //   return await this.menuService.getAllItems();
 // }
-
 @Roles(Role.Waiter)
 @MenuCustomdecarators('Get','/:id')
-@Get('byId/:id')   
+@Get('byid/:id')   
 async getMenuItemsById(@Param('id') id:number)
 {
    return await this.menuService.getMenuItemById(id);
 }
 
-/*sorting the menuitems using item name or category */
+/*Sorting the menuitems using item name or category*/
 @Get('/filter')
 @MenuCustomdecarators('Get','/filter')
 async getMenuByName(@Query('itemName') ItemName :string, @Query('category') category:string)

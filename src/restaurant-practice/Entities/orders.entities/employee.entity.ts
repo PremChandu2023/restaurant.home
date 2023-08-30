@@ -2,7 +2,8 @@ import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 
 import { Roles } from "./roles.entities";
 import { publicEncrypt } from "crypto";
 import * as bycrypt from 'bcrypt';
-import { Dateschema } from "../Orders/orders.entities/date.entity";
+import { Dateschema } from "./date.entity";
+import { IsNumberString } from "class-validator";
 
 
 @Entity('employees')
@@ -16,17 +17,18 @@ export class Employee {
     @Column({nullable:false})
     employee_Name: string
 
-    @Column()
+    @Column({default:'inactive'})
     status:string //active or inactive
 
-    @Column()
+    @Column({nullable:false})
     email:string
 
-    @Column()
+    @Column({nullable:false})
     password:string
 
-    @Column()
-    phoneNumber:number
+    @Column({nullable :true})
+    @IsNumberString()
+    phoneNumber:string
 
     @ManyToOne(() => Roles, (roles) => roles.employees, {eager : true})
     roles:Roles

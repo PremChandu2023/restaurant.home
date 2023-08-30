@@ -1,13 +1,13 @@
 import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Employee } from "../Entities/employee.entity";
+import { Employee } from "../Entities/orders.entities/employee.entity";
 import { Repository } from "typeorm";
 import { loginEmployeeDto } from "../dtos/login.employeeDto";
 import * as bycrypt from 'bcrypt'
 import { JwtService } from "@nestjs/jwt";
 import { registerEmployeeDto } from "../dtos/register.employeeDto";
 import { createRoleDto } from "../dtos/createRole.dtos";
-import { Roles } from "../Entities/roles.entities";
+import { Roles } from "../Entities/orders.entities/roles.entities";
 import { updateRoleDto } from "../dtos/updateRole.dtos";
 
 @Injectable()
@@ -21,18 +21,19 @@ export class AuthService {
         const employee = await this.employeeRespository.findOne({ where : {email : createLogin.email}})
         if(!employee)
         {
-            throw new UnauthorizedException('Bad credentials')
+            throw new UnauthorizedException({message:'Bad_credentials'})
         }
         else{
             //verify hashed request and password in database
           if(await  this.verifyPassword(createLogin.password, employee.password)) 
           {
+            //payload is employee list object
                 const token =await this.jwtService.signAsync({employee})
                 delete employee.password;
                 return {token, employee}
           }
           else{
-            throw new UnauthorizedException('Bad credentials');
+            throw new UnauthorizedException({message :'Bad credentials'});
           }
         }      
     }
@@ -74,9 +75,14 @@ export class AuthService {
             id : id
         }, select :['id', 'employee_Id', 'employee_Name', 'status', 'email', 'phoneNumber']})
     }
-    async createRoles(roleName:createRoleDto )
+    async createRoles(roleName:createRoleDto)
     {
-        const newRole = this.rolesRespository.create({name : roleName.roleName})
+        const newRoles = await this.rolesRespository.findOne({where : {name: roleName.roleName}});
+        if(newRoles)
+        {
+            throw new BadRequestException({error: "Conflict Error", message : 'Given_role_is_already_present '});
+        }
+        const newRole = this.rolesRespository.create({name : roleName.roleName, description : roleName.description});
         return await this.rolesRespository.save(newRole)
     }
     async updateRoles(updateRole:updateRoleDto, employeid:number)

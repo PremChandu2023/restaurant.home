@@ -3,8 +3,8 @@ import { Menucontroller } from "./menu-controller";
 import { AuthorisationMiddlware, Useragent, userAgent } from "../middlewares/user-agent-middlewares";
 import { MenuService } from "./menu-service";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Menu } from "../Orders/orders.entities/menu.entity";
-import { MenuItems } from "../Orders/orders.entities/menuitem.entity";
+import { Menu } from "../Entities/orders.entities/menu.entity";
+import { MenuItems } from "../Entities/orders.entities/menuitem.entity";
 import { JwtModule } from "@nestjs/jwt";
 
 @Module({

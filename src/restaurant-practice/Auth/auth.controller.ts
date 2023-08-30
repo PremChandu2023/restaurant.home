@@ -33,6 +33,7 @@ export class AuthController  {
             jwtToken : token
         })
     }
+    /* registers the new user*/
     @AuthCustomdecarators('Post','register')
     @Post('register')
     async employeeRegister(@Body() employee:registerEmployeeDto)
@@ -40,7 +41,7 @@ export class AuthController  {
         return this.authservice.registerEmployee(employee)
     }
 
-    @UseGuards(EmployeeAuthGuard)
+    // @UseGuards(EmployeeAuthGuard)
     @AuthCustomdecarators('Get',':id/details')
     @Get(':id/details')
     getEmployeeDetails(@Param('id') id:number)
@@ -48,7 +49,7 @@ export class AuthController  {
         return this.authservice.findEmployeeDetails(id)
     }
 
-    //roles
+    /* @Roles ==> all the new roles are created*/
     @AuthCustomdecarators("Post",'roles')
     @Post('roles')
     createRoles(@Body() roleName : createRoleDto)
