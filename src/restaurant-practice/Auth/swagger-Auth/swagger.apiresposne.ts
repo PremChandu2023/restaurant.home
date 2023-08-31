@@ -61,7 +61,18 @@ export const AuthApiResposnes = {
           }
         }
   },
-  
+  posttoken : {
+    ok : {
+      status: 210, description: 'Checks the expired date of referesh token and returns a new generated jwt access token',
+         content: {
+        'application/json': {
+          examples: {
+           success : AuthExamples.Referencetokensuccess
+          }
+        }
+      }
+    }
+  },
   PostRole : {
     ok : {
       status: 210, description: 'creates a role',

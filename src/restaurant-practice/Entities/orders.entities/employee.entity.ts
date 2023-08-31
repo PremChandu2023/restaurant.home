@@ -1,9 +1,10 @@
-import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Roles } from "./roles.entities";
 import { publicEncrypt } from "crypto";
 import * as bycrypt from 'bcrypt';
 import { Dateschema } from "./date.entity";
 import { IsNumberString } from "class-validator";
+import { Token } from "./token.enitty";
 
 
 @Entity('employees')
@@ -35,6 +36,9 @@ export class Employee {
 
     @Column(() => Dateschema)
     date:Dateschema
+
+    @OneToMany(()=> Token, (tokens) => tokens.user)
+    tokens : Token[]
 
     @BeforeInsert()
     hashPassword() {

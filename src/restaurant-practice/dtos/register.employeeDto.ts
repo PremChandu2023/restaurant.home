@@ -24,7 +24,7 @@ export class registerEmployeeDto {
 
 
     @IsNotEmpty()
-    @IsStrongPassword({minLength: 8, minLowercase:1,minNumbers:1,minSymbols:1,minUppercase:1})
+    // @IsStrongPassword({minLength: 8, minLowercase:1,minNumbers:1,minSymbols:1,minUppercase:1})
     @ApiProperty({example : 'Prem@12345678'})
     password:string
 

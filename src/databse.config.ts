@@ -5,6 +5,7 @@ import { Order } from "./restaurant-practice/Entities/orders.entities/orders.ent
 import { Employee } from "./restaurant-practice/Entities/orders.entities/employee.entity";
 import { Roles } from "./restaurant-practice/Entities/orders.entities/roles.entities";
 import { OrderItem } from "./restaurant-practice/Entities/orders.entities/orderitem.entity";
+import { Token } from "./restaurant-practice/Entities/orders.entities/token.enitty";
 
 export const restaurentdatabase : TypeOrmModuleOptions  = 
  {
@@ -14,7 +15,7 @@ export const restaurentdatabase : TypeOrmModuleOptions  =
         username: 'root',
         password : 'root123',
         database:'restaurant',
-        entities: [Menu, MenuItems, Order,OrderItem, Employee, Roles],
+        entities: [Menu, MenuItems, Order,OrderItem, Employee, Roles, Token],
         synchronize: true,
         // logging : true
 

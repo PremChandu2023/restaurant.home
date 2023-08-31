@@ -4,7 +4,8 @@ export const AuthExamples = {
         description : 'Verify the employee and returns a Jwt token',
         value : {
             succes : true,
-            jwtToken : 'sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq'
+            jwtToken : 'sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq',
+            jwtreferenceToken: 'uqwuhguhkhfukeyuheuhuhe-2jbdbbb',
         }
     },
     registerSuccess : {
@@ -88,7 +89,15 @@ export const AuthExamples = {
             "message": "Given_id_is_not_found"
         }
     },
-    
+    Referencetokensuccess : {
+      description : "Gives the new jwt token",
+       value :{
+        "succes": true,
+        "data": {
+            "JwtToken": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY5MzQ4MDY0MSwiZXhwIjoxNjkzNTY3MDQxfQ.XXMe_3_ZGju4t72YYXWrXErPsoovmp4ZP-rH1MwKhFaxRfUWApksfjL0BW4RUx_6MoMJLwz53_7msdGzP4pbRw"
+        }
+    }
+  },
     RoleGetSuccess : {
         description : "Gives the role deatils that have been posted",
          value :{

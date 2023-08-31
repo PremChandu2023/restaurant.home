@@ -8,14 +8,16 @@ import { AuthService } from "./auth.service";
 import { EmployeeAuthGuard } from "./auth.Guard";
 import { Roles } from "../Entities/orders.entities/roles.entities";
 import { RolesGuard } from "../guards/rolebased.guard";
+import { LocalStrategy } from "./strategies/local.strategy";
+import { Token } from "../Entities/orders.entities/token.enitty";
+
 
 @Module({
 controllers: [AuthController],
-imports : [TypeOrmModule.forFeature([Employee, Roles]),
+imports : [TypeOrmModule.forFeature([Employee, Roles,Token]),
             JwtModule.register({
                 secret: 'employeesecret',
                 signOptions : {algorithm : 'HS512',
-                expiresIn : '1d'
                             }
             }),PassportModule.register({defaultStrategy : 'jwt'})],providers : [AuthService,EmployeeAuthGuard,RolesGuard]
 })

@@ -18,7 +18,7 @@ import { PaymentStatus } from "../Menu/enums/payment.enum";
 @ApiBearerAuth()
 @Controller('/order')
 @UseInterceptors(RecentsearchInterceptor)
-// @UseGuards(EmployeeAuthGuard,RolesGuard)
+@UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
     constructor(private orderService: OrderServices) { }
 
@@ -35,6 +35,7 @@ export class OrderController {
     }
 
     @Get()
+    @Roles(Role.Manager)
     @OrderCustomdecator('Get','')
    async  getAllOrders()
     {

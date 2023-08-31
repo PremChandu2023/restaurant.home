@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res, UseGuards, UseInterceptors, Put} from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Res, UseGuards, UseInterceptors, Put, Request} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { loginEmployeeDto } from "../dtos/login.employeeDto";
 import {Response} from 'express'
@@ -10,6 +10,9 @@ import { createRoleDto } from "../dtos/createRole.dtos";
 import { updateRoleDto } from "../dtos/updateRole.dtos";
 import { ApiTags } from "@nestjs/swagger";
 import { AuthCustomdecarators } from "./swagger-Auth/auth-swaggerdecaratot";
+import { AuthGuard } from "@nestjs/passport";
+import { PassportAuthGuard } from "./guards/passport.authguard";
+import { JwtAuthGuard } from "./guards/jwt.authguard";
 
 @ApiTags("EmployeeAuth")
 @Controller('/employee')
@@ -21,17 +24,26 @@ export class AuthController  {
    @Post('login')
    async employeeLogin(@Body() loginBody: loginEmployeeDto, @Res() response:Response)
     {
-       const {token, employee} = await this.authservice.checkLogin(loginBody);
+       const tokens= await this.authservice.checkLogin(loginBody);
 
         // response.cookie('Authentication',token,{httpOnly:true, maxAge: 2*60*60*100})
         // return response.send({
         //     success: true,
         //     employee
         // })
-        response.status(200).json({
+        response.status(201).json({
             succes : true,
-            jwtToken : token
+            JwtToken : tokens.JwtAccessToken,
+            JwtRefereshToken : tokens.JwtrefereshToken
+
         })
+    }
+    @AuthCustomdecarators('Post','refereshtoken')
+    @Post('refereshtoken')
+    async refreshToken(@Body('referencetoken') refereshToken:string)
+    {   
+        const newAccessToken =await this.authservice.validateRefereshToken(refereshToken);
+        return{JwtToken :  newAccessToken};
     }
     /* registers the new user*/
     @AuthCustomdecarators('Post','register')

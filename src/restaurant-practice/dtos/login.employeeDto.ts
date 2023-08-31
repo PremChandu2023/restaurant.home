@@ -8,7 +8,7 @@ export class loginEmployeeDto {
     @IsEmail()
     email:string
 
-    @ApiProperty({ example: 'Prem@12345678'})
+    @ApiProperty({ example: 'root123'})
     @IsNotEmpty()
     password:string
 }
