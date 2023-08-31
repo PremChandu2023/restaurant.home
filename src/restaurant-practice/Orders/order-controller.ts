@@ -64,7 +64,7 @@ export class OrderController {
         return await this.orderService.updateOrderQuantity(updateOrder, customerName);
 
     }
-    /* Delets the menuItem of the Given customer order
+    /* Delets the menuItm of ethe Given customer order
     * @OrderItem => it is the combined id  of orderid and particular menitem id  */
     @Roles(Role.Manager,Role.Waiter)
     @Delete(':orderitemid')
@@ -76,7 +76,7 @@ export class OrderController {
     @Delete(':orderid')
     @OrderCustomdecator('Delete',':Orderid')
     async deleteOrder(@Param('id',ParseIntPipe) orderId:number)
-    {
+    {   
         return await this.orderService.deleteOrderById(orderId);
     }
     

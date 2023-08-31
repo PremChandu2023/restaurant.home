@@ -26,7 +26,7 @@ export class RolesGuard  implements CanActivate{
         
         const employee = await this.jwtService.verifyAsync(token , {secret : 'employeesecret'});
 
-console.log(employee);
+
 
         const newEmployee = await this.employeeRepository.findOne({where : {id : employee.userId}}) 
 
