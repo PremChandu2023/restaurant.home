@@ -14,6 +14,9 @@ import { plainToClass } from "class-transformer";
 import { updateOrderDto } from "./order-dtos/oders-updateDto";
 import { createOrderDTo } from "./order-dtos/createOrderDto";
 import { getOrderDto } from "./order-dtos/getOrderdto";
+import { AddItemDtos } from "./order-dtos/order-additemdtos";
+import { OrderExceptionConstants } from "./constants/exceptionconstants/exception.constant";
+import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.constants";
 
 
 @Injectable()
@@ -41,7 +44,10 @@ export class OrderServices {
         newOrder.customerName = createOrder.customerName;
         newOrder.tableNumber=createOrder.tableNumber;       
         const savedOrder = await this.orderRespository.save(newOrder);
-
+        if(!savedOrder)
+        {
+            throw DatabaseErrorConstants.CREATED_FAILED;
+        }
         for (const OrderItemdata of createOrder.items) {
             const newOrderItem = this.orderItemRespository.create()
             const menuItemId = OrderItemdata.menuItemId;
@@ -49,7 +55,7 @@ export class OrderServices {
             const menuItem = await this.menuItemRespository.findOne({ where: { menuitem_id: menuItemId } })
             if(!menuItem)
             {
-                throw new BadRequestException('Invalid_menuItem_no_data_is_found_with_given_menuItem');
+                throw OrderExceptionConstants.MENUITEM_INVALID;
             }
             newOrderItem.orders = savedOrder
             newOrderItem.menuitems = menuItem
@@ -75,7 +81,7 @@ export class OrderServices {
             },relations : ['orderItems',  'orderItems.menuitems']})
             if(!newOrder)
             {
-                throw new  NotFoundException('Invalid id Order with given id is not available');
+                throw OrderExceptionConstants.ORDER_INVALID;
             }
            
                 const transformOrder =await plainToClass(Order,newOrder, {excludeExtraneousValues :false})
@@ -85,17 +91,13 @@ export class OrderServices {
         // return await this.orderItemRespository.createQueryBuilder('orderitems').select(['orderitems.orderItem_id', 'orderitems.quantity']).where('orderitems.orderItem_id =:id', { id: OrderId }).getOne();
     }
 
-    //
-    async getOrderByName(Name: string) {
+    /* calculation of bill */
+    async getBillById(OrderId: number) {
         const newOrder = await this.orderRespository.findOne({
             where: {
-                customerName: Name
-            }, relations: ['orderItems', 'orderItems.menuitems', 'orderItems.menuitems.menus']
+               order_id: OrderId
+            }, relations: {orderItems : {menuitems:true}}
         })
-        // console.log(newOrder);
-        // const newMenuItem = await this.menuItemRespository.find({where : {
-        // }})
-
         // const newOrder = await this.orderRespository.createQueryBuilder('order').leftJoin('order.orderItems', 'orderitems').leftJoin('orderitems.menuitems', 'menuitems').where('order.customerName = :customerName').setParameter('customerName' , Name).getOne();
         const newOrderItems: orderDetails[] = newOrder.orderItems.map(item => ({
             order_Name: item.menuitems.menu_itemname,
@@ -110,42 +112,36 @@ export class OrderServices {
             order_Id: newOrder.order_id,
             customer_Name: newOrder.customerName,
             orderDetails: newOrderItems,
-            totalPrice: totalPrice
+            totalPrice: totalPrice,
+            paymentStatus : ''
         }
         return OrderReciept;
     }
-    async updateOrderQuantity(updateOrder: updateOrderDto, customerName: string) {
-        const newOrderid = await this.orderRespository.findOne({
-            where: {
-                customerName: customerName,
-            }, select: { order_id: true }
-        })
-        // console.log(newOrderid);
-        
-        if(!newOrderid)
+    async updateOrderQuantity(updateOrder: updateOrderDto, orderItemId: number) {
+        const newOrderItem = await this.orderItemRespository.findOne({where: { orderItem_id:orderItemId}});
+        if(!newOrderItem)
         {
-            throw new BadRequestException('Id_with_given_customerName_is_not_avalaible');
+            throw  OrderExceptionConstants.ORDER_INVALID;
         }
-        const newOrderItems = await this.orderItemRespository.findOne({
-            where: {
-                orders: { order_id: newOrderid.order_id }, menuitems: { menu_itemname: updateOrder.menuItem }
-            }
-        })
-        
-        if(!newOrderItems)
-        {
-            throw new BadRequestException('Invalid_Menuitem_name');
-        }
-        newOrderItems.quantity = updateOrder.quantity;
-        const savedOrder = await this.orderItemRespository.save(newOrderItems);
-        const transformOrder =await plainToClass(Order,savedOrder, {excludeExtraneousValues :false})
-        return transformOrder;
+        // const updateQuantity = await this.orderItemRespository.update({quantity:updateOrder.quantity},{orderItem_id: orderItemId})
+        newOrderItem.menuitems.menu_itemname=updateOrder.menuItem
+        newOrderItem.quantity=updateOrder.quantity
 
+        const updateQuantity = await this.orderItemRespository.save(newOrderItem);
+        if(!updateQuantity)
+        {
+            throw DatabaseErrorConstants.UPDATE_FAILED;
+        }     
+
+        return updateQuantity;
     }
+
     
-    async addMenuItem(updateMenuItem:updateOrderDto,id:number)
+    async addMenuItem(updateMenuItem:AddItemDtos,id:number)
     {
-        return "";
+       const newOrder = await this.orderItemRespository.findOne({where: { orders : {order_id: id}}});
+      
+       
     }
     async deleteMenuItem(orderItemId:number){
         const newOrderItem = await this.orderItemRespository.findOne({where : {orderItem_id : orderItemId}});
@@ -179,7 +175,7 @@ export class OrderServices {
         const newOrder = await this.orderRespository.findOne({where : { order_id: orderId}});
         if(!newOrder)
         {
-            throw new BadRequestException({message : 'Given_order_id_not_found'});
+            throw OrderExceptionConstants.ORDER_INVALID;
         }
         const result = await manager
         .createQueryBuilder()
@@ -189,8 +185,9 @@ export class OrderServices {
         .execute();
         if(result.affected === 1)
         {
-
-            return 'payment_status_updated_successfully';
+            const bill = await this.getBillById(orderId);
+            bill.paymentStatus=PaymentStatus.APPROVED
+            return bill;
         }
         else{
             return 'failed_to_update_payment_status';
@@ -200,7 +197,6 @@ export class OrderServices {
         
     }
    async calculatePrice(newOrderItems:orderDetails[], newOrder: Order){
-    console.log(newOrder.customerName);
     const totalPrice = newOrderItems.reduce((accum, item) => accum+item.price, 0)
     const totaltax = newOrderItems.reduce((accum, item) => accum+item.tax, 0) 
     return totalPrice+totaltax;

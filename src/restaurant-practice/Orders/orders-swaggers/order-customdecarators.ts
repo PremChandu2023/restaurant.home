@@ -36,12 +36,12 @@ export function OrderCustomdecator (method: string, route:string)
             case 'Put':
                 switch(route) {
                     case '/itemquantity:id':
-                    return applyDecorators(ApiOkResponse(OrderApiResponse.put.ok),
+                    return applyDecorators((ApiOperation({description: 'Update the quantity of the given menuitem of a particular order with given OrderItemid'})),ApiOkResponse(OrderApiResponse.put.ok),
                     ApiBadRequestResponse(OrderApiResponse.put.NotFound),
                     ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                     ApiForbiddenResponse(OrderApiResponse.put.frbidden))
                     case '/:id/addItem':
-                    return applyDecorators(ApiOkResponse(OrderApiResponse.put.addMenUitem.ok),
+                    return applyDecorators(ApiOperation({description:'Adds the another menuitem for the given order'}),ApiOkResponse(OrderApiResponse.put.addMenUitem.ok),
                        ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                        ApiForbiddenResponse(OrderApiResponse.put.frbidden))
                     // ApiBadRequestResponse(OrderApiResponse.put.addMenUitem.BadRequest))

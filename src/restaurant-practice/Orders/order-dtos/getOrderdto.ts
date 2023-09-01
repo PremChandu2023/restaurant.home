@@ -12,4 +12,5 @@ export class getOrderDto {
      orderDetails: orderDetails[]
      @ApiProperty()
      totalPrice: number
+     paymentStatus : string
 }

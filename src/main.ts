@@ -4,6 +4,7 @@ import { setupSwagger } from './swagger/swaggers';
 import { AuthGuard } from './restaurant-practice/guards/Auth-guard';
 import { Validator } from 'class-validator';
 import { ValidationPipe } from '@nestjs/common';
+import { GlobalExceptionFilter } from './restaurant-practice/Orders/Exception-Filters/exception.filters';
 
 
 async function bootstrap() {
@@ -27,6 +28,7 @@ async function bootstrap() {
   setupSwagger(app);
   // app.useGlobalGuards(new AuthGuard())
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new GlobalExceptionFilter())
   await app.listen(3000);
 
 

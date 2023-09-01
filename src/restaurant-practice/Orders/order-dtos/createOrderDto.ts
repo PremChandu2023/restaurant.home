@@ -1,15 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber, isNumber } from "class-validator";
 import { OrderItemDTo } from "./orderItemDto";
 
 @Injectable()
 export class createOrderDTo {
     @ApiProperty({example : "Sukesh"})
-    @IsNotEmpty({message: 'IT SHORLOFJEHF'})
+    @IsNotEmpty({message: 'Customer Name should not be empty'})
     customerName:string
 
     @IsNotEmpty({message : 'Table should not be empty'})
+    @IsNumber()
     tableNumber: number
 
     
