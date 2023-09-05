@@ -12,8 +12,8 @@ export function setupSwagger(app: INestApplication): void {
 
 
   const options = new DocumentBuilder()
-    .setTitle('chandu')
-    .setDescription('Your API Description')
+    .setTitle('Resaturant')
+    .setDescription('This is swagger documentation for restaurant ')
     .setVersion('1.0')
     .addBearerAuth()
     .addServer('http://localhost:3000') 

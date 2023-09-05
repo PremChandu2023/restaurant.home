@@ -15,14 +15,29 @@ export const menuExamples = {
             }
         }
     },
-    MenuBadRequest : {
+    MenuIdNotFound : {
         description : "Occurs when given Id is invalid",
          value :{
-            "message": "Given_id_is_not_found"
+            "statusCode": 404,
+            "error": {
+              "message": "Given_orderid_is_invalid"
+            },
+            "timeStamp": "2023-09-04T10:44:40.302Z",
+            "path": "/order/20000"
+          }
+    },
+    addMenu : {
+        description : 'Creates a new Menu',
+        value : {
+            "succes": true,
+            "data": {
+                "menu_Type": "Icecream",
+                "menu_id": 7
+            }
         }
     },
     addMenuItem : {
-        description : "Creates a new Menu",
+        description : "Creates a new MenuItem",
         value :{
             "succes": true,
             "data": {
@@ -54,19 +69,53 @@ export const menuExamples = {
     getbyName : {
         description : "Sorts the values by given ItemName",
         value : {
-            success : true,
-            data : {
-                
-            }
+            "succes": true,
+            "data": [
+                {
+                    "menuitem_id": 3,
+                    "menu_itemname": "chickenbiryani",
+                    "price": 20,
+                    "tax": 5
+                },
+                {
+                    "menuitem_id": 4,
+                    "menu_itemname": "chickenfriedrice",
+                    "price": 20,
+                    "tax": 5
+                },
+                {
+                    "menuitem_id": 5,
+                    "menu_itemname": "chickenmanchuria",
+                    "price": 20,
+                    "tax": 5
+                }
+            ]
         }
     },
     getByCategory:{
         description : "Sorts the values by given Category",
         value : {
-            success : true,
-            data : {
-                
-            }
+            "succes": true,
+            "data": [
+                {
+                    "menuitem_id": 3,
+                    "menu_itemname": "chickenbiryani",
+                    "price": 20,
+                    "tax": 5
+                },
+                {
+                    "menuitem_id": 4,
+                    "menu_itemname": "chickenfriedrice",
+                    "price": 20,
+                    "tax": 5
+                },
+                {
+                    "menuitem_id": 5,
+                    "menu_itemname": "chickenmanchuria",
+                    "price": 20,
+                    "tax": 5
+                }
+            ]
         }
     }
 }

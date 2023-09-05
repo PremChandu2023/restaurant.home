@@ -28,13 +28,13 @@ export const MenuResponses = {
               }
             }
           },
-        Badrequest:  {
-            status: 400, description: 'Occurs when given Id is invalid',
+        Idnotfound:  {
+            status: 404, description: 'Occurs when given Id is invalid',
             
                content: {
               'application/json': {
                 examples: {
-                 InvalidId : menuExamples.MenuBadRequest
+                 InvalidId : menuExamples.MenuIdNotFound
                 }
               }
             }
@@ -54,6 +54,20 @@ export const MenuResponses = {
         }
       }
     },
+    addMenu :{
+      ok : {
+      status: 201, description: 'Creates a new Menu',
+      // schema :MenuItems,
+      
+         content: {
+        'application/json': {
+          examples: {
+           success : menuExamples.addMenu
+          }
+        }
+      }
+    }
+  },
     addMenuItem :{
         ok : {
         status: 201, description: 'Creates a new Menuitem',

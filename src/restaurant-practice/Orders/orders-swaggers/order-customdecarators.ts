@@ -9,6 +9,7 @@ export function OrderCustomdecator (method: string, route:string)
             switch(route) {
                 case '/':
                     return applyDecorators(
+                        ApiOperation({description:"Creates a new order"}),
                         ApiOkResponse(OrderApiResponse.post.created),
                         ApiBadRequestResponse(OrderApiResponse.post.Badrequest),
                         ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),

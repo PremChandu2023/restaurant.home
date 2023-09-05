@@ -5,6 +5,7 @@ import { AuthGuard } from './restaurant-practice/guards/Auth-guard';
 import { Validator } from 'class-validator';
 import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './restaurant-practice/Orders/Exception-Filters/exception.filters';
+import { ConfigService } from '@nestjs/config';
 
 
 async function bootstrap() {
@@ -27,9 +28,14 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   setupSwagger(app);
   // app.useGlobalGuards(new AuthGuard())
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({transform : true}));
   app.useGlobalFilters(new GlobalExceptionFilter())
-  await app.listen(3000);
+
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>("PORT_NUMBER");
+  console.log(port);
+  
+  await app.listen(port);
 
 
 

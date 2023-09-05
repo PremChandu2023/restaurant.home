@@ -2,24 +2,27 @@
 export const OrderExamples = {
     Order : {
     description : "Gives the order details",
-     value : {
+     value :{
         "succes": true,
         "data": {
-            "customerName": "premchandu",
-            "tableNumber": 20,
-            "order_id": 14,
-            "date": {
-                "createdDate": "2023-08-24T08:24:49.956Z",
-                "updatedDate": "2023-08-24T08:24:49.956Z"
-            }
+            "customerName": "Nagendra",
+            "tableNumber": 21,
+            "order_id": 7,
+            "paymentStatus": "pending"
         }
     }
 },
 TableNUmberNull : {
     description : "Given Table is not entered",
-     value : {
-        "message": "Table number should be number"
-    }
+     value : 
+     {
+       "message": [
+         "items.0.tablename cannot be null",
+         "items.0.tablename must be a number conforming to the specified constraints"
+       ],
+       "error": "Bad Request",
+       "statusCode": 400
+     }
 },
 OrderById : {
     description : "Gives the order details",
@@ -49,8 +52,13 @@ OrderById : {
 OrderIdNotFound : {
     description : "Gives the order details",
     value :{
-        "message": "Invalid_Id_Order_with_given_id_is_not_available"
-    }
+        "statusCode": 404,
+        "error": {
+          "message": "Given_orderid_is_invalid"
+        },
+        "timeStamp": "2023-09-04T10:44:40.302Z",
+        "path": "/order/20000"
+      }
 },
 updatedQuantity : {
     description : "updates the menuItem and returns menuitem",
@@ -87,11 +95,14 @@ updateMenuItemNotFound : {
 },
 quantityNull : {
     description : "This error occurs when quanitty is null",
-    value : {
-        "message": [
-            "quantity should not be empty"
-        ],
-        "error": "Bad Request",
+    value : 
+    {
+      "message": [
+        "items.0.quantity cannot be null",
+        "items.0.quantity must be a number conforming to the specified constraints"
+      ],
+      "error": "Bad Request",
+      "statusCode": 400
     }
 },
 menuItemnull : {
@@ -139,8 +150,10 @@ AcceswithoutAuthorization:  {
   deleteSuccess : {
     description: 'Deletes the Order',
     value: {
-
-        message: "Order_with_Id__has_been_deleted_successfuly"
+        "succes": true,
+        "data": {
+          "message": "Order deleted successfully"
+        }
       }
   }
 

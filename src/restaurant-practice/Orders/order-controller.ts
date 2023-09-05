@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, Param, ParseIntPipe, Patch, Post, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, InternalServerErrorException, NotFoundException, Param, ParseArrayPipe, ParseIntPipe, Patch, Post, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { OrderServices } from "./order-service";
 import { MenuDto, MenuItemDto, updatePaymentDTo } from "./orders.dtos";
@@ -16,6 +16,7 @@ import { PaymentStatus } from "../Menu/enums/payment.enum";
 import { AddItemDtos } from "./order-dtos/order-additemdtos";
 import { OrderExceptionConstants } from "./constants/exceptionconstants/exception.constant";
 import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.constants";
+import { OrderItemDTo } from "./order-dtos/orderItemDto";
 
 @ApiTags("Orders")
 @ApiBearerAuth()
@@ -30,20 +31,20 @@ export class OrderController {
     @OrderCustomdecator('Post', '/')
     @Post('/')
     async createOrder(@Body() createOrder: createOrderDTo) {
-        try
-        {
-            console.log('ehdvweghfv');
-            
-        return await this.orderService.createOrder(createOrder);
-    }
-    catch(error)
-    {
-        switch(error)
-        {
-            case DatabaseErrorConstants.CREATED_FAILED:
-                throw new BadRequestException(error);
+        try {
+            return await this.orderService.createOrder(createOrder);
         }
-    }
+        catch (error) {
+            switch (error) {
+                case DatabaseErrorConstants.CREATED_FAILED:
+                    throw new BadRequestException(error);
+                case OrderExceptionConstants.MENUITEM_INVALID:
+                    throw new BadRequestException(error);
+
+                default:
+                    throw new InternalServerErrorException(error);
+            }
+        }
     }
 
     @Get()
@@ -57,22 +58,22 @@ export class OrderController {
     @OrderCustomdecator('Get', '/:id')
     @Get('/:id')
     async getOrderDetailsById(@Param('id', ParseIntPipe) OrderId: number) {
-        try{
-            return this.orderService.getOrderById(OrderId)
+        try {
+            return await this.orderService.getOrderById(OrderId)
         }
-        catch(error)
-        {
-            switch(error)
-            {
+        catch (error) {
+            switch (error) {
                 case OrderExceptionConstants.ORDER_INVALID:
-                    throw new BadRequestException(error);
+                    throw new NotFoundException({ message: error });
+                default:
+                    throw new InternalServerErrorException({ message: 'Cannot get the order details of the particular id' });
             }
-        }        
+        }
     }
-
+    /*Updates the 'quanity' of a particluar orderItem with given menuitem name and orderItem id */
     @Roles(Role.Manager, Role.Waiter)
     @OrderCustomdecator('Put', '/itemquantity:id')
-    @Post('/itemquantity/:id')
+    @Put('/quantity/:id')
     async updateOrderQuantity(@Param('id') orderItemId: number, @Body() updateOrder: updateOrderDto) {
         try {
             return await this.orderService.updateOrderQuantity(updateOrder, orderItemId);
@@ -80,7 +81,7 @@ export class OrderController {
         catch (error) {
             switch (error) {
                 case OrderExceptionConstants.ORDER_INVALID:
-                    throw new BadRequestException({ message: error });
+                    throw new NotFoundException({ message: error });
                 case DatabaseErrorConstants.UPDATE_FAILED:
                     throw new InternalServerErrorException({ mesage: error })
                 default:
@@ -88,47 +89,70 @@ export class OrderController {
             }
         }
     }
-    /* Deletes the menuItm of the Given customer order
+    /* Deletes the menuItem of the Given customer order
     * @OrderItem => it is the combined id  of orderid and particular menitem id that we want to delete*/
     @Roles(Role.Manager, Role.Waiter)
-    @Delete(':orderitemid')
+    @Delete('/orderitem/:id')
     @OrderCustomdecator('Delete', ':orderItemId')
-    deleteMenuItem(@Param('menuItemid', ParseIntPipe) orderItemId: number) {
-        return this.orderService.deleteMenuItem(orderItemId);
+    async deleteMenuItem(@Param('id', ParseIntPipe) orderItemId: number) {
+        try {
+            return await this.orderService.deleteMenuItem(orderItemId);
+        }
+        catch (error) {
+            switch (error) {
+                case OrderExceptionConstants.ORDERITEM_INVALID:
+                    throw new NotFoundException(error);
+                default:
+                    throw new InternalServerErrorException(error);
+            }
+        }
     }
 
-    @Delete(':orderid')
+    @Delete('/:id')
     @OrderCustomdecator('Delete', ':Orderid')
     async deleteOrder(@Param('id', ParseIntPipe) orderId: number) {
-        return await this.orderService.deleteOrderById(orderId);
+        try {
+            return await this.orderService.deleteOrderById(orderId);
+        }
+        catch (error) {
+            switch (error) {
+                case OrderExceptionConstants.ORDER_INVALID:
+                    throw new NotFoundException(error);
+            }
+        }
     }
-
     //Approve the payment request
     @Patch('approved/:id')
     @OrderCustomdecator('Patch', 'approved/:id')
-    updatePaymentStatus(@Param('id') id: number) {
-        const updateStatus: updatePaymentDTo = {
-            orderStatus: PaymentStatus.APPROVED
+    async updatePaymentStatus(@Param('id') id: number) {
+        try{
+            const updateStatus: updatePaymentDTo = {
+                orderStatus: PaymentStatus.APPROVED
+            }
+            return await this.orderService.updatePaymentandOrderStatus(updateStatus, id);
         }
-        return this.orderService.updatePaymentandOrderStatus(updateStatus, id);
+        catch(error)
+        {
+            throw new NotFoundException(error);
+        }
+        
     }
 
     //Cancel the payment request
     @Patch('declined/:id')
     @OrderCustomdecator('Patch', 'declined/:id')
-    updatePaymentdeStatus(@Param('id') id: number) {
+    async updatePaymentdeStatus(@Param('id') id: number) {
+        try{
         const updateStatus: updatePaymentDTo = {
             orderStatus: PaymentStatus.DECLINED
         }
-        return this.orderService.updatePaymentandOrderStatus(updateStatus, id);
+        return await this.orderService.updatePaymentandOrderStatus(updateStatus, id);
     }
-
-
-
-
-
-
-
+    catch(error)
+    {
+        throw new NotFoundException(error);
+    }
+    }
 
 
 

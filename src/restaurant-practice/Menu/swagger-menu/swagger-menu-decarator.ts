@@ -15,7 +15,7 @@ export function MenuCustomdecarators(method:string,route:string)
                     return applyDecorators(
                         ApiOperation({description: 'Get the menu items by id'}),
                         ApiOkResponse(MenuResponses.getById.ok),
-                        ApiBadRequestResponse(MenuResponses.getById.Badrequest)
+                        ApiBadRequestResponse(MenuResponses.getById.Idnotfound)
                     )
                 case '/filter':
                     return applyDecorators(ApiOkResponse(MenuResponses.filterGetByName.ok))
@@ -24,7 +24,8 @@ export function MenuCustomdecarators(method:string,route:string)
             switch(route)
             {
                 case '/':
-                    return applyDecorators(ApiOperation({description: 'Creates a new menuitem category'}))
+                    return applyDecorators(ApiOperation({description: 'Creates a new menuitem category'}),
+                    ApiOkResponse(MenuResponses.addMenu.ok))
                 case ':id/menuitem':
                     return applyDecorators(
                         ApiOkResponse(MenuResponses.addMenuItem.ok),

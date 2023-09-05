@@ -10,6 +10,7 @@ import { Roles } from "../Entities/orders.entities/roles.entities";
 import { RolesGuard } from "../guards/rolebased.guard";
 import { LocalStrategy } from "./strategies/local.strategy";
 import { Token } from "../Entities/orders.entities/token.enitty";
+import { ConfigModule } from "@nestjs/config";
 
 
 @Module({
@@ -19,7 +20,7 @@ imports : [TypeOrmModule.forFeature([Employee, Roles,Token]),
                 secret: 'employeesecret',
                 signOptions : {algorithm : 'HS512',
                             }
-            }),PassportModule.register({defaultStrategy : 'jwt'})],providers : [AuthService,EmployeeAuthGuard,RolesGuard]
+            }),ConfigModule],providers : [AuthService,EmployeeAuthGuard,RolesGuard]
 })
 export class AuthModule {
 

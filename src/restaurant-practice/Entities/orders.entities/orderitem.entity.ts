@@ -18,7 +18,7 @@ export class OrderItem {
     @ManyToOne(()=> Order, (orders) => orders.orderItems)
     orders:Order
 
-    @ManyToOne(()=> MenuItems, (menuitems)=> menuitems.OrderItems,{eager:true})
+    @ManyToOne(()=> MenuItems, (menuitems)=> menuitems.OrderItems)
     menuitems:MenuItems
 
     @Exclude()

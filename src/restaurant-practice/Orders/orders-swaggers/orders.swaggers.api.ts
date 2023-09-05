@@ -19,7 +19,6 @@ export const OrderApiResponse  = {
           content: {
             'application/json': {
               examples: {
-                succes : OrderExamples.Order,
                 TableNumberNull: OrderExamples.TableNUmberNull,
                 QuantityNull: OrderExamples.quantityNull,
                 MenuItemNull: OrderExamples.menuItemnull  

@@ -10,5 +10,5 @@ export class updateOrderDto {
     menuItem:string
     @ApiProperty({example : 10})
     @IsNotEmpty()
-    quantity:3
+    quantity:number
 }

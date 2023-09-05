@@ -39,7 +39,6 @@ export class OrderServices {
         return savedMenuitem;
     }
     async createOrder(createOrder: createOrderDTo) {
-        try{
         const newOrder = this.orderRespository.create();
         newOrder.customerName = createOrder.customerName;
         newOrder.tableNumber=createOrder.tableNumber;       
@@ -63,15 +62,10 @@ export class OrderServices {
             await this.orderItemRespository.save(newOrderItem);
         }
         return newOrder;
-        }
-        catch(error)
-        {
-            throw new InternalServerErrorException(error)
-        }
     }
     async getAllOrders():Promise<Order[]>
     {
-        const allOrders = await this.orderRespository.find({relations : {orderItems : {menuitems : true}},where: {orderItems : {quantity : 2,menuitems : {menu_itemname:"friedrice"}}}});
+        const allOrders = await this.orderRespository.find({relations: {orderItems : {menuitems: true}}})
         return allOrders;
     }
 
@@ -79,6 +73,7 @@ export class OrderServices {
           const newOrder = await this.orderRespository.findOne({where: {
                 order_id: OrderId,
             },relations : ['orderItems',  'orderItems.menuitems']})
+            
             if(!newOrder)
             {
                 throw OrderExceptionConstants.ORDER_INVALID;
@@ -118,21 +113,19 @@ export class OrderServices {
         return OrderReciept;
     }
     async updateOrderQuantity(updateOrder: updateOrderDto, orderItemId: number) {
-        const newOrderItem = await this.orderItemRespository.findOne({where: { orderItem_id:orderItemId}});
+        const newOrderItem = await this.orderItemRespository.findOne({where: { orderItem_id:orderItemId ,menuitems: {menu_itemname: updateOrder.menuItem} }});
         if(!newOrderItem)
         {
-            throw  OrderExceptionConstants.ORDER_INVALID;
+            throw  OrderExceptionConstants.ORDER_INVALID
         }
         // const updateQuantity = await this.orderItemRespository.update({quantity:updateOrder.quantity},{orderItem_id: orderItemId})
-        newOrderItem.menuitems.menu_itemname=updateOrder.menuItem
-        newOrderItem.quantity=updateOrder.quantity
-
+       
+        newOrderItem.quantity=updateOrder.quantity    
         const updateQuantity = await this.orderItemRespository.save(newOrderItem);
         if(!updateQuantity)
         {
             throw DatabaseErrorConstants.UPDATE_FAILED;
         }     
-
         return updateQuantity;
     }
 
@@ -147,18 +140,19 @@ export class OrderServices {
         const newOrderItem = await this.orderItemRespository.findOne({where : {orderItem_id : orderItemId}});
         if(!newOrderItem)
         {
-            throw new HttpException({message :"Invalid_OrderItemId" },HttpStatus.BAD_REQUEST);
+            throw OrderExceptionConstants.ORDERITEM_INVALID;
         }
         return {message : "Menu Item deleted successfully"};
     }
     async deleteOrderById(odrerId:number)
     {
         const newOrder = await this.orderRespository.delete({order_id : odrerId})
-        if(!newOrder)
+        
+        if(newOrder.affected === 0)
         {
-            throw new BadRequestException({message : 'order_with_given_id_is_not_found'})
+            throw OrderExceptionConstants.ORDER_INVALID;
         }
-        return newOrder;
+        return {message : 'Order deleted successfully'};
     }    
     async updatePaymentandOrderStatus(updateBody:updatePaymentDTo, orderId : number,)
     {

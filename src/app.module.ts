@@ -6,8 +6,9 @@ import { restaurentdatabase } from './databse.config';
 import { Ordermodule } from './restaurant-practice/Orders/order-module';
 import { Menumodule } from './restaurant-practice/Menu/menu-module';
 import { AuthModule } from './restaurant-practice/Auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports : [TypeOrmModule.forRoot(restaurentdatabase),Ordermodule,Menumodule,AuthModule],
+  imports : [TypeOrmModule.forRoot(restaurentdatabase),Ordermodule,Menumodule,AuthModule, ConfigModule.forRoot({envFilePath: [".env"]})],
   controllers: [AppController],
   providers: [AppService],
 })
