@@ -33,10 +33,12 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT_NUMBER");
+  const name = (process.env['DB_USERNAME'])
+  // console.log(name);
   
   console.log(port);
   
-  await app.listen(port)
+  await app.listen(port);
 /*If we add any new dependecies in nest js application we have to restart the program*/
 
 

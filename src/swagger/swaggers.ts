@@ -5,7 +5,7 @@ import * as yaml from 'js-yaml';
 import { join } from 'path';
 
 export function setupSwagger(app: INestApplication): void {
-  console.log('sjdbsdhjdg');
+
   
         
     // const ymlpath =  join(__dirname,'swagger/swagger.yml')
