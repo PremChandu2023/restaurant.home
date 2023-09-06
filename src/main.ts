@@ -33,10 +33,11 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT_NUMBER");
+  
   console.log(port);
   
-  await app.listen(port);
-
+  await app.listen(port)
+/*If we add any new dependecies in nest js application we have to restart the program*/
 
 
   // const document = SwaggerModule.createDocument(app, options,)

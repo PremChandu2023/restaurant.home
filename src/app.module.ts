@@ -8,7 +8,8 @@ import { Menumodule } from './restaurant-practice/Menu/menu-module';
 import { AuthModule } from './restaurant-practice/Auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports : [TypeOrmModule.forRoot(restaurentdatabase),Ordermodule,Menumodule,AuthModule, ConfigModule.forRoot({envFilePath: [".env"]})],
+  imports : [TypeOrmModule.forRoot(restaurentdatabase),Ordermodule,Menumodule,AuthModule, ConfigModule.forRoot({isGlobal:true
+  ,envFilePath: '.env'})],
   controllers: [AppController],
   providers: [AppService],
 })
