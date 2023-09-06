@@ -70,7 +70,9 @@ export class AuthService {
     {
         
         const payload :JwtPayloadDto = {userId: employee.id}
-        const token = await this.jwtService.signAsync(payload, {expiresIn:'7d',secret:'employesecret'}) // 7 * 24 * 60 * 60 * 1000 calculates the total number of milliseconds in 7 days.
+        const secretkey = this.configService.get<string>("JWT_REFERSH_KEY");
+
+        const token = await this.jwtService.signAsync(payload, {expiresIn:'7d',secret: secretkey}) // 7 * 24 * 60 * 60 * 1000 calculates the total number of milliseconds in 7 days.
 
         /*create an instance of token and with expireddate calculation and stores in the database*/            
         const newToken = this.tokenRepository.create({expirationTimestamp : new Date(new Date().getTime()+ 7 * 24 * 60 * 60 * 1000),token_value: token})
