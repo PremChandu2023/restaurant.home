@@ -2,17 +2,17 @@ import { Body, Controller, Get, Param, Post, Res, UseGuards, UseInterceptors, Pu
 import { AuthService } from "./auth.service";
 import { Response } from 'express'
 import { max } from "class-validator";
-import { RecentsearchInterceptor } from "../interceptors/interceptor-menu";
-import { EmployeeAuthGuard } from "./Auth.guards/auth.guard";
+import { RecentsearchInterceptor } from "../Interceptors/menu.interceptor";
+import { EmployeeAuthGuard } from "../guards/Auth.guards/auth.guard";
 
 import { ApiTags } from "@nestjs/swagger";
-import { AuthCustomdecarators } from "./Auth.swagger/auth-swaggerdecaratot";
+import { AuthCustomdecarators } from "./Swagger/auth-swaggerdecaratot";
 import { AuthGuard } from "@nestjs/passport";
-import { PassportAuthGuard } from "./Auth.guards/passport.authguard";
-import { JwtAuthGuard } from "./Auth.guards/jwt.authguard";
-import { MenuExceptionConstants } from "../Menu/constants/exception.constants";
-import { UserAuthConstants } from "./Auth.constants/auth.exception.constants";
-import { loginEmployeeDto, registerEmployeeDto, createRoleDto, updateRoleDto } from "./Auth.dtos/auth.dtos";
+import { PassportAuthGuard } from "../guards/Auth.guards/passport.authguard";
+import { JwtAuthGuard } from "../guards/Auth.guards/jwt.authguard";
+import { MenuExceptionConstants } from "../Menu/Constants/exception.constants";
+import { UserAuthConstants } from "./Constants/auth.exception.constants";
+import { loginEmployeeDto, registerEmployeeDto, createRoleDto, updateRoleDto } from "./Dtos/auth.dtos";
 
 @ApiTags("UserAuth")
 @Controller('/user')
@@ -88,7 +88,7 @@ export class AuthController {
             return await this.authservice.findEmployeeDetails(id);
         }
         catch (error) {
-            switch (error) {
+            switch (error) {    
                 case UserAuthConstants.EMPLOYEEID_NOT_FOUND:
                     throw new NotFoundException(error)
                 default:

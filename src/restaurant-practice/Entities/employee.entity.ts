@@ -1,5 +1,5 @@
 import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Roles } from "./roles.entities";
+import { Roles } from "./roles.entity";
 import { publicEncrypt } from "crypto";
 import * as bycrypt from 'bcrypt';
 import { Dateschema } from "./date.entity";

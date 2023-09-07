@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { setupSwagger } from './swagger/swaggers';
-import { AuthGuard } from './restaurant-practice/guards/Auth-guard';
+// import { AuthGuard } from './restaurant-practice/guards/Auth-guard';
 import { Validator } from 'class-validator';
 import { ValidationPipe } from '@nestjs/common';
-import { GlobalExceptionFilter } from './restaurant-practice/Orders/Exception-Filters/exception.filters';
+import { GlobalExceptionFilter } from './restaurant-practice/Exception-Filters/exception.filters';
 import { ConfigService } from '@nestjs/config';
+import { setupSwagger } from './swagger/swagger-config/swaggers';
+import { DatabaseClass } from './swagger/swagger.practices/swagger.config';
 
 
 async function bootstrap() {
@@ -30,6 +31,9 @@ async function bootstrap() {
   // app.useGlobalGuards(new AuthGuard())
   app.useGlobalPipes(new ValidationPipe({transform : true}));
   app.useGlobalFilters(new GlobalExceptionFilter())
+  const data = new DatabaseClass();
+  console.log(  data.up
+    );
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT_NUMBER");

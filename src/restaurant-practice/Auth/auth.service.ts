@@ -5,12 +5,12 @@ import { Repository } from "typeorm";
 import * as bycrypt from 'bcrypt'
 import { JwtService } from "@nestjs/jwt";
 
-import { UserAuthConstants } from "./Auth.constants/auth.exception.constants";
+import { UserAuthConstants } from "./Constants/auth.exception.constants";
 import { ConfigService } from "@nestjs/config";
 import { Employee } from "../Entities/employee.entity";
-import { Roles } from "../Entities/roles.entities";
+import { Roles } from "../Entities/roles.entity";
 import { Token } from "../Entities/token.enitty";
-import { GetLoginDto, JwtPayloadDto, createRoleDto, loginEmployeeDto, registerEmployeeDto, updateRoleDto } from "./Auth.dtos/auth.dtos";
+import { GetLoginDto, JwtPayloadDto, createRoleDto, loginEmployeeDto, registerEmployeeDto, updateRoleDto } from "./Dtos/auth.dtos";
 
 
 
@@ -30,11 +30,11 @@ export class AuthService {
         else{
             //verify hashed request and password in database
           if(await  this.verifyPassword(createLogin.password, employee.password)) 
-          {
+          {           
             
-            // access jwt token generation with employee list as a payload 
-
+            // access jwt token generation with employee list as a payload             
                const accesstoken = await this.generateJwtAccessToken(employee.id);
+               
                //generates the refersh token with employee list as a payload
                const refereshtoken = await this.generateRefreshToken(employee);
                 const tokens : GetLoginDto ={ JwtAccessToken:accesstoken,
@@ -59,10 +59,10 @@ export class AuthService {
     async generateJwtAccessToken(employee_id:number)
     {
         const payload : JwtPayloadDto = {userId: employee_id}
-        const secretkey = this.configService.get<string>("JWT_SECRET_KEY");
-        console.log(secretkey);
+       
         
-        const token = await this.jwtService.signAsync(payload, {secret: secretkey,expiresIn : '1d'});
+    const token = await this.jwtService.signAsync(payload, {secret:  process.env['JWT_SECRET_KEY'],expiresIn: 1});
+        
         return token;
     }
     async generateRefreshToken(employee:Employee)
@@ -81,7 +81,7 @@ export class AuthService {
     }
    async validateRefereshToken(refereshToken:string)
    {    
-        const token = await this.jwtService.verifyAsync(refereshToken, {secret:'employesecret'})
+        const token = await this.jwtService.verifyAsync(refereshToken, {secret:'employeekey'})
         
         const referenceToken = await this.tokenRepository.findOne({where :{token_value: refereshToken}})
         if(!referenceToken)
@@ -165,5 +165,10 @@ export class AuthService {
         newEmployee.roles=Role;
         return await this.employeeRespository.save(newEmployee)
     }
+
+
+    
+
+
 
 }

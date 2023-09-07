@@ -1,6 +1,6 @@
 
 export enum OrderExceptionConstants {
-    ORDER_INVALID = 'Given_orderId_is_invalid',
-    MENUITEM_INVALID = 'Given_menuItem_is_invalid',
-    ORDERITEM_INVALID = 'Given_orderItemid_is_invalid'
+    ORDER_INVALID = 'Error_Given_orderId_is_invalid',
+    MENUITEM_INVALID = 'Error_Given_menuItem_is_invalid',
+    ORDERITEM_INVALID = 'Error_Given_orderItemid_is_invalid'
 }

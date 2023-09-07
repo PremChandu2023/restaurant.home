@@ -20,6 +20,7 @@ export function OrderCustomdecator (method: string, route:string)
             switch(route) {
                 case '/:id':
                     return applyDecorators(
+                        ApiOperation({ description: 'Gives the details of the the order with given orderId'}),
                         ApiOkResponse(OrderApiResponse.get.ok),
                         ApiNotFoundResponse(OrderApiResponse.get.notFound),
                        ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),

@@ -1,5 +1,4 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
-import { Tablemenu } from "../Menu/table-menu";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, QueryBuilder, Repository, Transaction } from "typeorm";
 import { Menu } from "../Entities/menu.entity";
@@ -8,13 +7,10 @@ import { Order } from "../Entities/orders.entity";
 import { OrderItem } from "../Entities/orderitem.entity";
 
 import { MenuDto, MenuItemDto, orderDetails,  updatePaymentDTo } from "./orders.dtos";
-import { OrderStatus } from "../Menu/enums/order.enum";
-import { PaymentStatus } from "../Menu/enums/payment.enum";
+import { OrderStatus } from "../Enums/order.enum";
+import { PaymentStatus } from "../Enums/payment.enum";
 import { plainToClass } from "class-transformer";
-import { updateOrderDto } from "./order-dtos/oders-updateDto";
-import { createOrderDTo } from "./order-dtos/createOrderDto";
-import { getOrderDto } from "./order-dtos/getOrderdto";
-import { AddItemDtos } from "./order-dtos/order-additemdtos";
+import { AddItemDtos, createOrderDTo, getOrderDto, updateOrderDto } from "./order.dtos/order.dto";
 import { OrderExceptionConstants } from "./constants/exceptionconstants/exception.constant";
 import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.constants";
 

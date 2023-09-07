@@ -2,8 +2,8 @@ import { IsAlpha, IsArray, IsEnum, IsNotEmpty, IsNumber, IsNumberString } from "
 import { OrderItem } from "../Entities/orderitem.entity";
 import { Injectable } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
-import { OrderStatus } from "../Menu/enums/order.enum";
-import { PaymentStatus } from "../Menu/enums/payment.enum";
+import { OrderStatus } from "../Enums/order.enum";
+import { PaymentStatus } from "../Enums/payment.enum";
 
 @Injectable()
 export class MenuDto  {

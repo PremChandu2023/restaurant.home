@@ -2,7 +2,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-local";
 import { AuthService } from "../auth.service";
 import { UnauthorizedException } from "@nestjs/common";
-import { loginEmployeeDto } from "../Auth.dtos/auth.dtos";
+import { loginEmployeeDto } from "../Dtos/auth.dtos";
 // import { loginEmployeeDto } from "../Auth.dtos/login.employeeDto";
 
 

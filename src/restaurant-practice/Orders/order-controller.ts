@@ -3,26 +3,23 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { OrderServices } from "./order-service";
 import { MenuDto, MenuItemDto, updatePaymentDTo } from "./orders.dtos";
 import { MenuItems } from "../Entities/menuitem.entity";
-import { OrderCustomInterceptor } from "./Interceptors/Order.Interceptor";
-import { RecentsearchInterceptor } from "../interceptors/interceptor-menu";
-import { Roles } from "../custom-decarators/customroles.decarator";
-import { EmployeeAuthGuard } from "../Auth/Auth.guards/auth.guard";
-import { RolesGuard } from "../guards/rolebased.guard";
-import { Role } from "../Menu/enums/roles.enums";
+import { OrderCustomInterceptor } from "./Interceptors/order.Interceptor";
+import { RecentsearchInterceptor } from "../Interceptors/menu.interceptor";
+import { Roles } from "../Auth/Customdecarators/customroles.decarator";
+import { EmployeeAuthGuard } from "../guards/Auth.guards/auth.guard";
+import { RolesGuard } from "../guards/Auth.guards/rolebased.guard";
+import { Role } from "../Enums/roles.enums";
 import { OrderCustomdecator } from "./orders-swaggers/order-customdecarators";
-import { updateOrderDto } from "./order-dtos/oders-updateDto";
-import { createOrderDTo } from "./order-dtos/createOrderDto";
-import { PaymentStatus } from "../Menu/enums/payment.enum";
-import { AddItemDtos } from "./order-dtos/order-additemdtos";
+import { createOrderDTo, updateOrderDto } from "./order.dtos/order.dto";
+import { PaymentStatus } from "../Enums/payment.enum";
 import { OrderExceptionConstants } from "./constants/exceptionconstants/exception.constant";
 import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.constants";
-import { OrderItemDTo } from "./order-dtos/orderItemDto";
 
 @ApiTags("Orders")
 @ApiBearerAuth()
 @Controller('/order')
 @UseInterceptors(RecentsearchInterceptor)
-// @UseGuards(EmployeeAuthGuard,RolesGuard)
+@UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
     constructor(private orderService: OrderServices) { }
 
@@ -59,7 +56,7 @@ export class OrderController {
     @Get('/:id')
     async getOrderDetailsById(@Param('id', ParseIntPipe) OrderId: number) {
         try {
-            return await this.orderService.getOrderById(OrderId)
+            return await this.orderService.getOrderById(OrderId);
         }
         catch (error) {
             switch (error) {

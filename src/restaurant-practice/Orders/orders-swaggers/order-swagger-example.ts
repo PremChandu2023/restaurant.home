@@ -117,15 +117,19 @@ menuItemnull : {
 AcceswithoutAuthorization:  {
     description: ' If the client attempts to access certain book-related endpoints without providing any authentication credentials',
     value: {
-
       message: "Authentication_is_required_to_access_the_resource."
     }
   },
   ExpiredAuthenticationToken: {
     description: 'When the client sends an authentication token that is invalid, expired, or not recognized by the server',
     value: {
-      message: "client's_token_is_not_valid_for_the_requested_operation"
-    }
+      "statusCode": 401,
+      "error": {
+          "message": "Error_Token_is_not_present"
+      },
+      "timeStamp": "2023-09-07T09:42:40.972Z",
+      "path": "/order"
+  }
   },
   InsufficientPrivileges : {
     description: ' If the client provides authentication credentials, but the credentials do not grant sufficient privileges to access a specific book-related operation',
