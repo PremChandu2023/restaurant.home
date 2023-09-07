@@ -1,20 +1,18 @@
 import { Body, Controller, Get, Param, Post, Res, UseGuards, UseInterceptors, Put, Request, BadRequestException, InternalServerErrorException, NotFoundException, ConflictException } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { loginEmployeeDto } from "../dtos/login.employeeDto";
 import { Response } from 'express'
 import { max } from "class-validator";
-import { registerEmployeeDto } from "../dtos/register.employeeDto";
 import { RecentsearchInterceptor } from "../interceptors/interceptor-menu";
-import { EmployeeAuthGuard } from "./auth.Guard";
-import { createRoleDto } from "../dtos/createRole.dtos";
-import { updateRoleDto } from "../dtos/updateRole.dtos";
+import { EmployeeAuthGuard } from "./Auth.guards/auth.guard";
+
 import { ApiTags } from "@nestjs/swagger";
-import { AuthCustomdecarators } from "./swagger-Auth/auth-swaggerdecaratot";
+import { AuthCustomdecarators } from "./Auth.swagger/auth-swaggerdecaratot";
 import { AuthGuard } from "@nestjs/passport";
-import { PassportAuthGuard } from "./guards/passport.authguard";
-import { JwtAuthGuard } from "./guards/jwt.authguard";
+import { PassportAuthGuard } from "./Auth.guards/passport.authguard";
+import { JwtAuthGuard } from "./Auth.guards/jwt.authguard";
 import { MenuExceptionConstants } from "../Menu/constants/exception.constants";
-import { UserAuthConstants } from "./constants/auth.exception.constants";
+import { UserAuthConstants } from "./Auth.constants/auth.exception.constants";
+import { loginEmployeeDto, registerEmployeeDto, createRoleDto, updateRoleDto } from "./Auth.dtos/auth.dtos";
 
 @ApiTags("UserAuth")
 @Controller('/user')

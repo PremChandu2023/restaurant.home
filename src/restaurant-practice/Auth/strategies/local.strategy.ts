@@ -1,8 +1,9 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-local";
 import { AuthService } from "../auth.service";
-import { loginEmployeeDto } from "src/restaurant-practice/dtos/login.employeeDto";
 import { UnauthorizedException } from "@nestjs/common";
+import { loginEmployeeDto } from "../Auth.dtos/auth.dtos";
+// import { loginEmployeeDto } from "../Auth.dtos/login.employeeDto";
 
 
 export class LocalStrategy extends PassportStrategy(Strategy) {

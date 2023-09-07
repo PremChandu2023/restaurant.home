@@ -1,19 +1,18 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Employee } from "../Entities/orders.entities/employee.entity";
 import { Repository } from "typeorm";
-import { loginEmployeeDto } from "../dtos/login.employeeDto";
+
 import * as bycrypt from 'bcrypt'
 import { JwtService } from "@nestjs/jwt";
-import { registerEmployeeDto } from "../dtos/register.employeeDto";
-import { createRoleDto } from "../dtos/createRole.dtos";
-import { Roles } from "../Entities/orders.entities/roles.entities";
-import { updateRoleDto } from "../dtos/updateRole.dtos";
-import { Token } from "../Entities/orders.entities/token.enitty";
-import { JwtPayloadDto } from "../dtos/jwtpayload.dto";
-import { GetLoginDto } from "../dtos/login.getDto";
-import { UserAuthConstants } from "./constants/auth.exception.constants";
+
+import { UserAuthConstants } from "./Auth.constants/auth.exception.constants";
 import { ConfigService } from "@nestjs/config";
+import { Employee } from "../Entities/employee.entity";
+import { Roles } from "../Entities/roles.entities";
+import { Token } from "../Entities/token.enitty";
+import { GetLoginDto, JwtPayloadDto, createRoleDto, loginEmployeeDto, registerEmployeeDto, updateRoleDto } from "./Auth.dtos/auth.dtos";
+
+
 
 @Injectable()
 export class AuthService {

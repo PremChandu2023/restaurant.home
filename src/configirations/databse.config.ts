@@ -1,11 +1,11 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { Menu } from "../restaurant-practice/Entities/orders.entities/menu.entity";
-import { MenuItems } from "../restaurant-practice/Entities/orders.entities/menuitem.entity";
-import { Order } from "../restaurant-practice/Entities/orders.entities/orders.entity";
-import { Employee } from "../restaurant-practice/Entities/orders.entities/employee.entity";
-import { Roles } from "../restaurant-practice/Entities/orders.entities/roles.entities";
-import { OrderItem } from "../restaurant-practice/Entities/orders.entities/orderitem.entity";
-import { Token } from "../restaurant-practice/Entities/orders.entities/token.enitty";
+import { Menu } from "../restaurant-practice/Entities/menu.entity";
+import { MenuItems } from "../restaurant-practice/Entities/menuitem.entity";
+import { Order } from "../restaurant-practice/Entities/orders.entity";
+import { Employee } from "../restaurant-practice/Entities/employee.entity";
+import { Roles } from "../restaurant-practice/Entities/roles.entities";
+import { OrderItem } from "../restaurant-practice/Entities/orderitem.entity";
+import { Token } from "../restaurant-practice/Entities/token.enitty";
 
 export const restaurentdatabase : TypeOrmModuleOptions  = 
  {

@@ -1,4 +1,4 @@
-import { MenuItems } from "src/restaurant-practice/Entities/orders.entities/menuitem.entity";
+import { MenuItems } from "src/restaurant-practice/Entities/menuitem.entity";
 import { menuExamples } from "./swagger-menu-examples";
 
 export const MenuResponses = {

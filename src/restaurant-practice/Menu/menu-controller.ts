@@ -6,10 +6,10 @@ import { CustomBook } from "../custom-decarators/custom-decarrators-Books";
 import { MenuDto, MenuItemDto } from "../Orders/orders.dtos";
 import { MenuService } from "./menu-service";
 import { Request } from "express";
-import { EmployeeAuthGuard } from "../Auth/auth.Guard";
+import { EmployeeAuthGuard } from "../Auth/Auth.guards/auth.guard";
 import { RolesGuard } from "../guards/rolebased.guard";
 import { Role } from "./enums/roles.enums";
-import { Roles } from "../custom-decarators/custom-roles-decarator";
+import { Roles } from "../custom-decarators/customroles.decarator";
 import { MenuCustomdecarators } from "./swagger-menu/swagger-menu-decarator";
 import { MenuExceptionConstants } from "./constants/exception.constants";
 

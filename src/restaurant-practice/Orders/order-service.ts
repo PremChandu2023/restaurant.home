@@ -2,10 +2,10 @@ import { BadRequestException, HttpException, HttpStatus, Injectable, InternalSer
 import { Tablemenu } from "../Menu/table-menu";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, QueryBuilder, Repository, Transaction } from "typeorm";
-import { Menu } from "../Entities/orders.entities/menu.entity";
-import { MenuItems } from "../Entities/orders.entities/menuitem.entity";
-import { Order } from "../Entities/orders.entities/orders.entity";
-import { OrderItem } from "../Entities/orders.entities/orderitem.entity";
+import { Menu } from "../Entities/menu.entity";
+import { MenuItems } from "../Entities/menuitem.entity";
+import { Order } from "../Entities/orders.entity";
+import { OrderItem } from "../Entities/orderitem.entity";
 
 import { MenuDto, MenuItemDto, orderDetails,  updatePaymentDTo } from "./orders.dtos";
 import { OrderStatus } from "../Menu/enums/order.enum";

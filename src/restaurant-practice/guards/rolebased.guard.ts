@@ -2,9 +2,9 @@ import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } 
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import {Request} from 'express';
-import { ROLES_KEY, Roles } from "../custom-decarators/custom-roles-decarator";
+import { ROLES_KEY, Roles } from "../custom-decarators/customroles.decarator";
 import { Role } from "../Menu/enums/roles.enums";
-import { Employee } from "../Entities/orders.entities/employee.entity";
+import { Employee } from "../Entities/employee.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 

@@ -2,11 +2,11 @@ import { BadRequestException, Body, Controller, Delete, Get, HttpException, Http
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { OrderServices } from "./order-service";
 import { MenuDto, MenuItemDto, updatePaymentDTo } from "./orders.dtos";
-import { MenuItems } from "../Entities/orders.entities/menuitem.entity";
+import { MenuItems } from "../Entities/menuitem.entity";
 import { OrderCustomInterceptor } from "./Interceptors/Order.Interceptor";
 import { RecentsearchInterceptor } from "../interceptors/interceptor-menu";
-import { Roles } from "../custom-decarators/custom-roles-decarator";
-import { EmployeeAuthGuard } from "../Auth/auth.Guard";
+import { Roles } from "../custom-decarators/customroles.decarator";
+import { EmployeeAuthGuard } from "../Auth/Auth.guards/auth.guard";
 import { RolesGuard } from "../guards/rolebased.guard";
 import { Role } from "../Menu/enums/roles.enums";
 import { OrderCustomdecator } from "./orders-swaggers/order-customdecarators";

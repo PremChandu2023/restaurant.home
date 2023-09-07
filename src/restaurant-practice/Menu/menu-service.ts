@@ -1,8 +1,8 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Menu } from "../Entities/orders.entities/menu.entity";
+import { Menu } from "../Entities/menu.entity";
 import { ILike, Like, Repository } from "typeorm";
-import { MenuItems } from "../Entities/orders.entities/menuitem.entity";
+import { MenuItems } from "../Entities/menuitem.entity";
 import { MenuDto, MenuItemDto } from "../Orders/orders.dtos";
 import { classToPlain } from "class-transformer";
 import { getMenuItemDto } from "./menu-dtos";
