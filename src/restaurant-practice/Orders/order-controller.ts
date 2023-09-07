@@ -19,7 +19,7 @@ import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.c
 @ApiBearerAuth()
 @Controller('/order')
 @UseInterceptors(RecentsearchInterceptor)
-@UseGuards(EmployeeAuthGuard,RolesGuard)
+// @UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
     constructor(private orderService: OrderServices) { }
 
@@ -70,7 +70,7 @@ export class OrderController {
     /*Updates the 'quanity' of a particluar orderItem with given menuitem name and orderItem id */
     @Roles(Role.Manager, Role.Waiter)
     @OrderCustomdecator('Put', '/itemquantity:id')
-    @Put('/quantity/:id')
+    @Put('/quantity/:orderItemid')
     async updateOrderQuantity(@Param('id') orderItemId: number, @Body() updateOrder: updateOrderDto) {
         try {
             return await this.orderService.updateOrderQuantity(updateOrder, orderItemId);
@@ -89,7 +89,7 @@ export class OrderController {
     /* Deletes the menuItem of the Given customer order
     * @OrderItem => it is the combined id  of orderid and particular menitem id that we want to delete*/
     @Roles(Role.Manager, Role.Waiter)
-    @Delete('/orderitem/:id')
+    @Delete('/order-item/:id')
     @OrderCustomdecator('Delete', ':orderItemId')
     async deleteMenuItem(@Param('id', ParseIntPipe) orderItemId: number) {
         try {
@@ -119,7 +119,7 @@ export class OrderController {
         }
     }
     //Approve the payment request
-    @Patch('approved/:id')
+    @Patch(':id/approved')
     @OrderCustomdecator('Patch', 'approved/:id')
     async updatePaymentStatus(@Param('id') id: number) {
         try{
@@ -136,7 +136,7 @@ export class OrderController {
     }
 
     //Cancel the payment request
-    @Patch('declined/:id')
+    @Patch(':id/declined')
     @OrderCustomdecator('Patch', 'declined/:id')
     async updatePaymentdeStatus(@Param('id') id: number) {
         try{

@@ -10,7 +10,7 @@ export const MenuResponses = {
                content: {
               'application/json': {
                 examples: {
-                 success : {}
+                 success : menuExamples.allMenu
                 }
               }
             }

@@ -117,8 +117,13 @@ menuItemnull : {
 AcceswithoutAuthorization:  {
     description: ' If the client attempts to access certain book-related endpoints without providing any authentication credentials',
     value: {
-      message: "Authentication_is_required_to_access_the_resource."
-    }
+      "statusCode": 401,
+      "error": {
+          "message": "Error_Authorization_is_required_for_resource"
+      },
+      "timeStamp": "2023-09-07T09:42:40.972Z",
+      "path": "/order"
+  }
   },
   ExpiredAuthenticationToken: {
     description: 'When the client sends an authentication token that is invalid, expired, or not recognized by the server',
@@ -133,22 +138,32 @@ AcceswithoutAuthorization:  {
   },
   InsufficientPrivileges : {
     description: ' If the client provides authentication credentials, but the credentials do not grant sufficient privileges to access a specific book-related operation',
-    value: {
-
-      message: "client_does_not_have_the_required_authorization_to_perform_the_requested_action."
-    }
+    value:  {
+      "statusCode": 401,
+      "error": {
+          "message": "Error_client_does_not_have_the_required_authorization_to_perform_the_requested_action"
+      },
+      "timeStamp": "2023-09-07T09:42:40.972Z",
+      "path": "/order"
+  }
   }, RoleBasedAccessControl: {
     description: 'If the API uses role-based access control, the server may respond with a 403 status code when a user with a certain role tries to access an operation that requires a higher role or specific permissions.',
-    value: {
-
-      message: "User_with_this_role_is_not_permitted_to_access_the_resource"
-    }
+    value:  {
+      "statusCode": 401,
+      "error": {
+          "message": "User_with_this_role_is_not_permitted_to_access_the_resource"
+      },
+      "timeStamp": "2023-09-07T09:42:40.972Z",
+      "path": "/order"
+  }
   },
   UpdatePaymentStatus: {
     description: 'Updates the payment status',
     value: {
-
-        message: "Order_with_Id_payment_has_been_updated_successfuly"
+        "succes": true,
+        "data": {
+          "message": "Order_with_Id_payment_has_been_updated_successfuly deleted successfully"
+        }
       }
   },
   deleteSuccess : {

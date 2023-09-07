@@ -86,8 +86,10 @@ export class MenuService {
     //flitering the results by price 
     async filterByPrice(price:number)
     {
-        const menuItems = await this.menuItemsRepository.find({order: {price:'DESC'},skip: 0, take: 2})
-        console.log(menuItems);
+        const menuItems = await this.menuItemsRepository.find({order: {price:'DESC'},skip: 1, take: 2})
+        const newMenuitem = await this.menuItemsRepository.createQueryBuilder('menu').orderBy('menu.price','DESC').skip(1).take(1).getMany()
+        console.log(newMenuitem);
+        
         
     }
 

@@ -17,8 +17,11 @@ export function MenuCustomdecarators(method:string,route:string)
                         ApiBadRequestResponse(MenuResponses.getById.Idnotfound)
                     )
                 case '/filter':
-                    return applyDecorators(ApiOkResponse(MenuResponses.filterGetByName.ok))
-            }
+                    return applyDecorators(
+                        ApiOperation({description: 'Gives the Filtered menuitems based upon menuitemname or category'}),ApiOkResponse(MenuResponses.filterGetByName.ok))
+                case '/':
+                    return applyDecorators(ApiOperation({description: 'Gives all the list of menuitems'}),ApiOkResponse(MenuResponses.get.ok))
+                }
         case 'Post':
             switch(route)
             {

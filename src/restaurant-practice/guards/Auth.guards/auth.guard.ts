@@ -10,11 +10,11 @@ export class EmployeeAuthGuard implements CanActivate {
         const request = context.switchToHttp().getRequest<Request>();
         const token = await this.getTokenFromHeader(request);
         if (!token) {
-            throw new UnauthorizedException({message :"Token is not present"});
+            throw new UnauthorizedException({message :"Error_Token_is_not_present"});
         }
         try {
           await this.jwtService.verifyAsync(token, {
-                secret: 'employeesecretkey' ,
+                secret: process.env['JWT_SECRET_KEY'],
             })
             // console.log(payload);
             
@@ -23,14 +23,14 @@ export class EmployeeAuthGuard implements CanActivate {
         {
             if(error.name === 'TokenExpiredError')
             {    
-                throw new HttpException({message : "Given_Token_has_been_expired"}, HttpStatus.FORBIDDEN);
+                throw new HttpException({message : "Error_Given_Token_has_been_expired"}, HttpStatus.FORBIDDEN);
             }
             else if(error.name === 'JsonWebTokenError')
             {
-                throw new UnauthorizedException({message :'Invalid_token'});
+                throw new UnauthorizedException({message :'Error_Invalid_token'});
             }
             else {
-                throw new UnauthorizedException({message :'Authentication_failed'});
+                throw new UnauthorizedException({message :'Error_Authentication_failed'});
             }
         }
         return true;

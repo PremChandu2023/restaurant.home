@@ -33,15 +33,16 @@ export class Menucontroller {
    /*Obtain the menuitem using given menuitemid*/
    @Roles(Role.Waiter)
    @MenuCustomdecarators('Get', '/:id')
-   @Get('item/:id')
+   @Get('menu-item/:id')
    async getMenuItemsById(@Param('id') id: number) {
       return await this.menuService.getMenuItemById(id);
    }
 
    @Get()
+   @MenuCustomdecarators('Get', '/')
    getAllMenuItems() {
-      // return this.menuService.getAllItems();
-      return this.menuService.filterByPrice(10);
+      return this.menuService.getAllItems();
+      // return this.menuService.filterByPrice(10);
    }
 
 

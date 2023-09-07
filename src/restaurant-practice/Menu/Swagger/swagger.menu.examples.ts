@@ -8,10 +8,18 @@ export const menuExamples = {
                 "menu_itemname": "manchuria",
                 "price": 10,
                 "tax": 5,
-                "date": {
-                    "createdDate": "2023-08-17T08:31:36.802Z",
-                    "updatedDate": "2023-08-24T04:40:27.390Z"
-                }
+            }
+        }
+    },
+    allMenu :{
+        description : "Gives the menu details",
+         value :{
+            "succes": true,
+            "data": {
+                "menuitem_id": 2,
+                "menu_itemname": "manchuria",
+                "price": 10,
+                "tax": 5,
             }
         }
     },

@@ -59,9 +59,10 @@ export function OrderCustomdecator (method: string, route:string)
                             ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
                         )
                     case 'declined/:id':
-                        return applyDecorators(ApiOperation({description : 'Update the payment status as declined using the given OrderId' })),
+                        return applyDecorators(ApiOperation({description: 'Update the payment status as declined using the given OrderId'}),
                         ApiOkResponse(OrderApiResponse.Patch.ok),
-                        ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
+                        ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound))
+                        
                 }
                 case 'Delete':
                     switch(route)
