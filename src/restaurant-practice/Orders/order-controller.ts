@@ -70,7 +70,7 @@ export class OrderController {
     /*Updates the 'quanity' of a particluar orderItem with given menuitem name and orderItem id */
     @Roles(Role.Manager, Role.Waiter)
     @OrderCustomdecator('Put', '/itemquantity:id')
-    @Put('/quantity/:orderItemid')
+    @Put('/quantity/:orderitemid')
     async updateOrderQuantity(@Param('id') orderItemId: number, @Body() updateOrder: updateOrderDto) {
         try {
             return await this.orderService.updateOrderQuantity(updateOrder, orderItemId);

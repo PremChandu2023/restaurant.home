@@ -61,7 +61,12 @@ export class OrderServices {
     }
     async getAllOrders():Promise<Order[]>
     {
-        const allOrders = await this.orderRespository.find({relations: {orderItems : {menuitems: true}}})
+        // const allOrders = await this.orderRespository.find({relations: {orderItems : {menuitems: true}}})
+
+        const allOrders = await this.orderRespository.createQueryBuilder('order').innerJoinAndSelect('order.orderItems', 'orderItems').getMany();
+        console.log(allOrders);
+        
+      
         return allOrders;
     }
 

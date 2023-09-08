@@ -44,6 +44,16 @@ export const menuExamples = {
             }
         }
     },
+    MenuNameNull : {
+        description : 'Occurs when given menuName is inalid or null',
+        value : {
+            "message": [
+              "menu_name should not be empty"
+            ],
+            "error": "Bad Request",
+            "statusCode": 400
+          }
+    },
     addMenuItem : {
         description : "Creates a new MenuItem",
         value :{
@@ -71,7 +81,15 @@ export const menuExamples = {
     InvalidIdNotFound: {
         description : "Occurs when Menuid is not found",
         value : {
-            "message": "Given_id_is_not_found"
+            description : "Occurs when given Id is invalid",
+             value :{
+                "statusCode": 404,
+                "error": {
+                  "message": "Given_orderid_is_invalid"
+                },
+                "timeStamp": "2023-09-04T10:44:40.302Z",
+                "path": "/order/20000"
+              }
         }
     },
     getbyName : {

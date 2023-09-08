@@ -7,6 +7,7 @@ import { MenuDto, MenuItemDto } from "../Orders/orders.dtos";
 import { classToPlain } from "class-transformer";
 import { getMenuItemDto } from "./menu.dtos";
 import { MenuExceptionConstants } from "./Constants/exception.constants";
+import { Order } from "../Entities/orders.entity";
 
 @Injectable()
 export class MenuService {
@@ -86,11 +87,18 @@ export class MenuService {
     //flitering the results by price 
     async filterByPrice(price:number)
     {
+        //select * from menuitems ORDER BY price DESC OFFSET 1 ROWS FETCH 2 ROWS 
         const menuItems = await this.menuItemsRepository.find({order: {price:'DESC'},skip: 1, take: 2})
         const newMenuitem = await this.menuItemsRepository.createQueryBuilder('menu').orderBy('menu.price','DESC').skip(1).take(1).getMany()
         console.log(newMenuitem);
-        
-        
+    }
+    /* A sub query for updating the orderstatus for all customers*/
+    async updateStatus()
+    {
+        const updatedStatus = await this.menuItemsRepository.createQueryBuilder('menu').where((qb) => {
+            const subQuery = qb.subQuery().select().from(Order,'order').where('order.orderStatus = :status').getQuery();
+        return subQuery}).setParameter('status','approved').getMany();
+             return updatedStatus
     }
 
 }

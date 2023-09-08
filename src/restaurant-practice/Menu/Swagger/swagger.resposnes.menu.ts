@@ -66,6 +66,18 @@ export const MenuResponses = {
           }
         }
       }
+    },
+    BadRequest : {
+      status: 400, description: 'Invalid id',
+      // schema :MenuItems,
+      
+         content: {
+        'application/json': {
+          examples: {
+           MenuNameFound : menuExamples.MenuNameNull
+          }
+        }
+      }
     }
   },
     addMenuItem :{

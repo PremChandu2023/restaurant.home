@@ -12,6 +12,7 @@ import { Role } from "../Enums/roles.enums";
 import { Roles } from "../Auth/Customdecarators/customroles.decarator";
 import { MenuCustomdecarators } from "./Swagger/swagger.menu.decarator";
 import { MenuExceptionConstants } from "./Constants/exception.constants";
+import { Cron } from "@nestjs/schedule";
 
 
 @ApiTags("Menu")
@@ -40,8 +41,9 @@ export class Menucontroller {
 
    @Get()
    @MenuCustomdecarators('Get', '/')
-   getAllMenuItems() {
+   getAllMenuItems() {      
       return this.menuService.getAllItems();
+      // return this.menuService.updateStatus();
       // return this.menuService.filterByPrice(10);
    }
 
@@ -95,7 +97,7 @@ export class Menucontroller {
 
    @Roles(Role.Waiter)
    @MenuCustomdecarators('Post', ':id/menuitem')
-   @Post(':id/menuitem')
+   @Post(':id/menu-item')
    async addMenuItem(@Body() menuItem: MenuItemDto, @Param('id', ParseIntPipe) id: number) {
       return await this.menuService.addMenuItem(menuItem, id);
    }

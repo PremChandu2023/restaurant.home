@@ -27,7 +27,8 @@ export function MenuCustomdecarators(method:string,route:string)
             {
                 case '/':
                     return applyDecorators(ApiOperation({description: 'Creates a new menuitem category'}),
-                    ApiOkResponse(MenuResponses.addMenu.ok))
+                    ApiOkResponse(MenuResponses.addMenu.ok),
+                    ApiBadRequestResponse(MenuResponses.addMenu.BadRequest))
                 case ':id/menuitem':
                     return applyDecorators(ApiOperation({description: 'Creates a new menuitem with menuId as a category'}),
                         ApiOkResponse(MenuResponses.addMenuItem.ok),

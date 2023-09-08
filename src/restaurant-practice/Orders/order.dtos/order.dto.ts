@@ -1,6 +1,6 @@
 import { Injectable, ValidationPipe } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsNotEmpty, IsNotEmptyObject, IsNumber, ValidateNested, isNumber } from "class-validator";
+import { IsArray, IsEnum, IsNotEmpty, IsNotEmptyObject, IsNumber, ValidateNested, isNumber } from "class-validator";
 
 import { Type } from "class-transformer";
 import { PaymentStatus } from "src/restaurant-practice/Enums/payment.enum";
@@ -19,7 +19,7 @@ export class OrderItemDTo {
     
 }
 
-@Injectable()
+
 export class createOrderDTo  {
     @ApiProperty({example : "Sukesh"})
     @IsNotEmpty({message: 'Customer Name should not be empty'})
@@ -38,8 +38,9 @@ export class createOrderDTo  {
         "menuItemId": 4,
         "quantity": 1
     }]})
-    @Type(()=> OrderItemDTo)
-    @ValidateNested({each: true})
+    @IsArray()
+    @ValidateNested({each:true})
+    @Type(()=> OrderItemDTo) 
     items:OrderItemDTo[];
 
 }
