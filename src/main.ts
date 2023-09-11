@@ -32,8 +32,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({transform : true,errorHttpStatusCode: HttpStatus.BAD_REQUEST, whitelist:true, forbidNonWhitelisted:true}));
   app.useGlobalFilters(new GlobalExceptionFilter())
   const data = new DatabaseClass();
-  console.log(  data.up
-    );
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>("PORT_NUMBER");

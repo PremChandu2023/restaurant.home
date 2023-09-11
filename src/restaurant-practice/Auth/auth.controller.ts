@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Param, Post, Res, UseGuards, UseInterceptors, Put, Request, BadRequestException, InternalServerErrorException, NotFoundException, ConflictException } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Res, UseGuards, UseInterceptors, Put, Request, BadRequestException, InternalServerErrorException, NotFoundException, ConflictException, Logger } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { Response } from 'express'
 import { max } from "class-validator";
-import { RecentsearchInterceptor } from "../Interceptors/menu.interceptor";
+import { GlobalResponseInterceptor } from "../Interceptors/menu.interceptor";
 import { EmployeeAuthGuard } from "../guards/Auth.guards/auth.guard";
 
 import { ApiTags } from "@nestjs/swagger";
@@ -16,9 +16,12 @@ import { loginEmployeeDto, registerEmployeeDto, createRoleDto, updateRoleDto } f
 
 @ApiTags("UserAuth")
 @Controller('/user')
-@UseInterceptors(RecentsearchInterceptor)
+@UseInterceptors(GlobalResponseInterceptor)
 export class AuthController {
-    constructor(private authservice: AuthService) { }
+    logger:Logger
+    constructor(private authservice: AuthService) { 
+        this.logger = new Logger(AuthController.name)
+    }
 
     /*Authentication means checking the identity of user. It provides an answer to a question: who is the user?
     Authorization is about access to resources. It answers the question: is user authorized to perform this operation?*/
@@ -26,7 +29,7 @@ export class AuthController {
     @Post('login')
     async employeeLogin(@Body() loginBody: loginEmployeeDto, @Res() response: Response) {
         const tokens = await this.authservice.checkLogin(loginBody);
-
+        this.logger.log('tokens are generated successfully')
         // response.cookie('Authentication',token,{httpOnly:true, maxAge: 2*60*60*100})
         // return response.send({
         //     success: true,
@@ -44,6 +47,7 @@ export class AuthController {
     async refreshToken(@Body('refereshtoken') refereshToken: string) {
         try {
             const newAccessToken = await this.authservice.validateRefereshToken(refereshToken);
+            this.logger.log('Jwt token has been generated')
             return { JwtToken: newAccessToken };
         }
         catch (error) {
@@ -55,7 +59,7 @@ export class AuthController {
                 case UserAuthConstants.REFRESHTOKEN_NOTFOUND:
                     throw new BadRequestException(error)
                 default:
-                    throw new InternalServerErrorException({ message: 'An error occurred while processing the request' });
+                    throw new InternalServerErrorException({ message: 'An error occurred while processing the request for referesh token' });
             }
         }
 
@@ -66,6 +70,7 @@ export class AuthController {
     async employeeRegister(@Body() employee: registerEmployeeDto) {
         try {
             return this.authservice.registerEmployee(employee)
+
         }
         catch (error) {
             switch (error) {
@@ -92,7 +97,7 @@ export class AuthController {
                 case UserAuthConstants.EMPLOYEEID_NOT_FOUND:
                     throw new NotFoundException(error)
                 default:
-                    throw new InternalServerErrorException("Cannot get details of employee using employee id")
+                    throw new InternalServerErrorException(`Cannot get details of employee using employee id ${id}`)
             }
         }
     }

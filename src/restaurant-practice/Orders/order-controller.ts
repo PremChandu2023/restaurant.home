@@ -4,7 +4,7 @@ import { OrderServices } from "./order-service";
 import { MenuDto, MenuItemDto, updatePaymentDTo } from "./orders.dtos";
 import { MenuItems } from "../Entities/menuitem.entity";
 import { OrderCustomInterceptor } from "./Interceptors/order.Interceptor";
-import { RecentsearchInterceptor } from "../Interceptors/menu.interceptor";
+import { GlobalResponseInterceptor } from "../Interceptors/menu.interceptor";
 import { Roles } from "../Auth/Customdecarators/customroles.decarator";
 import { EmployeeAuthGuard } from "../guards/Auth.guards/auth.guard";
 import { RolesGuard } from "../guards/Auth.guards/rolebased.guard";
@@ -18,7 +18,7 @@ import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.c
 @ApiTags("Orders")
 @ApiBearerAuth()
 @Controller('/order')
-@UseInterceptors(RecentsearchInterceptor)
+@UseInterceptors(GlobalResponseInterceptor)
 // @UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
     constructor(private orderService: OrderServices) { }

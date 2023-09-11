@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,10 +10,16 @@ import { ConfigModule } from '@nestjs/config';
 // import { restaurentdatabase, restaurentdatabass } from './configurations/databse.config';
 import { DATABASE_CONFIG } from './configurations/database.config';
 import { DatabaseConfig } from './configurations/database.configure.service';
+import { LoggerMiddleware } from './restaurant-practice/Middlewares/logger.middleware';
 @Module({
   imports : [TypeOrmModule.forRootAsync({imports: [ConfigModule], useClass: DatabaseConfig}),Ordermodule,Menumodule,AuthModule, ConfigModule.forRoot({isGlobal:true
   ,load: [DATABASE_CONFIG]})],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer)
+    {
+        consumer.apply(LoggerMiddleware).forRoutes('*');
+    }
+}

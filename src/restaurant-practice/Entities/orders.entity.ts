@@ -18,7 +18,7 @@ export class Order {
     @Column({default:null})
     tableNumber:number;
 
-    @OneToMany(()=> OrderItem, (orderitems)=> orderitems.orders, {eager:true})
+    @OneToMany(()=> OrderItem, (orderitems)=> orderitems.orders, )
     orderItems:OrderItem[];
 
     @Column({type :'enum', enum : OrderStatus})

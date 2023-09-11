@@ -12,7 +12,7 @@ export const DATABASE_CONFIG =  () => ({
         entities: [...entityDefault],
         autoLoadEntities: true,
         synchronize: true,
-        // logging : true]
+        // logging : true
     }
 
 })

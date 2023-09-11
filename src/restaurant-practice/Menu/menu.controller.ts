@@ -1,7 +1,7 @@
-import { BadRequestException, Body, Controller, Get, InternalServerErrorException, NotFoundException, Param, ParseIntPipe, Post, Put, Query, Req, UseGuards, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Get, InternalServerErrorException, Logger, NotFoundException, Param, ParseIntPipe, Post, Put, Query, Req, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiQuery, ApiTags } from "@nestjs/swagger";
 // import { AuthGuard } from "../guards/Auth-guard";
-import { RecentsearchInterceptor } from "../Interceptors/menu.interceptor";
+import { GlobalResponseInterceptor } from "../Interceptors/menu.interceptor";
 import { CustomBook } from "../Auth/Customdecarators/custom-decarrators-Books";
 import { MenuDto, MenuItemDto } from "../Orders/orders.dtos";
 import { MenuService } from "./menu.service";
@@ -17,19 +17,15 @@ import { Cron } from "@nestjs/schedule";
 
 @ApiTags("Menu")
 @Controller('menu')
-@UseInterceptors(RecentsearchInterceptor)
+@UseInterceptors(GlobalResponseInterceptor)
 @Roles(Role.Manager)
 // @UseGuards(EmployeeAuthGuard,RolesGuard)
 export class Menucontroller {
-   constructor(private menuService: MenuService) { }
+   logger : Logger;
+   constructor(private menuService: MenuService) {
+      this.logger = new Logger(Menucontroller.name)
+    }
 
-
-   // @Get('/')
-   // @Roles(Role.Waiter)
-   // async getAllMenu()
-   // {
-   //   return await this.menuService.getAllItems();
-   // }
 
    /*Obtain the menuitem using given menuitemid*/
    @Roles(Role.Waiter)
@@ -101,4 +97,11 @@ export class Menucontroller {
    async addMenuItem(@Body() menuItem: MenuItemDto, @Param('id', ParseIntPipe) id: number) {
       return await this.menuService.addMenuItem(menuItem, id);
    }
+
+   // @Get('/')
+   // @Roles(Role.Waiter)
+   // async getAllMenu()
+   // {
+   //   return await this.menuService.getAllItems();
+   // }
 }

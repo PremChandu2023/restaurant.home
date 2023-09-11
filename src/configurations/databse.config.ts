@@ -6,6 +6,7 @@
 // import { Roles } from "../restaurant-practice/Entities/roles.entity";
 // import { OrderItem } from "../restaurant-practice/Entities/orderitem.entity";
 // import { Token } from "../restaurant-practice/Entities/token.enitty";
+// import { Logger } from "@nestjs/common";
 
 // export const restaurentdatabase : TypeOrmModuleOptions  = 
 //  {
@@ -18,6 +19,7 @@
 //         autoLoadEntities: true,
 //         synchronize: true,
 //         logging : true,
+//         logger: Logger.
 // }
 
 // export const restaurentdatabass : TypeOrmModuleOptions  = 

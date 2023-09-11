@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { AuthController } from "./auth.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Employee } from "../Entities/employee.entity";
@@ -19,7 +19,7 @@ imports : [TypeOrmModule.forFeature([Employee, Roles,Token]),
             JwtModule.register({
                 secret: 'employeesecretkey',
                 signOptions : {algorithm : 'HS512'}
-            }),ConfigModule],providers : [AuthService,EmployeeAuthGuard,RolesGuard]
+            }),ConfigModule],providers : [AuthService,EmployeeAuthGuard,RolesGuard, Logger]
 })
 export class AuthModule {
 
