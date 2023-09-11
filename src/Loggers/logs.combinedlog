@@ -1,0 +1,255 @@
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Menumodule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Ordermodule dependencies initialized"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OrderController {/order}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/quantity/:orderitemid, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/order-item/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/approved, PATCH} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/declined, PATCH} route"}
+{"context":"RoutesResolver","level":"info","message":"Menucontroller {/menu}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/menu-item/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/filter, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/:id/menu-item, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/user}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/refereshtoken, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/register, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/roles, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/role/:id, PUT} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"Port is running on port number:3000"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Menumodule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Ordermodule dependencies initialized"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OrderController {/order}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/quantity/:orderitemid, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/order-item/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/approved, PATCH} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/declined, PATCH} route"}
+{"context":"RoutesResolver","level":"info","message":"Menucontroller {/menu}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/menu-item/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/filter, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/:id/menu-item, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/user}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/refereshtoken, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/register, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/roles, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/role/:id, PUT} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"Port is running on port number:3000"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Menumodule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Ordermodule dependencies initialized"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OrderController {/order}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/quantity/:orderitemid, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/order-item/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/approved, PATCH} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/declined, PATCH} route"}
+{"context":"RoutesResolver","level":"info","message":"Menucontroller {/menu}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/menu-item/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/filter, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/:id/menu-item, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/user}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/refereshtoken, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/register, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/roles, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/role/:id, PUT} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"Port is running on port number:3000"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Menumodule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Ordermodule dependencies initialized"}
+{"level":"info","message":"ramanjanelu"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OrderController {/order}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/quantity/:orderitemid, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/order-item/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/approved, PATCH} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/declined, PATCH} route"}
+{"context":"RoutesResolver","level":"info","message":"Menucontroller {/menu}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/menu-item/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/filter, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/:id/menu-item, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/user}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/refereshtoken, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/register, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/roles, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/role/:id, PUT} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"Port is running on port number:3000"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Menumodule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Ordermodule dependencies initialized"}
+{"level":"info","message":"ramanjanelu"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OrderController {/order}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/quantity/:orderitemid, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/order-item/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/approved, PATCH} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/declined, PATCH} route"}
+{"context":"RoutesResolver","level":"info","message":"Menucontroller {/menu}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/menu-item/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/filter, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/:id/menu-item, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/user}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/refereshtoken, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/register, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/roles, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/role/:id, PUT} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"Port is running on port number:3000"}
+{"context":"NestFactory","level":"info","message":"Starting Nest application..."}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"PassportModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"JwtModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigHostModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AppModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"ConfigModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmCoreModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"TypeOrmModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"AuthModule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Menumodule dependencies initialized"}
+{"context":"InstanceLoader","level":"info","message":"Ordermodule dependencies initialized"}
+{"level":"info","message":"ramanjanelu"}
+{"context":"RoutesResolver","level":"info","message":"AppController {/}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/, GET} route"}
+{"context":"RoutesResolver","level":"info","message":"OrderController {/order}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/quantity/:orderitemid, PUT} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/order-item/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id, DELETE} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/approved, PATCH} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/order/:id/declined, PATCH} route"}
+{"context":"RoutesResolver","level":"info","message":"Menucontroller {/menu}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/menu-item/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/filter, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/menu/:id/menu-item, POST} route"}
+{"context":"RoutesResolver","level":"info","message":"AuthController {/user}:"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/login, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/refereshtoken, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/register, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/:id, GET} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/roles, POST} route"}
+{"context":"RouterExplorer","level":"info","message":"Mapped {/user/role/:id, PUT} route"}
+{"context":"NestApplication","level":"info","message":"Nest application successfully started"}
+{"level":"info","message":"Port is running on port number:3000"}

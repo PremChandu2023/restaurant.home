@@ -1,8 +1,10 @@
-//Modules ==>  providers defined in a module are visible to other members of the module without the need to export them. When a provider needs to be visible outside of a module, it is first exported from its host module, and then imported into its consuming module.
+/**
+ * Modules ==>  providers defined in a module are visible to other members of the module without the need to export them. When a provider needs to be visible outside of a module, it is first exported from its host module, and then imported into its consuming module.
 
 
 //Feature Modules :==>
-// Modules act as containers for related components, services, controllers, providers, and other entities. They help in achieving separation of concerns by grouping related functionality together and promoting code reusability. 
+/**
+ *  Modules act as containers for related components, services, controllers, providers, and other entities. They help in achieving separation of concerns by grouping related functionality together and promoting code reusability. 
 
 // Feature Modules are a specific type of modules in Nest.js that are used to organize functionality related to specific features of your application. Each feature module typically represents a distinct feature or domain of your application.
 
@@ -14,4 +16,4 @@
 
 //Global modules :
 
-// In Nest.js, Global Modules are a special type of module that provides a way to make certain providers and services available globally throughout the entire application without the need for explicit importing in each module. Global modules are useful for setting up shared functionality, configuration, or services that need to be available application-wide.
+// In Nest.js, Global Modules are a special type of module that provides a way to make certain providers and services available globally throughout the entire application without the need for explicit importing in each module. Global modules are useful for setting up shared functionality, configuration, or services that need to be available application-wide.*/

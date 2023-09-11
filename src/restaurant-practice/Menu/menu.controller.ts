@@ -27,7 +27,8 @@ export class Menucontroller {
     }
 
 
-   /*Obtain the menuitem using given menuitemid*/
+   /**
+    * Obtain the menuitem using given menuitemid*/
    @Roles(Role.Waiter)
    @MenuCustomdecarators('Get', '/:id')
    @Get('menu-item/:id')
@@ -44,7 +45,8 @@ export class Menucontroller {
    }
 
 
-   /*Sorting the menuitems using item name or category*/
+   /**
+    * Sorting the menuitems using item name or category*/
    @Get('/filter')
    @MenuCustomdecarators('Get', '/filter')
    @ApiQuery({name: 'itemName', required : false})
@@ -75,7 +77,8 @@ export class Menucontroller {
       }
    }
 
-   /*This creates the new menu category*/
+   /**
+    * This creates the new menu category*/
    @MenuCustomdecarators('Post', '/')
    @Post()
   async  createMenu(@Body() menu: MenuDto) {
