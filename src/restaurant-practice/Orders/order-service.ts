@@ -10,7 +10,7 @@ import { MenuDto, MenuItemDto, orderDetails, updatePaymentDTo } from "./orders.d
 import { OrderStatus } from "../Enums/order.enum";
 import { PaymentStatus } from "../Enums/payment.enum";
 import { plainToClass } from "class-transformer";
-import { AddItemDtos, createOrderDTo, getOrderDto, updateOrderDto } from "./order.dtos/order.dto";
+import { AddItemDtos, createOrderDTo, getOrderDto, updateOrderDto } from "./Dtos/order.dto";
 import { OrderExceptionConstants } from "./constants/exceptionconstants/exception.constant";
 import { DatabaseErrorConstants } from "./constants/exceptionconstants/databse.constants";
 
