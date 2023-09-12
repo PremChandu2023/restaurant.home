@@ -9,6 +9,6 @@ export class RestaurantService {
 
     createRestaurant()
     {
-        
+        // this.restaurantRespository.createQueryBuilder().insert().into('resaturant').values([])
     }
 }
