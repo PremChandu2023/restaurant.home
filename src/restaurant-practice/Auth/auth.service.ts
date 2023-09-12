@@ -22,7 +22,7 @@ export class AuthService {
     private configService:ConfigService,private jwtService:JwtService){
         this.logger = new Logger(AuthService.name)
     }
-    async checkLogin(createLogin: loginEmployeeDto)
+    async authenticateLogin(createLogin: loginEmployeeDto)
     {  
         try{
             this.logger.log('initializes the process of login','AuthService')

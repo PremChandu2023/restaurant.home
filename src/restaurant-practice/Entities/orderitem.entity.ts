@@ -1,5 +1,5 @@
 
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Order } from "./orders.entity";
 import { MenuItems } from "./menuitem.entity";
 import { Exclude } from "class-transformer";

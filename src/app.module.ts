@@ -11,8 +11,10 @@ import { ConfigModule } from '@nestjs/config';
 import { DATABASE_CONFIG } from './configurations/database.config';
 import { DatabaseConfig } from './configurations/database.configure.service';
 import { LoggerMiddleware } from './restaurant-practice/Middlewares/logger.middleware';
+import { RestaurantModule } from './restaurant-practice/restaurant/restaurant.module';
 @Module({
-  imports : [TypeOrmModule.forRootAsync({imports: [ConfigModule], useClass: DatabaseConfig}),Ordermodule,Menumodule,AuthModule, ConfigModule.forRoot({isGlobal:true
+  imports : [TypeOrmModule.forRootAsync({imports: [ConfigModule], useClass: DatabaseConfig}),Ordermodule,RestaurantModule,
+Menumodule,AuthModule, ConfigModule.forRoot({isGlobal:true
   ,load: [DATABASE_CONFIG]})],
   controllers: [AppController],
   providers: [AppService],

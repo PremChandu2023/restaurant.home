@@ -46,12 +46,10 @@ async function bootstrap() {
   console.log(port);
 
   await app.listen(port);
-  Logger.log(`Port is running on port number:${port}`);
+  const logger = new Logger('PORT')
+  logger.log(`Port is running on port number:${port}`);
   /**
    * If we add any new dependecies in nest js application we have to restart the program*/
 
-  // const document = SwaggerModule.createDocument(app, options,)
-  // SwaggerModule.setup("api", app, document)
-  // await app.listen(3000);
 }
 bootstrap();

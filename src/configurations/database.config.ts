@@ -9,10 +9,9 @@ export const DATABASE_CONFIG =  () => ({
         username: process.env.DB_USERNAME,
         password : process.env.DB_PASSWORD,
         database:process.env.DB_DATABASE1,
-        entities: [...entityDefault],
         autoLoadEntities: true,
         synchronize: true,
-        // logging : true
+        logging : true
     }
 
 })

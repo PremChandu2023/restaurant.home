@@ -14,7 +14,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     
     async validate(logindto:loginEmployeeDto)
     {
-        const user =await this.authService.checkLogin(logindto);
+        const user =await this.authService.authenticateLogin(logindto);
         if(!user)
         {
             throw new UnauthorizedException({message : 'unauthorized in loacl strategy'});

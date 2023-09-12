@@ -28,7 +28,7 @@ export class AuthController {
     @AuthCustomdecarators('Post', 'login')
     @Post('login')
     async employeeLogin(@Body() loginBody: loginEmployeeDto, @Res() response: Response) {
-        const tokens = await this.authservice.checkLogin(loginBody);
+        const tokens = await this.authservice.authenticateLogin(loginBody);
         this.logger.log('tokens are generated successfully')
         // response.cookie('Authentication',token,{httpOnly:true, maxAge: 2*60*60*100})
         // return response.send({
@@ -43,7 +43,7 @@ export class AuthController {
         })
     }
     @AuthCustomdecarators('Post', 'refereshtoken')
-    @Post('refereshtoken')
+    @Post('referesh-token')
     async refreshToken(@Body('refereshtoken') refereshToken: string) {
         try {
             const newAccessToken = await this.authservice.validateRefereshToken(refereshToken);
