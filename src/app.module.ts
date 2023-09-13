@@ -13,15 +13,22 @@ import { DatabaseConfig } from './configurations/database.configure.service';
 import { LoggerMiddleware } from './restaurant-practice/Middlewares/logger.middleware';
 import { RestaurantModule } from './restaurant-practice/restaurant/restaurant.module';
 @Module({
-  imports : [TypeOrmModule.forRootAsync({imports: [ConfigModule], useClass: DatabaseConfig}),Ordermodule,RestaurantModule,
-Menumodule,AuthModule, ConfigModule.forRoot({isGlobal:true
-  ,load: [DATABASE_CONFIG]})],
+  imports: [
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: DatabaseConfig,
+    }),
+    Ordermodule,
+    RestaurantModule,
+    Menumodule,
+    AuthModule,
+    ConfigModule.forRoot({ isGlobal: true, load: [DATABASE_CONFIG] }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
-    configure(consumer: MiddlewareConsumer)
-    {
-        consumer.apply(LoggerMiddleware).forRoutes('*');
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
 }

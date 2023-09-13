@@ -72,8 +72,23 @@ export class MenuService {
         this.logger.log(`Completed the process of fetching the Menuitem details using  menuitem id ${id}`)
         return newMenuItems;
     }
-    async getMenuItemsByCategory(category:string)
+    async getMenuItemsByCategoryOrItemName(category?:string,ItemName?:string)
     {
+        if(ItemName)
+        {
+            this.logger.log(`Fetching the Menuitem details by name of the menuitem by partial sort`)
+            const newMenuItems =await this.menuItemsRepository.createQueryBuilder('menuitems').select().where('menuitems.menu_itemname LIKE :menu_itemname', {menu_itemname: `%${ItemName}%`}).getMany()
+    
+        //    const newMenuItems  =await this.menuItemsRepository.findBy({menu_itemname : ILike(`%${ItemName}%`)})
+           if(newMenuItems.length === 0)
+           {
+                this.logger.log(MenuExceptionConstants.MENUITEMID_NOTFOUND);
+                throw MenuExceptionConstants.MENUITEMNAME_NOTFOUND;
+           }
+           return newMenuItems;
+        }
+        else if(category)
+        {
         const newMenuItem = await this.menuRepository.find({where : {
             menu_Type : ILike(`%${category}%`)
         },relations: {menuItems:true}})
@@ -84,6 +99,7 @@ export class MenuService {
        }
 
         return newMenuItem;
+    }
     }
     async getMenuItemsByName(ItemName:string):Promise<MenuItems[]>
     {

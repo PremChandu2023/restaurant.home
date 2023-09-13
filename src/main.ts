@@ -9,6 +9,7 @@ import { setupSwagger } from './swagger/swagger-config/swaggers';
 import { DatabaseClass } from './swagger/swagger.practices/swagger.config';
 import { loggerConfig } from './Loggers/winston.loggerconfig';
 import { loggers } from 'winston';
+import { GlobalResponseInterceptor } from './restaurant-practice/Interceptors/menu.interceptor';
 
 async function bootstrap() {
   // const options = new DocumentBuilder()
@@ -36,6 +37,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.useGlobalInterceptors(new GlobalResponseInterceptor())
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   const configService = app.get(ConfigService);

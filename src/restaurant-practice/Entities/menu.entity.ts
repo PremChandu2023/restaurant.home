@@ -13,7 +13,7 @@ export class Menu {
     @Column()
     menu_Type:string;
 
-    @ManyToOne(() => Restaurant, (restaurants) => restaurants.menuItems)
+    @ManyToOne(() => Restaurant, (restaurants) => restaurants.menus)
     @JoinColumn({foreignKeyConstraintName: 'fk_restaurant'})
     restaurants:Restaurant
     

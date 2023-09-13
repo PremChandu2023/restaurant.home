@@ -53,12 +53,9 @@ export class Menucontroller {
    @ApiQuery({name: 'category', required : false})
    async getMenuByName(@Query('itemName',) ItemName: string, @Query('category') category: string) {
       try {
-         if (ItemName) {
+         if (ItemName || category) {
             
-            return await this.menuService.getMenuItemsByName(ItemName);
-         }
-         else if (category) {
-            return await this.menuService.getMenuItemsByCategory(category);
+            return await this.menuService.getMenuItemsByCategoryOrItemName(category,ItemName);
          }
          else {
             // Handle the case where neither itemName nor category is provided
