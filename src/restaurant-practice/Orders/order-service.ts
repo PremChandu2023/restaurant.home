@@ -31,17 +31,20 @@ import {
 } from './Dtos/order.dto';
 import { OrderExceptionConstants } from './constants/exceptionconstants/exception.constant';
 import { DatabaseErrorConstants } from './constants/exceptionconstants/databse.constants';
+import { Restaurant } from '../restaurant/Entities/restaurant.entity';
 
 @Injectable()
 export class OrderServices {
   logger: Logger;
   constructor(
-    @InjectRepository(Menu) private menuRespository: Repository<Menu>,
+    @InjectRepository(Menu) private readonly menuRespository: Repository<Menu>,
     @InjectRepository(MenuItems)
     private menuItemRespository: Repository<MenuItems>,
     @InjectRepository(Order) private orderRespository: Repository<Order>,
     @InjectRepository(OrderItem)
     private orderItemRespository: Repository<OrderItem>,
+    @InjectRepository(Restaurant)
+    private restaurantRespository: Repository<Restaurant>,
     private datasource: DataSource,
   ) {
     this.logger = new Logger(OrderServices.name);
@@ -63,12 +66,21 @@ export class OrderServices {
     const savedMenuitem = await this.menuItemRespository.save(newmenuItem);
     return savedMenuitem;
   }
-  async createOrder(createOrder: createOrderDTo) {
+  async createOrder(createOrder: createOrderDTo, id: number) {
     this.logger.log('Initializes the process of creating a new Order');
+    const resaturant = await this.restaurantRespository.findOne({
+      where: { id: id },
+    });
+    if (!resaturant) {
+      throw RestaurantExcepConst.INVALID_RESATUARANT_ID;
+    }
     const newOrder = this.orderRespository.create();
     newOrder.customerName = createOrder.customerName;
     newOrder.tableNumber = createOrder.tableNumber;
+
     const savedOrder = await this.orderRespository.save(newOrder);
+    resaturant.orders = [newOrder];
+    await this.restaurantRespository.save(resaturant);
     if (!savedOrder) {
       this.logger.log(DatabaseErrorConstants.CREATED_FAILED);
       throw DatabaseErrorConstants.CREATED_FAILED;
@@ -119,12 +131,7 @@ export class OrderServices {
       this.logger.log(OrderExceptionConstants.ORDER_INVALID);
       throw OrderExceptionConstants.ORDER_INVALID;
     }
-
-    const transformOrder = await plainToClass(Order, newOrder, {
-      excludeExtraneousValues: false,
-    });
-    this.logger.log('Completed the process of creating a new Order');
-    return transformOrder;
+    return newOrder;
 
     // return await this.orderItemRespository.createQueryBuilder('oi').where('oi.orderItem_id = :id', {id: OrderId}).getMany()
     // return await this.orderItemRespository.createQueryBuilder('orderitems').select(['orderitems.orderItem_id', 'orderitems.quantity']).where('orderitems.orderItem_id =:id', { id: OrderId }).getOne();
@@ -220,15 +227,6 @@ export class OrderServices {
       'Initializes the process of updating the payment and order status',
     );
     return this.datasource.transaction(async (manager) => {
-      // if(!Object.values(PaymentStatus).includes(updateBody.orderStatus))
-      // {
-      //     throw new BadRequestException('Given_orderstatus_is_Invalid');
-      // }
-      // const order = await this.orderRespository.findOne({ where : {order_id : orderId}})
-      // if( !order)
-      // {
-      //     throw new HttpException('given_id_not_found', HttpStatus.NOT_FOUND);
-      // }
       const newOrder = await this.orderRespository.findOne({
         where: { order_id: orderId },
       });
@@ -254,7 +252,7 @@ export class OrderServices {
     });
   }
   async calculatePrice(newOrderItems: orderDetails[]) {
-    this.logger.log('Calaculating the price sdbafjkf details');
+    this.logger.log('Calaculating the price details');
     const totalPrice = newOrderItems.reduce(
       (accum, item) => accum + item.price,
       0,
@@ -270,19 +268,14 @@ export class OrderServices {
   /**
    * Retreiving Order details for customer with given OrderId
    */
- async  getOrdersById(orderId:number)
-  {
-        // by using database repository methods by default left join
-        // const newOrder = await this.orderRespository.find({where: {order_id: orderId},relations: ['orderItems', 'orderItems.menuitems',]})
+  async getOrdersById(orderId: number) {
+    // by using database repository methods by default left join
+    // const newOrder = await this.orderRespository.find({where: {order_id: orderId},relations: ['orderItems', 'orderItems.menuitems',]})
 
-        // const newOrder = await this.orderRespository.createQueryBuilder('order').innerJoinAndSelect('order.orderItems','orderitems').innerJoinAndSelect('orderitems.menuitems','menuitems').where('menuitems.price >= :price',{price : 100}).getOne();
+    const newOrder = await this.orderRespository.createQueryBuilder('order').innerJoinAndSelect('order.orderItems','orderitems').innerJoinAndSelect('orderitems.menuitems','menuitems').where('menuitems.price >= :price',{price : 100}).andWhere('order.order_id = :id',{id: orderId}).getMany();
 
+    // const newOrder = await this.orderItemRespository.createQueryBuilder('orderitem').innerJoinAndSelect('orderitem.orders','orders')
 
-        const newOrder = await this.orderItemRespository.createQueryBuilder('order')
-
-        // const newOrder = await this.orderItemRespository.createQueryBuilder('orderitem').innerJoinAndSelect('orderitem.orders','orders')
-
-        return newOrder;
-
+    return newOrder;
   }
 }

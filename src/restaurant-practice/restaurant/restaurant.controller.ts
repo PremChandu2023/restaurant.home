@@ -50,4 +50,16 @@ export class RestaurantController {
     // return await this.restaurantService.getAllRestaurantDetails(id, price);
     return await this.restaurantService.getRestaurantDetailsWithOrders(id);
   }
+
+  @Get('/role/:id')
+  getEmployeesById(@Param('id', ParseIntPipe) id:number)
+  {
+     return this.restaurantService.getEmployeeByRoleId(id);
+  }
+
+  @Get('/orderscount')
+  async getOrdersCount()
+  {
+      return await this.restaurantService.getTotalOrdersCount();
+  }
 }

@@ -13,6 +13,7 @@ import { Roles } from "../Auth/Customdecarators/customroles.decarator";
 import { MenuCustomdecarators } from "./Swagger/swagger.menu.decarator";
 import { MenuExceptionConstants } from "./Constants/exception.constants";
 import { Cron } from "@nestjs/schedule";
+import { OrderType } from "./Constants/orders.type";
 
 
 @ApiTags("Menu")
@@ -98,10 +99,10 @@ export class Menucontroller {
       return await this.menuService.addMenuItem(menuItem, id);
    }
 
-   // @Get('/')
-   // @Roles(Role.Waiter)
-   // async getAllMenu()
-   // {
-   //   return await this.menuService.getAllItems();
-   // }
+   @Get('/filterbyorder/:type')
+   @Roles(Role.Waiter)
+   async getAllMenu(@Param('type') type:OrderType)
+   {
+     return await this.menuService.filterByPrice(type);
+   }
 }

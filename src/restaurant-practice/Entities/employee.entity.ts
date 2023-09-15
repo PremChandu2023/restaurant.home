@@ -1,47 +1,57 @@
-import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Roles } from "./roles.entity";
-import { publicEncrypt } from "crypto";
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Roles } from './roles.entity';
+import { publicEncrypt } from 'crypto';
 import * as bycrypt from 'bcrypt';
-import { Dateschema } from "./date.entity";
-import { IsNumberString } from "class-validator";
-import { Token } from "./token.enitty";
-
+import { Dateschema } from './date.entity';
+import { IsNumberString } from 'class-validator';
+import { Token } from './token.enitty';
+import { Order } from './orders.entity';
 
 @Entity('employees')
 export class Employee {
-    @PrimaryGeneratedColumn()
-    id:number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({unique:true})
-    employee_Id:string
+  @Column({ unique: true })
+  employee_Id: string;
 
-    @Column({nullable:false})
-    employee_Name: string
+  @Column({ nullable: false })
+  employee_Name: string;
 
-    @Column({default:'inactive'})
-    status:string //active or inactive
+  @Column({ default: 'inactive' })
+  status: string; //active or inactive
 
-    @Column({nullable:false})
-    email:string
+  @Column({ nullable: false })
+  email: string;
 
-    @Column({nullable:false})
-    password:string
+  @Column({ nullable: false,select: false })
+  password: string;
 
-    @Column({nullable :true})
-    @IsNumberString()
-    phoneNumber:string
+  @Column({ nullable: true })
+  @IsNumberString()
+  phoneNumber: string;
 
-    @ManyToOne(() => Roles, (roles) => roles.employees, {eager : true})
-    roles:Roles
+  @OneToMany(() => Order, (orders) => orders.user)
+  orders:Order[]
 
-    @Column(() => Dateschema)
-    date:Dateschema
+  @ManyToOne(() => Roles, (roles) => roles.employees, { eager: true })
+  roles: Roles;
 
-    @OneToMany(()=> Token, (tokens) => tokens.user)
-    tokens : Token[]
+  @Column(() => Dateschema)
+  date: Dateschema;
 
-    @BeforeInsert()
-    hashPassword() {
-        this.password= bycrypt.hashSync(this.password, 10);
-    }
+  @OneToMany(() => Token, (tokens) => tokens.user)
+  tokens: Token[];
+
+  @BeforeInsert()
+  hashPassword() {
+    this.password = bycrypt.hashSync(this.password, 10);
+  }
 }

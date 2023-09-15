@@ -40,14 +40,14 @@ import { DatabaseErrorConstants } from './constants/exceptionconstants/databse.c
 @UseInterceptors(GlobalResponseInterceptor)
 // @UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
-  constructor(private orderService: OrderServices) {}
+  constructor(private orderService: OrderServices) { }
 
   @Roles(Role.Manager, Role.Waiter)
   @OrderCustomdecator('Post', '/')
-  @Post('/')
-  async createOrder(@Body() createOrder: createOrderDTo) {
+  @Post('/restaurant/:id')
+  async createOrder(@Param('id', ParseIntPipe) id:number,@Body() createOrder: createOrderDTo) {
     try {
-      return await this.orderService.createOrder(createOrder);
+      return await this.orderService.createOrder(createOrder,id);
     } catch (error) {
       switch (error) {
         case DatabaseErrorConstants.CREATED_FAILED:
@@ -175,11 +175,10 @@ export class OrderController {
     }
   }
 
-  @Get('practice/:id')
-  async getOrders(@Param('id', ParseIntPipe) orderId:number)
-  {
-      return await this.orderService.getOrdersById(orderId)
-  }
+  // @Get('orders/:id')
+  // async getOrders(@Param('id', ParseIntPipe) orderId: number) {
+  //   return await this.orderService.getOrdersById(orderId);
+  // }
 
   // @Roles(Role.Manager,Role.Waiter)
   // @OrderCustomdecator('Get','/byname/:name')

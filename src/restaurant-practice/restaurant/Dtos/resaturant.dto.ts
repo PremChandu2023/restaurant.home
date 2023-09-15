@@ -29,3 +29,9 @@ export class AddMenuItemDto {
     tax:number
 
 }
+
+@Injectable()
+export class OrdersCountDto {
+    restaurant_Name :string
+    orders_count:number
+} 

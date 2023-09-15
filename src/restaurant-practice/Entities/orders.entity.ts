@@ -6,6 +6,8 @@ import { OrderStatus } from "src/restaurant-practice/Enums/order.enum";
 import { Exclude } from 'class-transformer';
 import { Dateschema } from "./date.entity";
 import { Restaurant } from "../restaurant/Entities/restaurant.entity";
+import { Employee } from "./employee.entity";
+import { User } from "./user.entity";
 
 @Entity('orders')
 export class Order {
@@ -24,6 +26,9 @@ export class Order {
 
     @ManyToOne(() => Restaurant, (restaurants) => restaurants.orders)
     restaurant:Restaurant
+
+    @ManyToOne(() => User, (orders) => orders.order)
+    user:User
 
     @Column({type :'enum', enum : OrderStatus})
     orderStatus: OrderStatus

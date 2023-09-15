@@ -12,11 +12,12 @@ import { EmployeeAuthGuard } from "../guards/Auth.guards/auth.guard";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { RolesGuard } from "../guards/Auth.guards/rolebased.guard";
+import { Restaurant } from "../restaurant/Entities/restaurant.entity";
 
 @Module({
 
 controllers : [OrderController],
-imports: [TypeOrmModule.forFeature([Menu,Order,MenuItems,OrderItem, Employee, Roles]),JwtModule.register({
+imports: [TypeOrmModule.forFeature([Menu,Order,MenuItems,OrderItem, Employee, Roles,Restaurant]),JwtModule.register({
     secret: 'employeesecret',
     signOptions : {algorithm : 'HS512',
     expiresIn : '1d'
