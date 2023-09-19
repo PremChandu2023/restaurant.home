@@ -3,6 +3,7 @@ import {
     BeforeInsert,
     Column,
     Entity,
+    Index,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -21,6 +22,7 @@ import {
     id: number;
   
     @Column({ nullable: false })
+    @Index('name1_idx')
     user_Name: string;
   
   

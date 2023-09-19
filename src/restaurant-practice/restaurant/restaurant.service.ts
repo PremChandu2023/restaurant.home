@@ -154,6 +154,7 @@ export class RestaurantService {
         'AVG(orderItems.quantity * menuitems.price) AS averagePrice',
       ])
       .groupBy('restaurant.name')
+      .orderBy('averagePrice')
       .getRawMany();
 
     return orderCount;

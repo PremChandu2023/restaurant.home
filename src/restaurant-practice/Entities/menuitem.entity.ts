@@ -4,6 +4,7 @@ import { OrderItem } from "./orderitem.entity";
 import { Exclude } from "class-transformer";
 import { Dateschema } from "./date.entity";
 import { Restaurant } from "../restaurant/Entities/restaurant.entity";
+import { MenuItemStatus } from "../Menu/Enums/menuItem.status";
 
 @Entity('menuitems')
 export class MenuItems {
@@ -29,6 +30,9 @@ export class MenuItems {
 
     @Column({default : 5})
     tax:number;
+
+    @Column({type: 'enum', enum:MenuItemStatus, default: MenuItemStatus.NOT_AVAILABLE})
+    availability:string
 
     @Exclude()
     @Column(() => Dateschema)

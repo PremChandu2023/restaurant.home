@@ -9,7 +9,7 @@ export function OrderCustomdecator (method: string, route:string)
             switch(route) {
                 case '/':
                     return applyDecorators(
-                        ApiOperation({description:"Creates a new order"}),
+                        ApiOperation({summary:"Creates a new order"}),
                         ApiOkResponse(OrderApiResponse.post.created),
                         ApiBadRequestResponse(OrderApiResponse.post.Badrequest),
                         ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
@@ -20,14 +20,14 @@ export function OrderCustomdecator (method: string, route:string)
             switch(route) {
                 case '/:id':
                     return applyDecorators(
-                        ApiOperation({ description: 'Gives the details of the the order with given orderId'}),
+                        ApiOperation({ summary: 'Gives the details of the the order with given orderId'}),
                         ApiOkResponse(OrderApiResponse.get.ok),
                         ApiNotFoundResponse(OrderApiResponse.get.notFound),
                        ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                        ApiForbiddenResponse(OrderApiResponse.put.frbidden)
                     )
                 case '':
-                    return applyDecorators(ApiOperation({description : 'Gives the list of all objects of orders '}),ApiOkResponse(OrderApiResponse.get.ok))
+                    return applyDecorators(ApiOperation({summary : 'Gives the list of all objects of orders '}),ApiOkResponse(OrderApiResponse.get.ok))
                 case '/byname/:name':
                 return applyDecorators(ApiOkResponse(OrderApiResponse.get.ok),
                 ApiNotFoundResponse(OrderApiResponse.get.notFound)),
@@ -38,12 +38,12 @@ export function OrderCustomdecator (method: string, route:string)
             case 'Put':
                 switch(route) {
                     case '/itemquantity:id':
-                    return applyDecorators((ApiOperation({description: 'Update the quantity of the given menuitem of a particular order with given OrderItemid'})),ApiOkResponse(OrderApiResponse.put.ok),
+                    return applyDecorators((ApiOperation({summary: 'Update the quantity of the given menuitem of a particular order with given OrderItemid'})),ApiOkResponse(OrderApiResponse.put.ok),
                     ApiBadRequestResponse(OrderApiResponse.put.NotFound),
                     ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                     ApiForbiddenResponse(OrderApiResponse.put.frbidden))
                     case '/:id/addItem':
-                    return applyDecorators(ApiOperation({description:'Adds the another menuitem for the given order'}),ApiOkResponse(OrderApiResponse.put.addMenUitem.ok),
+                    return applyDecorators(ApiOperation({summary:'Adds the another menuitem for the given order'}),ApiOkResponse(OrderApiResponse.put.addMenUitem.ok),
                        ApiUnauthorizedResponse(OrderApiResponse.put.Unauthorized),
                        ApiForbiddenResponse(OrderApiResponse.put.frbidden))
                     // ApiBadRequestResponse(OrderApiResponse.put.addMenUitem.BadRequest))
@@ -54,12 +54,12 @@ export function OrderCustomdecator (method: string, route:string)
                 switch(route)
                 {
                     case 'approved/:id':
-                        return applyDecorators(ApiOperation({description: 'Update the payment status as approved using the given OrderId'}),
+                        return applyDecorators(ApiOperation({summary: 'Update the payment status as approved using the given OrderId'}),
                             ApiOkResponse(OrderApiResponse.Patch.ok),
                             ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
                         )
                     case 'declined/:id':
-                        return applyDecorators(ApiOperation({description: 'Update the payment status as declined using the given OrderId'}),
+                        return applyDecorators(ApiOperation({summary: 'Update the payment status as declined using the given OrderId'}),
                         ApiOkResponse(OrderApiResponse.Patch.ok),
                         ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound))
                         
@@ -68,12 +68,12 @@ export function OrderCustomdecator (method: string, route:string)
                     switch(route)
                 {
                     case ':Orderid':
-                        return applyDecorators(ApiOperation({description: 'Deletes the odrer with given orderid'}),
+                        return applyDecorators(ApiOperation({summary: 'Deletes the odrer with given orderid'}),
                             ApiOkResponse(OrderApiResponse.Delete.ok),
                             ApiBadRequestResponse(OrderApiResponse.Delete.IdNotFound)
                         )
                     case ':orderItemId':
-                        return applyDecorators(ApiOperation({description : 'Update the payment status as declined using the given OrderId' })),
+                        return applyDecorators(ApiOperation({summary : 'Update the payment status as declined using the given OrderId' })),
                         ApiOkResponse(OrderApiResponse.Patch.ok),
                         ApiBadRequestResponse(OrderApiResponse.Patch.IdNotFound)
                 }

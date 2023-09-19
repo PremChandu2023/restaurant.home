@@ -15,6 +15,7 @@ import { getMenuItemDto } from './menu.dtos';
 import { MenuExceptionConstants } from './Constants/exception.constants';
 import { Order } from '../Entities/orders.entity';
 import { OrderType } from './Constants/orders.type';
+import { log } from 'winston';
 
 @Injectable()
 export class MenuService {
@@ -82,62 +83,6 @@ export class MenuService {
     );
     return newMenuItems;
   }
-  async getMenuItemsByCategoryOrItemName(category?: string, ItemName?: string) {
-    if (ItemName) {
-      this.logger.log(
-        `Fetching the Menuitem details by name of the menuitem by partial sort`,
-      );
-      const newMenuItems = await this.menuItemsRepository
-        .createQueryBuilder('menuitems')
-        .select()
-        .where('menuitems.menu_itemname LIKE :menu_itemname', {
-          menu_itemname: `%${ItemName}%`,
-        })
-        .getMany();
-
-      //    const newMenuItems  =await this.menuItemsRepository.findBy({menu_itemname : ILike(`%${ItemName}%`)})
-      if (newMenuItems.length === 0) {
-        this.logger.log(MenuExceptionConstants.MENUITEMID_NOTFOUND);
-        throw MenuExceptionConstants.MENUITEMNAME_NOTFOUND;
-      }
-      return newMenuItems;
-    } else if (category) {
-      const newMenuItem = await this.menuRepository.find({
-        where: {
-          menu_Type: ILike(`%${category}%`),
-        },
-        relations: { menuItems: true },
-      });
-
-      if (newMenuItem.length === 0) {
-        throw MenuExceptionConstants.CATEGORY_NOT_FOUND;
-      }
-
-      return newMenuItem;
-    }
-  }
-
-  /**
-   *
-   * @param price filters based upon price from high to low and low to high
-   */
-  async filterByPrice(category: string) {
-    //select * from menuitems ORDER BY price DESC OFFSET 1 ROWS FETCH 2 ROWS
-    // const menuItems = await this.menuItemsRepository.find({order: {price:'DESC'},skip: 1, take: 2})
-    let parameter;
-
-    if (category === OrderType.ASCENDINGORDER) {
-      parameter = OrderType.ASCENDINGORDER;
-    } else if (category === OrderType.DESCENDINGORDER) {
-      parameter = OrderType.DESCENDINGORDER;
-    }
-
-    const newMenuitem = await this.menuItemsRepository
-      .createQueryBuilder('menu')
-      .orderBy('menu.price', parameter)
-      .getMany();
-    return newMenuitem;
-  }
   /* A sub query for updating the orderstatus for all customers*/
   async updateStatus() {
     const updatedStatus = await this.menuItemsRepository
@@ -154,5 +99,45 @@ export class MenuService {
       .setParameter('status', 'approved')
       .getMany();
     return updatedStatus;
+  }
+
+  /**
+   *
+   * @param category Category of menuItem with partial Category Name
+   * @param ItemName ItemName with partial searching operation
+   * @param price Give for low to high and high to low
+   * @returns filtered Items based on above parameters
+   */
+  async getMenuItemByFilter(
+    category?: string,
+    ItemName?: string,
+    price?: OrderType,
+  ) : Promise<MenuItems[]>{
+    let queryBuilder = this.menuItemsRepository.createQueryBuilder('menuitems');
+
+    if (ItemName) {
+      queryBuilder.andWhere('menuitems.menu_itemname LIKE :menu_itemname', {
+        menu_itemname: `%${ItemName}%`,
+      });
+    }
+    if (category) {
+      queryBuilder.innerJoinAndSelect('menuitems.menus', 'menu');
+      console.log(category);
+
+      queryBuilder.andWhere('menu.menu_Type LIKE :menu_Type', {
+        menu_Type: category,
+      });
+    }
+    if (price) {
+      console.log(price);
+      let priceCateg : OrderType = price;
+      queryBuilder.orderBy('menuitems.price',priceCateg)
+    }
+    const filteredItems = await queryBuilder.getMany();   
+    if(filteredItems.length === 0)
+    {
+        throw new BadRequestException({message : 'Data is not found with given Request'})
+    }
+    return filteredItems;
   }
 }

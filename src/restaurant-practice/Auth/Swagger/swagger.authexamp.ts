@@ -1,10 +1,10 @@
 
 export const AuthExamples = {
-    loginsucces : {
+    loginsuccess : {
         description : 'Verify the employee and returns a Jwt token',
         value : {
             succes : true,
-            jwtToken : 'sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq',
+            jwtToken : 'sdjhvshvjdvnjdvnjvkjsvvhjvvjjjeiljejnebjq_hdhg_jwhd-dbb',
             jwtreferenceToken: 'uqwuhguhkhfukeyuheuhuhe-2jbdbbb',
         }
     },

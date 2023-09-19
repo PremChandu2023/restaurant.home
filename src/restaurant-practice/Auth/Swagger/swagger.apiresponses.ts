@@ -7,7 +7,7 @@ export const AuthApiResposnes = {
             content: {
               'application/json': {
                 examples: {
-                  succes : AuthExamples.loginsucces     
+                  success : AuthExamples.loginsuccess     
                 }
               }
             }
