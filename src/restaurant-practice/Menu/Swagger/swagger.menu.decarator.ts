@@ -3,6 +3,7 @@ import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiQuery }
 import { MenuResponses } from "./swagger.resposnes.menu";
 import { MenuDto } from "src/restaurant-practice/Orders/orders.dtos";
 import { OrderType } from "../Constants/orders.type";
+import { MenuItemStatus } from "../Enums/menuItem.status";
 
 
 export function MenuCustomdecarators(method:string,route:string)
@@ -19,10 +20,14 @@ export function MenuCustomdecarators(method:string,route:string)
                     )
                 case '/filter':
                     return applyDecorators(
-                        ApiQuery({name: 'itemName', required : false,description: 'Get the menuitems by menuItemname'}),
-                        ApiQuery({name: 'category', required : false,description: 'Get the menuitems by menuCategory'}),
-                        ApiQuery({name: 'price', required : false,enum:OrderType, description: 'Get the menuitems by price in ascending order in descending order'}),
+                        ApiQuery({name: 'price-range', required : false,enum:OrderType, description: 'Get the menuitems by price in ascending order in descending order'}),
+                        ApiQuery({name: 'price-Min', required : false,type:Number, }),
+                        ApiQuery({name: 'price-Max', required : false, type:Number}),
+                        ApiQuery({name: 'status',required:false,enum: MenuItemStatus}),
                         ApiOperation({summary: 'Gives the Filtered menuitems based upon menuitemname or category'}),ApiOkResponse(MenuResponses.filterGetByName.ok))
+                case '/search':
+                    return applyDecorators(ApiQuery({name: 'itemName', required : false,description: 'Get the menuitems by menuItemname'}),
+                    ApiQuery({name: 'category', required : false,description: 'Get the menuitems by menuCategory'}),)
                 case '/':
                     return applyDecorators(ApiOperation({summary: 'Gives all the list of menuitems'}),ApiOkResponse(MenuResponses.get.ok))
                 }
@@ -47,6 +52,12 @@ export function MenuCustomdecarators(method:string,route:string)
                     return applyDecorators(
                         ApiOperation({summary: "Deletes the Menu with given Id"})
                     )
+            }
+        case 'Put':
+            switch(route)
+            {
+                case '/:id/menuitem-status':
+                    return applyDecorators(ApiBody({ enum: MenuItemStatus, schema : { type: 'enum', example: {status : 'Available'}}}))
             }
 
     }

@@ -16,6 +16,8 @@ import { MenuExceptionConstants } from './Constants/exception.constants';
 import { Order } from '../Entities/orders.entity';
 import { OrderType } from './Constants/orders.type';
 import { log } from 'winston';
+import { MenuItemStatus } from './Enums/menuItem.status';
+import { UpdateStatusDto } from './Dtos/updateStatusDtos';
 
 @Injectable()
 export class MenuService {
@@ -100,6 +102,27 @@ export class MenuService {
       .getMany();
     return updatedStatus;
   }
+  async searchMenuItems(ItemName:string,category:string) {
+    let queryBuilder = await this.menuItemsRepository.createQueryBuilder('menuitems');
+    if (ItemName) {
+      queryBuilder.andWhere('menuitems.menu_itemname LIKE :menu_itemname', {
+        menu_itemname: `%${ItemName}%`,
+      });
+    }
+    if (category) {
+      queryBuilder.innerJoinAndSelect('menuitems.menus', 'menu');
+      queryBuilder.andWhere('menu.menu_Type LIKE :menu_Type', {
+        menu_Type: category,
+      });
+    }
+    const filteredItems = await queryBuilder.getMany();
+    if (filteredItems.length === 0) {
+      throw new BadRequestException({
+        message: 'Data is not found with given Request',
+      });
+    }
+    return filteredItems;
+  }
 
   /**
    *
@@ -109,35 +132,59 @@ export class MenuService {
    * @returns filtered Items based on above parameters
    */
   async getMenuItemByFilter(
-    category?: string,
-    ItemName?: string,
-    price?: OrderType,
-  ) : Promise<MenuItems[]>{
+    availableStatus?: string,
+    priceMax?: number,
+    priceMin?: number,
+  ): Promise<MenuItems[]> {
     let queryBuilder = this.menuItemsRepository.createQueryBuilder('menuitems');
 
-    if (ItemName) {
-      queryBuilder.andWhere('menuitems.menu_itemname LIKE :menu_itemname', {
-        menu_itemname: `%${ItemName}%`,
-      });
-    }
-    if (category) {
-      queryBuilder.innerJoinAndSelect('menuitems.menus', 'menu');
-      console.log(category);
+    if (availableStatus) {
 
-      queryBuilder.andWhere('menu.menu_Type LIKE :menu_Type', {
-        menu_Type: category,
+      queryBuilder.andWhere('menuitems.status = :status', {
+        status: availableStatus,
       });
     }
-    if (price) {
-      console.log(price);
-      let priceCateg : OrderType = price;
-      queryBuilder.orderBy('menuitems.price',priceCateg)
+    if (priceMax || priceMin) {
+      if(priceMax && priceMin)
+      {
+      queryBuilder.andWhere('menuitems.price BETWEEN :priceMin AND :priceMax', {
+        priceMin: priceMin,
+        priceMax: priceMax,
+      });
     }
-    const filteredItems = await queryBuilder.getMany();   
-    if(filteredItems.length === 0)
+    else if(priceMax)
     {
-        throw new BadRequestException({message : 'Data is not found with given Request'})
+      queryBuilder.andWhere('menuitems.price <:priceMax', {
+        priceMax: priceMax,
+      });
+    }
+    else if(priceMin)
+    {
+      queryBuilder.andWhere('menuitems.price > :priceMin', {
+        priceMin: priceMin,
+      });
+    }
+    }
+    const filteredItems = await queryBuilder.getMany();
+    if (filteredItems.length === 0) {
+      throw new BadRequestException({
+        message: 'Data is not found with given Request',
+      });
     }
     return filteredItems;
+  }
+
+  async updateAvailableStatus(
+    availableStatus: UpdateStatusDto,
+    id: number,
+  ): Promise<any> {
+    console.log(id + ' ' + availableStatus);
+
+    const updatedItem = await this.menuItemsRepository.findOne({
+      where: { menuitem_id: id },
+    });
+    updatedItem.status = availableStatus.status;
+    await this.menuItemsRepository.save(updatedItem);
+    return updatedItem;
   }
 }

@@ -1,5 +1,5 @@
 
 export enum MenuItemStatus {
-    AVAILABLE = 'Avalaible_Now',
+    AVAILABLE = 'Avalaible',
     NOT_AVAILABLE = 'Out_Of_Stock'
 }

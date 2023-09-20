@@ -15,7 +15,7 @@ export class GlobalResponseInterceptor implements NestInterceptor {
             const modifiedResult = instanceToPlain(result, {excludePrefixes : ['date']})
             
            const modifiedResponse = {
-            succes: true,
+            success: true,
             data : modifiedResult
            }
             return modifiedResponse;

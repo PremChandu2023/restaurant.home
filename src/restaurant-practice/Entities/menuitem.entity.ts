@@ -31,8 +31,8 @@ export class MenuItems {
     @Column({default : 5})
     tax:number;
 
-    @Column({type: 'enum', enum:MenuItemStatus, default: MenuItemStatus.NOT_AVAILABLE})
-    availability:string
+    @Column({type:'enum', enum:MenuItemStatus})
+    status: MenuItemStatus
 
     @Exclude()
     @Column(() => Dateschema)

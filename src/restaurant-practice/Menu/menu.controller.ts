@@ -15,7 +15,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
 // import { AuthGuard } from "../guards/Auth-guard";
 import { GlobalResponseInterceptor } from '../Interceptors/menu.interceptor';
 import { CustomBook } from '../Auth/Customdecarators/custom-decarrators-Books';
@@ -30,6 +30,8 @@ import { MenuCustomdecarators } from './Swagger/swagger.menu.decarator';
 import { MenuExceptionConstants } from './Constants/exception.constants';
 import { Cron } from '@nestjs/schedule';
 import { OrderType } from './Constants/orders.type';
+import { MenuItemStatus } from './Enums/menuItem.status';
+import { UpdateStatusDto } from './Dtos/updateStatusDtos';
 
 @ApiTags('Menu')
 @Controller('menu')
@@ -59,19 +61,28 @@ export class Menucontroller {
 
   /**
    * Sorting the menuitems using item name or category*/
+  @Get('/search')
+  @MenuCustomdecarators('Get', '/search')
+  async searchMenuItems(
+    @Query('itemName') ItemName: string,
+    @Query('category') category: string,
+  ) {
+       return await this.menuService.searchMenuItems(ItemName,category);
+  }
+
   @Get('/filter')
   @MenuCustomdecarators('Get', '/filter')
   async getMenuItemsByFilter(
-    @Query('itemName') ItemName: string,
-    @Query('price') price: OrderType,
-    @Query('category') category: string,
+    @Query('price-Min') priceMin: number,
+    @Query('price-Max' ) priceMax: number,
+    @Query('status') status: string,
   ) {
     try {
-      if (ItemName || category || price) {
+      if (status  || priceMin || priceMax) {
         return await this.menuService.getMenuItemByFilter(
-          category,
-          ItemName,
-          price,
+          status,
+          priceMax,
+          priceMin,
         );
       } else {
         // Handle the case where neither itemName nor category is provided
@@ -92,7 +103,7 @@ export class Menucontroller {
     }
   }
 
-  /**
+  /*
    * This creates the new menu category*/
   @MenuCustomdecarators('Post', '/')
   @Post()
@@ -123,5 +134,14 @@ export class Menucontroller {
     } catch (error) {
       throw new NotFoundException(error);
     }
+  }
+
+  @Put('/:id/menuitem-status')
+  @MenuCustomdecarators('Put', '/:id/menuitem-status')
+  async updateMenuStatus(
+    @Body() status: UpdateStatusDto,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return await this.menuService.updateAvailableStatus(status, id);
   }
 }
