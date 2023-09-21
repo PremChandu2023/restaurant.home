@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsNotEmpty, IsNotEmptyObject, IsNumber, ValidateNested, isNumber } from "class-validator";
 
 import { Type } from "class-transformer";
-import { PaymentStatus } from "src/restaurant-practice/Enums/payment.enum";
+import { PaymentStatus } from "src/Restaurant/Enums/payment.enum";
 
 @Injectable()
 export class OrderItemDTo {

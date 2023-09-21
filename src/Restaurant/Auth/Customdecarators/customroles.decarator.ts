@@ -1,6 +1,6 @@
 import { SetMetadata } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { Role } from "src/restaurant-practice/Enums/roles.enums";
+import { Role } from "src/Restaurant/Enums/roles.enums";
 
 export const ROLES_KEY = 'roles'
 export const Roles = (...roles :Role[])=> SetMetadata(ROLES_KEY, roles);

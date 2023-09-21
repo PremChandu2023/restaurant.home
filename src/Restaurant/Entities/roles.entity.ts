@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-import { Employee } from "src/restaurant-practice/Entities/employee.entity";
+import { Employee } from "src/Restaurant/Entities/employee.entity";
 import { Exclude } from "class-transformer";
 import { Dateschema } from "./date.entity";
 import { ApiProperty } from "@nestjs/swagger";

@@ -3,15 +3,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 // import { restaurentdatabase } from './databse.config';
-import { Ordermodule } from './restaurant-practice/Orders/order-module';
-import { Menumodule } from './restaurant-practice/Menu/menu.module';
-import { AuthModule } from './restaurant-practice/Auth/auth.module';
+import { Ordermodule } from './Restaurant/Orders/order-module';
+import { Menumodule } from './Restaurant/Menu/menu.module';
+import { AuthModule } from './Restaurant/Auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 // import { restaurentdatabase, restaurentdatabass } from './configurations/databse.config';
 import { DATABASE_CONFIG } from './configurations/database.config';
 import { DatabaseConfig } from './configurations/database.configure.service';
-import { LoggerMiddleware } from './restaurant-practice/Middlewares/logger.middleware';
-import { RestaurantModule } from './restaurant-practice/restaurant/restaurant.module';
+import { LoggerMiddleware } from './Restaurant/Middlewares/logger.middleware';
+import { RestaurantModule } from './Restaurant/restaurant/restaurant.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

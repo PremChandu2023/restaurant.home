@@ -1,15 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import { AuthGuard } from './restaurant-practice/guards/Auth-guard';
+// import { AuthGuard } from './Restaurant/guards/Auth-guard';
 import { Validator } from 'class-validator';
 import { HttpStatus, Logger, ValidationPipe } from '@nestjs/common';
-import { GlobalExceptionFilter } from './restaurant-practice/Exception-Filters/exception.filters';
+import { GlobalExceptionFilter } from './Restaurant/Exception-Filters/exception.filters';
 import { ConfigService } from '@nestjs/config';
 import { setupSwagger } from './swagger/swagger-config/swaggers';
 import { DatabaseClass } from './swagger/swagger.practices/swagger.config';
 import { loggerConfig } from './Loggers/winston.loggerconfig';
 import { loggers } from 'winston';
-import { GlobalResponseInterceptor } from './restaurant-practice/Interceptors/menu.interceptor';
+import { GlobalResponseInterceptor } from './Restaurant/Interceptors/menu.interceptor';
 
 async function bootstrap() {
   // const options = new DocumentBuilder()

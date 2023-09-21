@@ -1,8 +1,8 @@
 // import { Dateschema } from "src/polls/database-type-orm/Entities/date.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { OrderItem } from "./orderitem.entity";
-import { PaymentStatus } from "src/restaurant-practice/Enums/payment.enum";
-import { OrderStatus } from "src/restaurant-practice/Enums/order.enum";
+import { PaymentStatus } from "src/Restaurant/Enums/payment.enum";
+import { OrderStatus } from "src/Restaurant/Enums/order.enum";
 import { Exclude } from 'class-transformer';
 import { Dateschema } from "./date.entity";
 import { Restaurant } from "../restaurant/Entities/restaurant.entity";

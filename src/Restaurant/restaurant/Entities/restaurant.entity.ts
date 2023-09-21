@@ -1,8 +1,8 @@
 import { Exclude } from 'class-transformer';
-import { Dateschema } from 'src/restaurant-practice/Entities/date.entity';
-import { Menu } from 'src/restaurant-practice/Entities/menu.entity';
-import { MenuItems } from 'src/restaurant-practice/Entities/menuitem.entity';
-import { Order } from 'src/restaurant-practice/Entities/orders.entity';
+import { Dateschema } from 'src/Restaurant/Entities/date.entity';
+import { Menu } from 'src/Restaurant/Entities/menu.entity';
+import { MenuItems } from 'src/Restaurant/Entities/menuitem.entity';
+import { Order } from 'src/Restaurant/Entities/orders.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('restaurant')

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 import { IS_ENUM, IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsString } from "class-validator";
-import { Role } from "src/restaurant-practice/Enums/roles.enums";
+import { Role } from "src/Restaurant/Enums/roles.enums";
 
 @Injectable()
 export class createRoleDto {

@@ -1,7 +1,7 @@
 import { applyDecorators } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiBody, ApiForbiddenResponse, ApiOkResponse, ApiOperation, ApiUnauthorizedResponse } from "@nestjs/swagger";
 import { AuthApiResposnes } from "./swagger.apiresponses";
-import { OrderApiResponse } from "src/restaurant-practice/Orders/orders-swaggers/orders.swaggers.api";
+import { OrderApiResponse } from "src/Restaurant/Orders/orders-swaggers/orders.swaggers.api";
 
 
 export function AuthCustomdecarators(method:string,route:string)
