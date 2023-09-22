@@ -1,9 +1,10 @@
 import { Injectable, ValidationPipe } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNotEmpty, IsNotEmptyObject, IsNumber, ValidateNested, isNumber } from "class-validator";
+import { IsArray, IsDecimal, IsEnum, IsNotEmpty, IsNotEmptyObject, IsNumber, IsOptional, Max, ValidateNested, isNotEmpty, isNumber, max } from "class-validator";
 
 import { Type } from "class-transformer";
 import { PaymentStatus } from "src/Restaurant/Enums/payment.enum";
+import { type } from "os";
 
 @Injectable()
 export class OrderItemDTo {
@@ -97,4 +98,35 @@ export class updatePaymentDTo {
     @ApiProperty({type : IsEnum, example: 'pending'})
     @IsEnum({PaymentStatus})
     orderStatus: PaymentStatus;
+}
+
+
+export class RatingDto{
+    @ApiProperty()
+    ratingValue:number
+    @ApiProperty()
+    @IsOptional()
+    review:string
+}
+
+export class menuItemRatingDto {
+
+    @ApiProperty()
+    orderItemId:number
+    @ApiProperty()
+    reviews: RatingDto;
+}
+
+
+export class createRatingDto {
+   
+    @ApiProperty()
+    @IsNotEmpty()
+    userId : number
+
+    @ApiProperty()
+    @IsNotEmpty()
+    @Type(() => menuItemRatingDto)
+    orderItems: menuItemRatingDto[];
+
 }

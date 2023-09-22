@@ -19,7 +19,6 @@ export class GlobalResponseInterceptor implements NestInterceptor {
             data : modifiedResult
            }
             return modifiedResponse;
-
         }))
     }
 }

@@ -16,7 +16,6 @@ import { loginEmployeeDto, registerEmployeeDto, createRoleDto, updateRoleDto } f
 
 @ApiTags("UserAuth")
 @Controller('/user')
-@UseInterceptors(GlobalResponseInterceptor)
 export class AuthController {
     logger:Logger
     constructor(private authservice: AuthService) { 
@@ -30,6 +29,8 @@ export class AuthController {
     async employeeLogin(@Body() loginBody: loginEmployeeDto, @Res() response: Response) {
         const tokens = await this.authservice.authenticateLogin(loginBody);
         this.logger.log('tokens are generated successfully')
+        //if we want the authentication token in a cookie
+        
         // response.cookie('Authentication',token,{httpOnly:true, maxAge: 2*60*60*100})
         // return response.send({
         //     success: true,

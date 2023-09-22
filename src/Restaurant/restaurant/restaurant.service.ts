@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Restaurant } from './Entities/restaurant.entity';
 import { Repository } from 'typeorm';
@@ -12,6 +12,10 @@ import { Employee } from '../Entities/employee.entity';
 import { log } from 'winston';
 import { Roles } from '../Entities/roles.entity';
 import { orderDetails } from '../Orders/orders.dtos';
+import { Rating } from '../Entities/ratings.entity';
+import { RatingDto, createRatingDto } from '../Orders/Dtos/order.dto';
+import { OrderItem } from '../Entities/orderitem.entity';
+import { OrderExceptionConstants } from '../Orders/constants/exceptionconstants/exception.constant';
 
 @Injectable()
 export class RestaurantService {
@@ -24,6 +28,10 @@ export class RestaurantService {
     private roleRespository: Repository<Roles>,
     @InjectRepository(Employee)
     private employeeRespository: Repository<Employee>,
+    @InjectRepository(Rating)
+    private ratingRespository: Repository<Rating>,
+    @InjectRepository(OrderItem)
+    private orderItemRespository: Repository<OrderItem>,
   ) {}
 
   async createRestaurant(
@@ -75,6 +83,7 @@ export class RestaurantService {
   async getAllRestaurantDetails(
     id: number,
     price: number,
+    filter:string
   ): Promise<Restaurant[]> {
     /**
      * innerJoin:
@@ -84,6 +93,10 @@ export class RestaurantService {
      * innerJoinAndSelect is used when you want to perform an inner join and also retrieve all columns from the joined entity.
      * in this case all common elements with resaturant and menuitems table and both sides table records will be obtained.
      */
+    
+
+
+
     let condition: string;
     if (price) {
       condition = 'menu_Items.price < :parameter';
@@ -104,6 +117,8 @@ export class RestaurantService {
    * @desc with this all details of Restaurant with order details from using nested inner join combined with all tables
    */
   async getRestaurantDetailsWithOrders(id: number): Promise<Restaurant> {
+
+
     const newRestaDetails = await this.restaurantRespository
       .createQueryBuilder('restaurant')
       .innerJoinAndSelect('restaurant.orders', 'orders')
@@ -165,27 +180,48 @@ export class RestaurantService {
    */
   async getOrdersByTime() {
     const orderResults = await this.restaurantRespository
-    .createQueryBuilder('restaurant')
-    .innerJoinAndSelect('restaurant.orders', 'orders')
-    .innerJoinAndSelect('orders.orderItems', 'orderItems')
-    .innerJoinAndSelect('orderItems.menuitems','menuitems')
-    .select(['restaurant.name', 'EXTRACT (MONTH FROM orders.createdDate) AS month',
-  'COUNT(*) AS total'])
-  .groupBy('restaurant.name,month')
-  .orderBy('total')
-    .getRawMany();
-  return orderResults;
-  }
-
-  /**
-   * Group Menu Items by Category
-   * Group menu items by category to determine the popularity of different types of dishes.
-   */
-  groupMenuItemsByCategory() {
-    
+      .createQueryBuilder('restaurant')
+      .innerJoinAndSelect('restaurant.orders', 'orders')
+      .innerJoinAndSelect('orders.orderItems', 'orderItems')
+      .innerJoinAndSelect('orderItems.menuitems', 'menuitems')
+      .select([
+        'restaurant.name',
+        'EXTRACT (MONTH FROM orders.createdDate) AS month',
+        'COUNT(*) AS total',
+      ])
+      .groupBy('restaurant.name,month')
+      .orderBy('total')
+      .getRawMany();
+    return orderResults;
   }
 
   /**
    *
+   * @param ratingDto It contains the restaurant ratings for menuItems of particular order wrapped together in a dtos class
+   * @param restaurantId Id of the resaturant form which is order placed
    */
+  async createRating(ratingDto: createRatingDto, restaurantId: number) {
+    const ratings = [];
+
+    for (const items of ratingDto.orderItems) {
+      const newOrderItem = await this.orderItemRespository.findOne({
+        where: { orderItem_id: items.orderItemId },
+      });
+      if (!newOrderItem) {
+        throw new BadRequestException(
+          OrderExceptionConstants.ORDERITEM_INVALID,
+        );
+      }
+
+      const newRating = await this.ratingRespository.create({
+        orderItem: newOrderItem,
+        value: items.reviews.ratingValue,
+        review: items.reviews.review,
+        restaurant: {id:restaurantId}
+      });
+      const rating = await this.ratingRespository.save(newRating);
+      ratings.push(rating);
+    }
+    return ratings;
+  }
 }

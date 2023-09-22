@@ -8,15 +8,21 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AddMenuItemDto, createRestaurantDto } from './Dtos/resaturant.dto';
 import { RestaurantService } from './restaurant.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { log } from 'winston';
+import { diskStorage } from 'multer';
+import { RatingDto, createRatingDto } from '../Orders/Dtos/order.dto';
 
 @Controller('restaurant')
 @ApiTags('restaurant')
 export class RestaurantController {
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(private restaurantService: RestaurantService) {}
 
   @Post('/')
   async createRestaurant(@Body() createRestaurantDto: createRestaurantDto) {
@@ -46,20 +52,44 @@ export class RestaurantController {
   async getAllRestaurentDetails(
     @Query('price') price: number,
     @Query('restaurantId') id: number,
+    @Query('filter') filter:string
   ) {
-    // return await this.restaurantService.getAllRestaurantDetails(id, price);
-    return await this.restaurantService.getRestaurantDetailsWithOrders(id);
+    return await this.restaurantService.getAllRestaurantDetails(id, price, filter);
+    // return await this.restaurantService.getRestaurantDetailsWithOrders(id);
   }
 
   @Get('/role/:id')
-  getEmployeesById(@Param('id', ParseIntPipe) id:number)
-  {
-     return this.restaurantService.getEmployeeByRoleId(id);
+  getEmployeesById(@Param('id', ParseIntPipe) id: number) {
+    return this.restaurantService.getEmployeeByRoleId(id);
   }
 
   @Get('/orderscount')
-  async getOrdersCount()
+  async getOrdersCount() {
+    return await this.restaurantService.getTotalOrdersCount();
+  }
+
+  @Post('/images')
+  @UseInterceptors(
+    FileInterceptor('file1', {
+      storage: diskStorage({
+        destination: 'Uploads',
+        filename: (req, file1, cb) => {
+          const name :string = file1.originalname.split('.')[0];
+          const fileExtension = file1.originalname.split('.')[1];
+          const newName = name.split(' ').join('_')+'_'+Date.now().toString()+'.'+fileExtension
+          cb(null,newName)
+        },
+      }),
+    }),
+  )
+  async getRestaurantImages(@UploadedFile() file1: Express.Multer.File) {
+    console.log(file1);
+  }
+
+
+  @Post('/:id/rating')
+  async createRating(@Param('id') restaurantId:number,@Body() createRating:createRatingDto)
   {
-      return await this.restaurantService.getTotalOrdersCount();
+     return await this.restaurantService.createRating(createRating,restaurantId);
   }
 }

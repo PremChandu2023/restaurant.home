@@ -29,15 +29,15 @@ import { EmployeeAuthGuard } from '../guards/Auth.guards/auth.guard';
 import { RolesGuard } from '../guards/Auth.guards/rolebased.guard';
 import { Role } from '../Enums/roles.enums';
 import { OrderCustomdecator } from './orders-swaggers/order-customdecarators';
-import { createOrderDTo, updateOrderDto } from './Dtos/order.dto';
+import { createOrderDTo, RatingDto, updateOrderDto } from './Dtos/order.dto';
 import { PaymentStatus } from '../Enums/payment.enum';
 import { OrderExceptionConstants } from './constants/exceptionconstants/exception.constant';
 import { DatabaseErrorConstants } from './constants/exceptionconstants/databse.constants';
+import { Order } from '../Entities/orders.entity';
 
 @ApiTags('Orders')
 @ApiBearerAuth()
 @Controller('/order')
-@UseInterceptors(GlobalResponseInterceptor)
 // @UseGuards(EmployeeAuthGuard,RolesGuard)
 export class OrderController {
   constructor(private orderService: OrderServices) { }
@@ -45,7 +45,7 @@ export class OrderController {
   @Roles(Role.Manager, Role.Waiter)
   @OrderCustomdecator('Post', '/')
   @Post('/restaurant/:id')
-  async createOrder(@Param('id', ParseIntPipe) id:number,@Body() createOrder: createOrderDTo) {
+  async createOrder(@Param('id', ParseIntPipe) id:number,@Body() createOrder: createOrderDTo):Promise<Order> {
     try {
       return await this.orderService.createOrder(createOrder,id);
     } catch (error) {

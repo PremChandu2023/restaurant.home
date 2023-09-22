@@ -3,6 +3,7 @@ import { Dateschema } from 'src/Restaurant/Entities/date.entity';
 import { Menu } from 'src/Restaurant/Entities/menu.entity';
 import { MenuItems } from 'src/Restaurant/Entities/menuitem.entity';
 import { Order } from 'src/Restaurant/Entities/orders.entity';
+import { Rating } from 'src/Restaurant/Entities/ratings.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('restaurant')
@@ -24,6 +25,9 @@ export class Restaurant {
 
   @OneToMany(() => Order, (orders) => orders.restaurant)
   orders: Order[];
+
+  @OneToMany(() => Rating,(ratings) => ratings.restaurant)
+  rating:Rating[]
 
   @Exclude()
   @Column(() => Dateschema)

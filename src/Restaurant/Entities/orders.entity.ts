@@ -8,6 +8,7 @@ import { Dateschema } from "./date.entity";
 import { Restaurant } from "../restaurant/Entities/restaurant.entity";
 import { Employee } from "./employee.entity";
 import { User } from "./user.entity";
+import { Rating } from "./ratings.entity";
 
 @Entity('orders')
 export class Order {
@@ -30,6 +31,8 @@ export class Order {
     @ManyToOne(() => User, (orders) => orders.order)
     user:User
 
+    @OneToMany(()=> Rating, (rating)=> rating.orders)
+    rating:Rating[]
     @Column({type :'enum', enum : OrderStatus})
     orderStatus: OrderStatus
 

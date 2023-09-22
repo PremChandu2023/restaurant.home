@@ -12,6 +12,7 @@ import { DATABASE_CONFIG } from './configurations/database.config';
 import { DatabaseConfig } from './configurations/database.configure.service';
 import { LoggerMiddleware } from './Restaurant/Middlewares/logger.middleware';
 import { RestaurantModule } from './Restaurant/restaurant/restaurant.module';
+import { MulterModule } from '@nestjs/platform-express';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -21,7 +22,7 @@ import { RestaurantModule } from './Restaurant/restaurant/restaurant.module';
     Ordermodule,
     RestaurantModule,
     Menumodule,
-    AuthModule,
+    AuthModule, 
     ConfigModule.forRoot({ isGlobal: true, load: [DATABASE_CONFIG] }),
   ],
   controllers: [AppController],

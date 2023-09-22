@@ -12,20 +12,6 @@ import { loggers } from 'winston';
 import { GlobalResponseInterceptor } from './Restaurant/Interceptors/menu.interceptor';
 
 async function bootstrap() {
-  // const options = new DocumentBuilder()
-  //   .setTitle("Swagger application")
-  //   .setDescription("Practice apis")
-  //   .setVersion("1.0")
-  //   .addBearerAuth({
-  //     type : "http",
-  //     scheme : "bearer",
-  //     bearerFormat : "JWT",
-  //     name : "JWT",
-  //     description : "Enter JWT token",
-  //     in : "header"
-  //   },"JWT-auth")
-  //   .build()
-
   const app = await NestFactory.create(AppModule);
   setupSwagger(app);
   // app.useGlobalGuards(new AuthGuard())
