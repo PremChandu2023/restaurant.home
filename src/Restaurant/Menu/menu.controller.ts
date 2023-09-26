@@ -14,6 +14,7 @@ import {
   Req,
   UseGuards,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
 // import { AuthGuard } from "../guards/Auth-guard";
@@ -48,7 +49,9 @@ export class Menucontroller {
   @Roles(Role.Waiter)
   @MenuCustomdecarators('Get', '/:id')
   @Get('menu-item/:id')
-  async getMenuItemsById(@Param('id') id: number) {
+  async getMenuItemsById(@Param('id', ParseIntPipe) id: number) {
+    console.log(typeof id);
+    
     return await this.menuService.getMenuItemById(id);
   }
 
@@ -76,13 +79,15 @@ export class Menucontroller {
     @Query('price-Min') priceMin: number,
     @Query('price-Max' ) priceMax: number,
     @Query('status') status: string,
+    @Query('filter') filter:string
   ) {
     try {
-      if (status  || priceMin || priceMax) {
+      if (status  || priceMin || priceMax || filter) {
         return await this.menuService.getMenuItemByFilter(
           status,
           priceMax,
           priceMin,
+          filter
         );
       } else {
         // Handle the case where neither itemName nor category is provided

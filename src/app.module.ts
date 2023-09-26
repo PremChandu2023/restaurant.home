@@ -13,20 +13,24 @@ import { DatabaseConfig } from './configurations/database.configure.service';
 import { LoggerMiddleware } from './Restaurant/Middlewares/logger.middleware';
 import { RestaurantModule } from './Restaurant/restaurant/restaurant.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: DatabaseConfig,
     }),
+    ThrottlerModule.forRoot([{ttl: 60, limit: 2}]),
     Ordermodule,
     RestaurantModule,
     Menumodule,
-    AuthModule, 
+    AuthModule,
     ConfigModule.forRoot({ isGlobal: true, load: [DATABASE_CONFIG] }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {provide: APP_GUARD,useClass: ThrottlerGuard}],
+  
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

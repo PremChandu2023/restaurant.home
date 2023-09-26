@@ -50,11 +50,12 @@ export class RestaurantController {
   @ApiQuery({ name: 'restaurantId', required: false })
   @ApiQuery({ name: 'price', required: false })
   async getAllRestaurentDetails(
-    @Query('price') price: number,
-    @Query('restaurantId') id: number,
-    @Query('filter') filter:string
+    // @Query('price') price: number,
+    // @Query('restaurantId') id: number,
+    // @Body('filter') filter:string
+    @Query() query:any
   ) {
-    return await this.restaurantService.getAllRestaurantDetails(id, price, filter);
+    return await this.restaurantService.getAllRestaurantDetails(query);
     // return await this.restaurantService.getRestaurantDetailsWithOrders(id);
   }
 

@@ -1,4 +1,4 @@
-// import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 // import { Menu } from "../restaurant-practice/Entities/menu.entity";
 // import { MenuItems } from "../restaurant-practice/Entities/menuitem.entity";
 // import { Order } from "../restaurant-practice/Entities/orders.entity";
@@ -24,7 +24,7 @@
 
 // export const restaurentdatabass : TypeOrmModuleOptions  = 
 //  {
-//         type : 'mysql',
+//         type : 'postgres',
 //         host : 'localhost',
 //         port : 3306,
 //         username: 'root',
@@ -35,4 +35,5 @@
 //         // logging : true
 
 // }
+
 

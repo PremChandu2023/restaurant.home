@@ -106,7 +106,7 @@ export class OrderServices {
   }
   async getAllOrders(): Promise<Order[]> {
     this.logger.log('Initializes the process of fetching all Orders');
-    // const allOrders = await this.orderRespository.find({ relations: { orderItems: { menuitems: true } } })
+    // const allOrders = await this.orderRespository.find({relations:{orderItems:true}});
 
     const allOrders = await this.orderRespository
       .createQueryBuilder('order')
@@ -251,7 +251,7 @@ export class OrderServices {
       }
     });
   }
-  async calculatePrice(newOrderItems: orderDetails[]) {
+  async calculatePrice(newOrderItems: orderDetails[]):Promise<number>{
     this.logger.log('Calaculating the price details');
     const totalPrice = newOrderItems.reduce(
       (accum, item) => accum + item.price,

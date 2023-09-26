@@ -24,6 +24,7 @@ export function MenuCustomdecarators(method:string,route:string)
                         ApiQuery({name: 'price-Min', required : false,type:Number, }),
                         ApiQuery({name: 'price-Max', required : false, type:Number}),
                         ApiQuery({name: 'status',required:false,enum: MenuItemStatus}),
+                        ApiQuery({name: 'filter',required:false, type:String}),
                         ApiOperation({summary: 'Gives the Filtered menuitems based upon menuitemname or category'}),ApiOkResponse(MenuResponses.filterGetByName.ok))
                 case '/search':
                     return applyDecorators(ApiQuery({name: 'itemName', required : false,description: 'Get the menuitems by menuItemname'}),

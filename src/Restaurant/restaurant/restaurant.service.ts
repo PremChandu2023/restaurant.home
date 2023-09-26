@@ -16,6 +16,7 @@ import { Rating } from '../Entities/ratings.entity';
 import { RatingDto, createRatingDto } from '../Orders/Dtos/order.dto';
 import { OrderItem } from '../Entities/orderitem.entity';
 import { OrderExceptionConstants } from '../Orders/constants/exceptionconstants/exception.constant';
+import { filterOptions } from './Constants/filters.constants';
 
 @Injectable()
 export class RestaurantService {
@@ -54,12 +55,12 @@ export class RestaurantService {
     addMenuItemDto: AddMenuItemDto,
     restaurantId: number,
   ): Promise<Restaurant> {
-    const newMenuitems = await this.restaurantRespository.findOne({
+    const newResta = await this.restaurantRespository.findOne({
       where: { id: restaurantId },
     });
-    console.log(newMenuitems);
+    console.log(newResta);
 
-    if (!newMenuitems) {
+    if (!newResta) {
       throw RestaurantExcepConst.INVALID_RESATUARANT_ID;
     }
 
@@ -68,24 +69,13 @@ export class RestaurantService {
       price: addMenuItemDto.price,
     });
 
-    newMenuItem.restaurant = newMenuitems;
+    newMenuItem.restaurant = newResta;
     await this.menuItemsRespository.save(newMenuItem);
-    const savedMenuItem = await this.restaurantRespository.save(newMenuitems);
+    const savedMenuItem = await this.restaurantRespository.save(newResta);
     return savedMenuItem;
   }
 
-  /**
-   *
-   * @param id is menuItem id
-   * @param price it is the price with which we want to filter the results
-   * @returns a Promise of Restaurant of all details with given id or price
-   */
-  async getAllRestaurantDetails(
-    id: number,
-    price: number,
-    filter:string
-  ): Promise<Restaurant[]> {
-    /**
+   /**
      * innerJoin:
      * It returns only the primary entity (the entity you started the query with) and the joined entity, but it does not retrieve all the columns from the joined entity
      * in this case common records of resaturant  will be obtained but its menuitems will not be obatined
@@ -93,20 +83,28 @@ export class RestaurantService {
      * innerJoinAndSelect is used when you want to perform an inner join and also retrieve all columns from the joined entity.
      * in this case all common elements with resaturant and menuitems table and both sides table records will be obtained.
      */
-    
-
-
-
+  /**
+   *
+   * @param id is menuItem id
+   * @param price it is the price with which we want to filter the results
+   * @returns a Promise of Restaurant of all details with given id or price
+   */
+  async getAllRestaurantDetails(
+   query:any
+  ): Promise<Restaurant[]> {
     let condition: string;
-    if (price) {
+    
+   const filterKeys:string[] =Object.keys(query)
+
+    if (filterKeys.includes('price')) {
       condition = 'menu_Items.price < :parameter';
-    } else if (id) {
+    } else if (filterKeys.includes('id')) {
       condition = 'menu_Items.menuitem_id = :parameter';
     }
     const newRest = await this.restaurantRespository
       .createQueryBuilder('restaurant')
       .innerJoinAndSelect('restaurant.menu_Items', 'menu_Items')
-      .where(condition, { parameter: id || price })
+      .where(condition, { parameter: query['price'] || query['id'] })
       .getMany();
 
     return newRest;

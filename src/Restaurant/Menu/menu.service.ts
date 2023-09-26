@@ -102,8 +102,10 @@ export class MenuService {
       .getMany();
     return updatedStatus;
   }
-  async searchMenuItems(ItemName:string,category:string) {
-    let queryBuilder = await this.menuItemsRepository.createQueryBuilder('menuitems');
+  async searchMenuItems(ItemName: string, category: string) {
+    let queryBuilder = await this.menuItemsRepository.createQueryBuilder(
+      'menuitems',
+    );
     if (ItemName) {
       queryBuilder.andWhere('menuitems.menu_itemname LIKE :menu_itemname', {
         menu_itemname: `%${ItemName}%`,
@@ -135,35 +137,42 @@ export class MenuService {
     availableStatus?: string,
     priceMax?: number,
     priceMin?: number,
+    filter?:string
   ): Promise<MenuItems[]> {
     let queryBuilder = this.menuItemsRepository.createQueryBuilder('menuitems');
+    //joining with menu table
+    // queryBuilder.innerJoinAndSelect('menuitems.menus','menus')
 
+    // const filterBy = filter.split('&')
+    
+
+    // filterBy.forEach((options) => {
+      
+    //   queryBuilder.andWhere('menus.menu_Type = :menu_Type', {menu_Type : options})
+    // })
     if (availableStatus) {
-
       queryBuilder.andWhere('menuitems.status = :status', {
         status: availableStatus,
       });
     }
     if (priceMax || priceMin) {
-      if(priceMax && priceMin)
-      {
-      queryBuilder.andWhere('menuitems.price BETWEEN :priceMin AND :priceMax', {
-        priceMin: priceMin,
-        priceMax: priceMax,
-      });
-    }
-    else if(priceMax)
-    {
-      queryBuilder.andWhere('menuitems.price <:priceMax', {
-        priceMax: priceMax,
-      });
-    }
-    else if(priceMin)
-    {
-      queryBuilder.andWhere('menuitems.price > :priceMin', {
-        priceMin: priceMin,
-      });
-    }
+      if (priceMax && priceMin) {
+        queryBuilder.andWhere(
+          'menuitems.price BETWEEN :priceMin AND :priceMax',
+          {
+            priceMin: priceMin,
+            priceMax: priceMax,
+          },
+        );
+      } else if (priceMax) {
+        queryBuilder.andWhere('menuitems.price <:priceMax', {
+          priceMax: priceMax,
+        });
+      } else if (priceMin) {
+        queryBuilder.andWhere('menuitems.price > :priceMin', {
+          priceMin: priceMin,
+        });
+      }
     }
     const filteredItems = await queryBuilder.getMany();
     if (filteredItems.length === 0) {
@@ -178,8 +187,6 @@ export class MenuService {
     availableStatus: UpdateStatusDto,
     id: number,
   ): Promise<any> {
-    console.log(id + ' ' + availableStatus);
-
     const updatedItem = await this.menuItemsRepository.findOne({
       where: { menuitem_id: id },
     });
