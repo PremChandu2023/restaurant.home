@@ -15,7 +15,7 @@ import { RestaurantModule } from './Restaurant/restaurant/restaurant.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-@Module({
+import { ClassBatchDemoModule } from './class-batch-demo/class-batch-demo.module';@Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -27,6 +27,7 @@ import { APP_GUARD } from '@nestjs/core';
     Menumodule,
     AuthModule,
     ConfigModule.forRoot({ isGlobal: true, load: [DATABASE_CONFIG] }),
+    ClassBatchDemoModule,
   ],
   controllers: [AppController],
   providers: [AppService, {provide: APP_GUARD,useClass: ThrottlerGuard}],

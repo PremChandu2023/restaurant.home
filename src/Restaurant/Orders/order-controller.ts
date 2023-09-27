@@ -35,6 +35,7 @@ import { OrderExceptionConstants } from './constants/exceptionconstants/exceptio
 import { DatabaseErrorConstants } from './constants/exceptionconstants/databse.constants';
 import { Order } from '../Entities/orders.entity';
 import { log } from 'winston';
+import { CreateBatchDto } from 'src/class-batch-demo/Dtos/createBatch.dto';
 
 @ApiTags('Orders')
 @ApiBearerAuth()
@@ -193,4 +194,10 @@ export class OrderController {
   // {
   //     return this.orderService.addMenuItem(updateMenuItem,id);
   // }
+
+  @Post('demo')
+  createPost(@Body() createBatch:CreateBatchDto)
+  {
+      return createBatch;
+  }
 }

@@ -17,10 +17,14 @@ async function bootstrap() {
   // app.useGlobalGuards(new AuthGuard())
   app.useGlobalPipes(
     new ValidationPipe({
+      stopAtFirstError:true,
       transform: true,
-      errorHttpStatusCode: HttpStatus.BAD_REQUEST,
       whitelist: true,
       forbidNonWhitelisted: true,
+      skipMissingProperties:false,
+      validationError: {
+        target:false
+      }
     }),
   );
   app.useGlobalInterceptors(new GlobalResponseInterceptor())
