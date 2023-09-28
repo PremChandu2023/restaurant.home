@@ -18,12 +18,12 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       stopAtFirstError:true,
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      skipMissingProperties:false,
+      transform: true,// Automatically transform incoming data to match the DTO class
+      whitelist: true,// Strips away unexpected properties from the request
+      forbidNonWhitelisted: true,// Throws an error if unexpected properties are present in the request
+      skipMissingProperties:false,// Throws an error if any of the expected properties are missing
       validationError: {
-        target:false
+        target:false// Exclude the entire object from the response, showing only field-level errors
       }
     }),
   );

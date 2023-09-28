@@ -1,19 +1,20 @@
 import { IsString, ValidateNested, IsEnum, IsNumber, IsArray, IsInt } from "class-validator";
-import { DiscountTypeEnum } from "../Enums/createBatch.enums";
+import { DiscountTypeEnum } from "../Constants/createBatch.enums";
+import { ValidationErrorConstants } from "../Constants/validation.error.constants";
 
 export class PlansSchemaDto {
     @IsString()
     title: string;
   
-    @IsArray()
+    @IsArray({})
     @IsInt({each: true})
     applicableBatchIds: number[];
   
     @IsEnum(DiscountTypeEnum, {
-      message: 'Discount type must be one of: flat, percentage',
+      message: ValidationErrorConstants.CONST_ERROR_DISCOUNTTYPE_MUST_BE_STRING_WITH_ENUM,
     })
     discountType: string;
   
-    @IsNumber({}, { message: 'discountValue must be a valid number' })
+    @IsNumber({}, { message: ValidationErrorConstants.CONST_ERROR_DISCOUNT_VALUE_MUST_BE_FLOAT_TYPE})
     discountValue: number;
   }

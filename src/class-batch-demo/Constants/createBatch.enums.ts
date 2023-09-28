@@ -30,5 +30,7 @@ export enum DiscountTypeEnum {
 }
 export enum FrequencyEnum {
   DAYS = 1,
-  FREQUENCY = 2,
+  WEEKS = 2,
+  MONTHS=3,
+  YEARS =4
 }
